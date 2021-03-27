@@ -4,3 +4,4 @@ function demo() {
 }
 
 demo();
+demo();
