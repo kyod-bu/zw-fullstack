@@ -1,3 +1,7 @@
+/**
+ * @author kyod
+ * @description 执行上下文/闭包
+ */
 /* 执行上下文学习 */
 function outser() {
     // executionContext -> scopeChain, variableObject, this

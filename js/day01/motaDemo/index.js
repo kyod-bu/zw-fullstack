@@ -1,5 +1,6 @@
 /**
- * kyod
+ * @author kyod
+ * @description 利用闭包写一个魔塔小游戏
  */
 // 先来一个闭包，var的变量不会跑到window上去
 // (function () {
