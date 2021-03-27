@@ -1,7 +1,14 @@
-/* 测试网络 */ 
-function demo() {
-    console.log(100);
+/* 执行上下文学习 */
+function demo(num) {
+    var name = "xiaowa";
+    var getData = function getData() { };
+    function c() { }
 }
+demo(100);
 
-demo();
-demo();
+
+function executionFuncOuter() {
+    function executionFunc() {
+    
+    }
+}
