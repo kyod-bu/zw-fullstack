@@ -123,7 +123,7 @@ c();
 function a() {
   return function b() {
     // var myName = 'b';
-    console.log(myName); // 这里会报错
+    console.log(myName); // 这里会报错 Uncaught ReferenceError: myName is not defined
   }
 }
 function c() {
@@ -136,7 +136,7 @@ c();
 
 ### 3.1 作用域链
 
-当一个块或函数嵌套在另一个块或函数中时，就发生了作用域的嵌套。在当前函数中如果js引擎无法找到某个变量，就会往上一级嵌套的作用域中去寻找，直到找到该变量或抵达全局作用域，这样的链式关系就称为作用域链（Scope Chain）
+当一个块或函数嵌套在另一个块或函数中时，就发生了作用域的嵌套。在当前函数中如果 js 引擎无法找到某个变量，就会往上一级嵌套的作用域中去寻找，直到找到该变量或抵达全局作用域，这样的链式关系就称为作用域链（Scope Chain）
 
 ## 4 闭包
 
@@ -161,74 +161,74 @@ function outer() {
 
 **平时用在哪儿？**
 
-1. 封装私有变量（amd 的框架等都使用）
+### 4.1 封装私有变量（amd 的框架等都使用）
 
-   ```javascript
-   // 普通的定义类的方法
-   function Person() {
-       this._attackVolume = 100;
-   }
-     
-   Person.prototype = {
-       attack(body) {
-           body.bloodVolume -= this.attackVolume - body.defenseVolume;
-       }
-   };
-   
-   var person = new Person();
-   console.log(person._attackVolume);
-   
-   // 工厂方法
-   function Person() {
-       var _attackVolume = 100;
-       return {
-           attack() {
-               body.bloodVolume -= this.attackVolume - body.defenseVolume;
-           }
-       };
-   }
-   
-   var person = new Person();
-   console.log(person._attackVolume);
-   ```
+```javascript
+// 普通的定义类的方法
+function Person() {
+    this._attackVolume = 100;
+}
+  
+Person.prototype = {
+    attack(body) {
+        body.bloodVolume -= this.attackVolume - body.defenseVolume;
+    }
+};
 
-2. 存储变量
+var person = new Person();
+console.log(person._attackVolume);
 
-   ```javascript
-   // 封装的时候
-   function getListDataManager() {
-       // 外层scope中定义一个变量
-       let localData = null;
-   
-       return {
-           getData() {
-               // 里面的函数使用外层的变量，而且是反复使用
-               if(localData) {
-                   return Promise.resolve(localData);
-               }
-               return fetch('xxx')
-                   .then(data => localData = data.json());
-           }
-       };
-   }
-   
-   // 用的时候
-   const listDataManager = getListDataManager();
-   
-   button.onclick = () => {
-       // 每次都会去获取数据，但是有可能是获取的缓存的数据
-       text.innerHTML = listDataManager.getData();
-   };
-   
-   window.onscroll = () => {
-       // 每次都会去获取数据，但是有可能是获取的缓存的数据
-       text.innerHTML = listDataManager.getData();
-   };
-   ```
+// 工厂方法
+function Person() {
+    var _attackVolume = 100;
+    return {
+        attack() {
+            body.bloodVolume -= this.attackVolume - body.defenseVolume;
+        }
+    };
+}
+
+var person = new Person();
+console.log(person._attackVolume);
+```
+
+### 4.2 存储变量
+
+```javascript
+// 封装的时候
+function getListDataManager() {
+    // 外层scope中定义一个变量
+    let localData = null;
+
+    return {
+        getData() {
+            // 里面的函数使用外层的变量，而且是反复使用
+            if(localData) {
+                return Promise.resolve(localData);
+            }
+            return fetch('xxx')
+                .then(data => localData = data.json());
+        }
+    };
+}
+
+// 用的时候
+const listDataManager = getListDataManager();
+
+button.onclick = () => {
+    // 每次都会去获取数据，但是有可能是获取的缓存的数据
+    text.innerHTML = listDataManager.getData();
+};
+
+window.onscroll = () => {
+    // 每次都会去获取数据，但是有可能是获取的缓存的数据
+    text.innerHTML = listDataManager.getData();
+};
+```
 
 ## 5 this
 
-this 指的是当前的执行上下文。
+**this 指的是当前的执行上下文。**
 
 一共有5种场景。
 
@@ -481,14 +481,34 @@ showPerson();
 
 ```javascript
 for(var i = 0; i < 10; i++) {
-    console.log('i:', i);
+    console.log('i:', i); 
 }
+// i: 0
+// i: 1
+// i: 2
+// i: 3
+// i: 4
+// i: 5
+// i: 6
+// i: 7
+// i: 8
+// i: 9
 
 for(var i = 0; i < 10; i++) {
     setTimeout(function() {
         console.log('i:', i);
     }, 0);
 }
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
+// i: 10
 
 for(var i = 0; i < 10; i++) {
     (function(i) {
@@ -497,4 +517,14 @@ for(var i = 0; i < 10; i++) {
         }, 0);
     })(i);
 }
+// i: 0
+// i: 1
+// i: 2
+// i: 3
+// i: 4
+// i: 5
+// i: 6
+// i: 7
+// i: 8
+// i: 9
 ```
