@@ -21,7 +21,7 @@ class Person {
   const person = new Person();
   
   person.job.salary = 0;
-  console.log('wife.job.salary:', wife.job.salary); // 0
+  console.log('wife.job.salary:', wife.job.salary); // wife.job.salary: 100
   
-  wife.buybuyby();
-  person.buybuyby();
+  wife.buybuyby(); // money:: 0
+  person.buybuyby(); // money:: 0
