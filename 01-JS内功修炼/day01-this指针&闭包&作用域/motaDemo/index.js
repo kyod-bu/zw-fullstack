@@ -14,8 +14,8 @@
 //         var imgPos = {
 //             x: 0,
 //             y: 0,
-//             width: 30,
-//             height: 30
+//             width: 32,
+//             height: 32
 //         };
 
 //         // 定义英雄
@@ -40,7 +40,7 @@
 //             );
 //     };
 
-//     heroImg.src = './hero.png';
+//     heroImg.src = '../course/hero.png';
 // })();
 
 // 上面的实现方式，在多人合作的时候，多人编辑同一个文档，会显得不是那么合理
@@ -65,7 +65,7 @@
                     callback && callback(context, heroImg);
                     loaded = true; // 加载过资源之后，将loaded置为true
                 };
-                heroImg.src = './hero.png';
+                heroImg.src = '../course/hero.png';
             }
         };
     }
@@ -76,8 +76,8 @@
         var imgPos = {
             x: 0,
             y: 0,
-            width: 42,
-            height: 41
+            width: 32,
+            height: 32
         };
 
         // 定义英雄

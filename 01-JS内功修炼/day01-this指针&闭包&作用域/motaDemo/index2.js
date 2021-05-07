@@ -20,8 +20,8 @@
 
         // 加载图片
         const allResourceTask = Promise.all([
-            imgTask(heroImg, './hero.png'),
-            imgTask(allSpriteImg, './all.png')
+            imgTask(heroImg, '../course/hero.png'),
+            imgTask(allSpriteImg, '../course/all.jpg')
         ]);
 
         return {
@@ -59,8 +59,8 @@
             imgPos: {
                 x: 0,
                 y: 0,
-                width: 42,
-                height: 41
+                width: 32,
+                height: 32
             },
             rect: {
                 x: 0,
@@ -75,10 +75,10 @@
             heroImg: allSpriteImg,
             context: context,
             imgPos: {
-                x: 854,
-                y: 729,
-                width: 52,
-                height: 50
+                x: 858,
+                y: 529,
+                width: 32,
+                height: 32
             }, // 图片截取的位置信息
             rect: {
                 x: 100,
