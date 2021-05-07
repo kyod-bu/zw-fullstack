@@ -76,7 +76,7 @@ var monster = newOperation(Body);
 
 #### 方法3: 原型模式
 
-我们创建的每个函数都有个**prototype**属性，这个属性是个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。那么prototype就是通过调用构造函数而创建的那个实例的原型对象。
+我们创建的每个函数都有个 **prototype** 属性，这个属性是个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。那么prototype就是通过调用构造函数而创建的那个实例的原型对象。
 
 **举个例子**
 
@@ -99,7 +99,7 @@ var wife = new Body();
 
 1. 真正的原型，在构造函数中
 2. 我们每声明一个函数，浏览器就会在内存中创建一个对象，在这个对象中增加一个属性，叫 **constructor** ，指向我们的函数，并把我们的函数的 **prototype属性** 指向这个对象。
-3. 用这个构造函数创建的对象都有一个不可访问的属性【ptototype】，这个属性就指向了构造函数的prototype，在浏览器中，支持使用\_\_proto\_\_来访问这个对象。
+3. 用这个构造函数创建的对象都有一个不可访问的属性【ptototype】，这个属性就指向了构造函数的 prototype，在浏览器中，支持使用 \_\_proto\_\_ 来访问这个对象。
 
 使用原型对象的**好处**是：可以在创建出来的多个对象中，**共享属性和方法**。
 
@@ -118,7 +118,7 @@ function newOperation(constructFun) {
 var monster = newOperation(Body);
 ```
 
-这种模式下，每一个生成的对象都有一个属性【prototype】，浏览器厂商在具体实现的时候，保留了一个\_\_proto\_\_属性，用来让我们访问【prototype】
+这种模式下，每一个生成的对象都有一个属性【prototype】，浏览器厂商在具体实现的时候，保留了一个 \_\_proto\_\_ 属性，用来让我们访问【prototype】
 
 【prototype】的ECMA解释
 
@@ -209,7 +209,7 @@ class Person {
     this.money = 100;
   }
   job = {
-    salary: 100;
+    salary: 100,
   }
   buybuyby() {
     this.money -= 100;
@@ -222,7 +222,7 @@ const wife = new Person();
 const person = new Person();
 
 person.job.salary = 0;
-console.log('wife.job.salary:', wife.job.salary); // 0
+console.log('wife.job.salary:', wife.job.salary); // 100
 
 wife.buybuyby();
 person.buybuyby();
@@ -277,7 +277,7 @@ monster.attacked();
 console.log(monster2.volumes._bloodVolume);
 ```
 
-注意：这种方式，monster改变\_bloodVolume后，monster2的\_bloodVolume也被改变了。
+⚠️ 这种方式，monster改变\_bloodVolume后，monster2的\_bloodVolume也被改变了。
 
 ### 方法2: 借用构造函数继承
 
@@ -300,7 +300,7 @@ function Monster() {
 var monster = new Monster();
 ```
 
-注意：这种方式，Monster无法继承父类prototype上的方法和属性。
+⚠️ 这种方式，Monster无法继承父类prototype上的方法和属性。
 
 ### 方法3: 原型链+借用构造函数的组合继承
 
@@ -375,7 +375,7 @@ class Monster extends Body {
 var monster = new Monster();
 ```
 
-⚠️这里我们可以看一下Babel编译后的样子。
+⚠️ 这里我们可以看一下Babel编译后的样子。
 
 ## 5 相关面试题
 
@@ -435,7 +435,7 @@ function Person() {
 Person.prototype = {
   name: 2,
   show: function() {
-    console.log('name is:', this.name);
+    console.log('name is:', this.name); 
   }
 };
 var person = new Person();
@@ -443,8 +443,8 @@ var person2 = new Person();
 person.show = function() {
   console.log('new show');
 };
-person2.show();
-person.show();
+person2.show(); // name is: 1
+person.show(); // new show
 ```
 
 ### 2.综合题
@@ -459,6 +459,6 @@ Person.prototype = {
     console.log('name is:', this.name);
   }
 };
-Person.prototype.show();
-(new Person()).show();
+Person.prototype.show(); // name is: 2
+(new Person()).show(); // name is: 1
 ```
