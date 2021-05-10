@@ -7,11 +7,13 @@ node_modules
 
 # production 生产
 build
+dist
 
 # misc 杂项
 *.code-workspace
 .vscode
 *下载资料
+package-lock.json
 
 # log 日志
 *.log*
