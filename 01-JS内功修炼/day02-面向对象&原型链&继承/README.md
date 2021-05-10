@@ -56,7 +56,7 @@ function Body() {
   };
 }
 var monster = new Body(); 
-// 但函数被new时，this指向new出来的实例对象
+// 当函数被new时，this指向new出来的实例对象
 ```
 
 **手写一个【new函数】**

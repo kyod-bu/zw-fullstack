@@ -1,30 +1,20 @@
 # 详情可参考：https://docs.github.com/cn/github/using-git/ignoring-files
 
 # dependencies 依赖
-/node_modules
-/.pnp
-.pnp.js
+node_modules
 
 # testing 测试
-/coverage
 
 # production 生产
-/build
+build
 
 # misc 杂项
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-/zw.code-workspace
+*.code-workspace
+.vscode
+*下载资料
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# downloaded information 爪哇教育下载资料
-/爪哇教育下载资料
+# log 日志
+*.log*
 
 # other
 /other 

@@ -65,7 +65,15 @@ function promise2() {
 
 上面的2个promise实例，串联起来即可写为：<code>promise1().then(function() { return promise2(); });</code>
 
-也可以简写为：<code>promise1().then(promise2);</code>
+```javascript
+promise1()
+  .then(function () {
+    return promise2();
+  })
+
+// 也可以简写为：
+promise1().then(promise2);
+```
 
 浏览器中执行之后，即可看到，1s之后出现**1s 后输出**字样，再经过2s出现**2s 后输出**字样。在这个例子中，我们能看到，当前promise如果状态变为已完成（执行了resolve方法），那么就会去执行then方法中的下一个promise函数。
 
@@ -120,7 +128,7 @@ try {
 1. promise会有三种状态：【进行中】【已完成】【已拒绝】，进行中状态可以更改为已完成或已拒绝，已经更改过状态后，无法继续更改（例如，从已完成改为已拒绝）。
 2. ES6中的Promise构造函数，我们构造之后需要传入一个函数，他接受2个函数参数，执行第一个参数之后就会改变当前promise为“已完成”状态，执行第二个参数之后就会变为“已拒绝”状态。
 3. 通过 .then 方法，即可在上一个promise达到已完成时继续执行下一个函数或promise。同时通过resolve或reject时传入参数，即可给下一个函数或promise传入初始值。
-4. 已拒绝的 promise，后续可以通过 .catch 方法或是 .then 方法的第二个参数或是 try catch 进行捕获。
+4. 已拒绝的 promise，后续可以通过 .catch 方法或 .then 方法的第二个参数或是 try catch 进行捕获。
 
 ### 1.3 封装异步操作为 promise
 
@@ -217,7 +225,7 @@ ajaxAsync('/ajax.json')
 总结一下当前小节：
 
 1. 我们可以轻松的把任何一个函数或者是异步函数改为promise，尤其是异步函数，改为promise之后即可进行链式调用，增强可读性。
-2. 将带有回调函数的异步改为promise也很简单，只需要在内部实例话promise之后，在原来执行回调函数的地方执行对应的更改promise状态的函数即可。
+2. 将带有回调函数的异步改为promise也很简单，只需要在内部实例化promise之后，在原来执行回调函数的地方执行对应的更改promise状态的函数即可。
 
 ### 1.4 promise 规范解读
 
@@ -405,7 +413,7 @@ Promise.all([promise1(), promise2()])
   });
 ```
 
-注意，此时多个 promise 是同时进行的，也就是在上面的例子中，等待 1s 打印 1 之后，再等待 1s 就会打印 2 和「全部 promise 均已完成」。
+⚠️ 此时多个 promise 是同时进行的，也就是在上面的例子中，等待 1s 打印 1 之后，再等待 1s 就会打印 2 和「全部 promise 均已完成」。
 
 #### 1.5.4 Promise.race
 
