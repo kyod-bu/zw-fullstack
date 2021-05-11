@@ -25,3 +25,4 @@ class Person {
   
   wife.buybuyby(); // money:: 0
   person.buybuyby(); // money:: 0
+  
