@@ -413,11 +413,11 @@ Promise.all([promise1(), promise2()])
   });
 ```
 
-⚠️ 此时多个 promise 是同时进行的，也就是在上面的例子中，等待 1s 打印 1 之后，再等待 1s 就会打印 2 和「全部 promise 均已完成」。
+⚠️ 此时多个 promise 是**同时**进行的，也就是在上面的例子中，等待 1s 打印 1 之后，再等待 1s 就会打印 2 和「全部 promise 均已完成」。
 
 #### 1.5.4 Promise.race
 
-返回一个 promise 实例，接受一个数组，里面含有多个 promise 实例，当有一个 promise 实例状态改变时，就进入该状态且不可改变。这里所有的 promise 实例为竞争关系，只选择第一个进入改变状态的 promise 值。
+返回一个 promise 实例，接受一个数组，里面含有多个 promise 实例，当有一个 promise 实例状态改变时，就进入该状态且不可改变。这里所有的 promise 实例为**竞争**关系，只选择第一个进入改变状态的 promise 值。
 
 ```javascript
 var promise1 = function() {
