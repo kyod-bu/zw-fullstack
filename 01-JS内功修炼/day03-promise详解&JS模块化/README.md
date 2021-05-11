@@ -945,6 +945,8 @@ const { var1 as customVal1 } = require("./moduleA");
 
 ![各种规范之间的关系](./img/各种规范之间的关系.png)
 
+⚠️ 区分 **语法层面** 和 **运行环境层面**
+
 每个 JS 的运行环境都有一个解析器，否则这个环境也不会认识 JS 语法。它的作用就是用 ECMAScript 的规范去解释 JS 语法，也就是处理和执行语言本身的内容。
 例如按照逻辑正确执行 `var a = "123";` ，`function func(){ console.log('hahaha'); }` 之类的内容。
 
@@ -960,7 +962,7 @@ ESModule 就属于 JS Core 层面的规范，而 AMD，CommonJS 是运行环境�
 
 Node.js 在 V12 版本之后才可以使用 ESModule 规范的模块，在 V12 没进入 LTS 之前，我们需要加上
 `--experimental- modules` 的 flag 才能使用这样的特性，也就是通过
-`node --experimental-modules index.js` 来执行。浏览器端 Chrome 61 之后的版本可以开启支持 ESModule 的选项，只需要通过\`\`这样的标签加载即可。
+`node --experimental-modules index.js` 来执行。浏览器端 Chrome 61 之后的版本可以开启支持 ESModule 的选项，只需要通过 `` 这样的标签加载即可。
 
 这也就是说，如果想在 Node.js 环境中使用 ESModule，就需要升级 Node.js 到高版本，这相对来说比较容易，毕竟服务端 Node.js 版本控制在开发人员自己手中。但浏览器端具有分布式的特点，是否能使用这种高版本特性取决于用户访问时的版本，而且这种解释器语法层面的内容无法像 AMD 那样在运行时兼容，所以想要直接使用就会比较麻烦。
 
@@ -976,7 +978,7 @@ Node.js 在 V12 版本之后才可以使用 ESModule 规范的模块，在 V12 �
 
 ![Babel编译示例](./img/Babel编译示例.png)
 
-这就造成了另外一个问题，这样带有模块化关键词的模块，编译之后还是没办法直接运行在浏览器中，因为浏览器端并不能运行 CommonJS 的模块。为了能在 WEB 端直接使用 CommonJS 规范的模块，处了编译之外，我们还需要一个步骤叫做 **打包（bundle）**。
+这就造成了另外一个问题，这样带有模块化关键词的模块，编译之后还是没办法直接运行在浏览器中，因为浏览器端并不能运行 CommonJS 的模块。为了能在 WEB 端直接使用 CommonJS 规范的模块，除了编译之外，我们还需要一个步骤叫做 **打包（bundle）**。
 
 打包工具的作用，就是将模块化内部实现的细节抹平，无论是 AMD 还是 CommonJS 模块化规范的模块，经过打包处理之后能变成能直接运行在 WEB 或 Node.js 的内容。
 
@@ -984,6 +986,6 @@ Node.js 在 V12 版本之后才可以使用 ESModule 规范的模块，在 V12 �
 
 browserify 和 webpack 是非常优秀的打包工具，browserify 能够处理 CommonJS 模块化规范的包变为 web 能直接使用的，webpack 则能处理任何模块化规范的内容。
 
-以 browserify 为例，我们使用 `nom install -g browserify` 安装成功后，
+以 browserify 为例，我们使用 `npm install -g browserify` 安装成功后，
 使用 `browserify main.js -o bundle.js` 命令即可把 main.js 打包处理为 bundle.js ，
 从而能直接通过 `<script src="bundle.js"></script>` 标签对该文件进行引用。

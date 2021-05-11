@@ -86,4 +86,14 @@ export default m;
 // CommonJS 模块，只能在 Node.js 环境中才能运行【同步加载】
 // AMD 模块，适合 WEB 端开发【异步加载】，不能直接运行在 node 端，因为内部的 `define` 函数，`require` 函数都必须配合在浏览器中加载 require.js 这类 AMD 库才能使用
 // UMD 模块化，能同时被 `CommonJS规范` 和 `AMD规范` 加载
-// ESModule 模块化规范
+// ESModule 模块化规范，ESMoudule 是由 JS 解释器实现，而 CommonJS 和 AMD 是在宿主环境运行时实现
+
+// ESModule 属于`语法层面`的规范，而 CommonJS 和 AMD 属于 `运行环境层面` 的规范
+
+// Babel 最终将代码编译为包含 `require` 和 `exports` 的 CommonJS 规范
+// 这就造成另一个问题，编译之后不能直接在 浏览器 中运行
+// 为了能在 WEB 端直接使用 CommonJS 规范的模块，除了编译之外，我们还需要一个步骤 `打包（bundle）`
+
+// 打包工具：browserify 和 webpack
+// browserify ，能够处理 CommonJS 模块化规范的包变为 web 能够直接使用的
+// webpack ， 能处理任何模块化规范的内容
