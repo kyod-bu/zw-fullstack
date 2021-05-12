@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <p>hello world</p>
+
+        <script>
+            // // get 请求发送数据
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('get', '/ajax?foo=bar&bar=foo', true);
+            // xhr.send(null);
+
+            // // post 请求发送 form 数据
+            // var xhr = new XMLHttpRequest();
+            // xhr.open('post', '/ajaxPost', true);
+            // // 设置 request 的 Content-Type 为 application/x-www-form-urlencodeed
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencodeed');
+            // var data = new FormData();
+            // data.append('foo', 'bar');
+            // data.append('bar', 'foo');
+            // xhr.send(data);
+
+
+            // post 请求发送 json 数据
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', '/ajaxPost', true);
+            // 设置 request 的 Content-Type 为 application/json
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            // 对象序列化
+            var data = JSON.stringify({
+                foo: 'bar', 
+                bar: 'foo'
+            });
+            xhr.send(data);
+        </script>
+    </body>
+</html>

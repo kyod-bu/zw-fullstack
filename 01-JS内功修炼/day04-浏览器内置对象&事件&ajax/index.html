@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="div">
+            <p id="pId" class="foo bar">这是一个 P 标签</p>
+            <p>这是第二个 P 标签</p>
+
+            <ul id="ul">
+                <p>1234</p>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+            </ul>
+        </div>
+
+        <script>
+            var $p = document.getElementById('pId');
+            var $div = document.getElementById('div');
+
+            // console.log($p.classList.contains('bar')); // 浏览器层面语法，不推荐
+            var arr = $p.getAttribute('class').split(' ');
+            console.log(arr.includes('bar'));
+            
+            // addEventListener 的第三个参数
+            // true 事件捕获（自上而下）
+            // false 事件冒泡（自下而上） 【默认】
+            // $div.addEventListener('click', function(event){ // 触发事件之后，浏览器会传入一个事件对象 event，进入事件，回调函数本身
+            //     // event.currentTarget 当前处理事件的元素，也就是事件定义时绑定的元素
+            //     // event.target 当前点击到的元素，即就是嵌套最深的元素
+            //     console.log('currentTarget: ', event.currentTarget); 
+            //     // event.stopPropagation(); // 取消事件的进一步 捕获/冒泡
+            //     // event.stopImmediatePropagation(); // 取消事件的进一步 捕获/冒泡， 同时阻止事件处理程序调用
+            //     console.log('div 触发了 click 事件');
+            // }, true); // 事件捕获
+
+            // $div.addEventListener('click', function(event){
+            //     console.log('currentTarget: ', event.currentTarget); 
+            //     // event.stopPropagation();
+            //     console.log('div 触发了 click 事件2');
+            // }, true); // 事件捕获
+
+            // $p.addEventListener('click', function() {
+            //     console.log('currentTarget: ', event.currentTarget); 
+            //     console.log('P 标签触发了事件 1');
+            // });
+            // $p.addEventListener('click', function() {
+            //     console.log('currentTarget: ', event.currentTarget); 
+            //     console.log('P 标签触发了事件 2');
+            // });
+
+            document.getElementById('ul').onclick = function(event) {
+                var target = event.target;
+                if(target.nodeName.toLowerCase() === 'li') { // 这里的 nodeName 和 tagName 一样，拿到的是大写
+                    console.log(target.innerHTML);
+                }
+            }
+        </script>
+    </body>
+</html>
