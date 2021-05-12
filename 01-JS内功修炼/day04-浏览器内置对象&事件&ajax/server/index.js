@@ -16,9 +16,14 @@ app.get('/', function (req, res) {
 
 app.get('/ajax', function(req, res) {
     console.log(req.query);
-    res.json({
-        foo: 'bar'
-    });
+
+    // 服务端返回格式1: json 格式
+    // res.json({
+    //     foo: 'bar'
+    // });
+    
+    // 服务端返回格式2: string 格式
+    res.send('string test');
 });
 
 app.post('/ajaxPost', function(req, res) {
