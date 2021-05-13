@@ -307,7 +307,9 @@ axios()
 
 ⚠️ 建议：在书写代码的时候，尽量都使用 async/await  的语法，实在要对之前的代码 make 的话，可以结合 promise 使用。
 
-## 4. Proxy 与 Reflect用法
+## 4. Proxy 与 Reflect 用法
+
+<https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy>
 
 ### 4.1 基本用法
 
@@ -317,19 +319,27 @@ axios()
 // obj.money = 100000000;
 var obj = {};
 Object.defineProperty(obj, 'money', {
+    // 拦截对象的读取
     get(key) {
         console.log('get a attr');
         return obj[key];
     },
-
+    
+    // 拦截对象的设置
     set(key, value) {
-        console.log('get a attr');
-        return obj[key] = value
+        console.log('set a attr');
+        return obj[key] = value;
     }
 });
+// 测试一下：
+obj.money = 123; // 设置
+obj.money; // 读取
+
+// 以上是老式的方法
 ```
 
 ```js
+// 下面展示一下新式的方法，借助 ES6 的 Proxy
 // obj.money = 100000000;
 var obj = {};
 var proxiedObj = new Proxy({}, {
@@ -341,12 +351,19 @@ var proxiedObj = new Proxy({}, {
         console.log('key:', key, value);
     }
 });
-proxiedObj.asdasd = 1;
+// 测试一下：
+proxiedObj.name = 1; // 设置
+proxiedObj.name; // 读取
+
+// 如果对象上新加一个key, proxiedObj 是可以拦截到的，但是以前的方法是拦截不到的
+proxiedObj.newKey = 122;
 ```
 
 ### 4.2 可撤销对象
 
 ```js
+// 调用 revocable 方法，代理就解除了
+// 需要慎用，你要是用了的话，其他的兄弟可能会很苦恼的
 var {proxy, revoke} = Proxy.revocable({}, {
     get(target, key, receiver) {
         console.log('key:', key);
@@ -357,9 +374,14 @@ var {proxy, revoke} = Proxy.revocable({}, {
     }
 });
 revoke();
+
+proxy.name = 1; // 这里就直接报错了
+// Uncaught TypeError: Cannot perform 'set' on a proxy that has been revoked
 ```
 
 ### 4.3 Reflect 基本用法
+
+<https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect>
 
 ### 4.4 在 Vue3.0 中的应用
 
@@ -367,9 +389,13 @@ revoke();
 
 ## 5. Decorators 用法与注意事项
 
-### 5.3 如何装饰类与方法
+<https://es6.ruanyifeng.com/#docs/decorator>
 
-```js
+### 5.1 如何装饰类与方法
+
+```javascript
+// 给 类（MyComponent） 添加一个 方法（itemFy）
+// itemFy 本质是一个函数
 const itemFy = (target) => {
     console.log('target::::', target);
 };
@@ -382,46 +408,56 @@ class MyComponent {
 }
 ```
 
-### 5.4 babel 编译下的 Decorators
+### 5.2 babel 编译下的 Decorators
 
-### 5.5 decorators 与 proxy 的联系与区别
+```shell
+../node_modules/.bin/babel classdecorators.js --out-dir=./dist
+```
 
-1. Decorators会更改原始对象，装饰是对于原油对象的修改
-2. Proxy注重于“代理”，产生新的对象，而非对原始的修改
+### 5.3 decorators 与 proxy 的联系与区别
+
+1. **Decorators** 会更改原始对象，装饰是对于**原有对象的修改**
+2. **Proxy** 注重于“代理”，**产生新的对象**，而非对原始的修改
 
 ## 6. class 语法
 
-第二节课(面向对象)讲过，同学们可以自行回顾复习
+第二节课(面向对象)讲过，可以自行回顾复习
 
 ## 7. babel 配置与插件书写
 
 ### 7.1 babel 中的术语
 
-#### Presets
+#### 7.1.1 Presets
 
 一系列配置的集合
 
-#### polyfill（腻子）
+#### 7.1.2 polyfill（腻子）
 
-补丁，用于兼容各个浏览器对于语法支持程度的不同，补充的方法或属性集合
+**补丁**，用于兼容各个浏览器对于语法支持程度的不同，补充的方法或属性集合
 
-#### plugin
+#### 7.1.3 plugin
 
-现在，Babel 虽然开箱即用，但是什么动作都不做。它基本上类似于 const babel = code => code; ，将代码解析之后再输出同样的代码。如果想要 Babel 做一些实际的工作，就需要为其添加插件
+现在，Babel 虽然开箱即用，但是什么动作都不做。它基本上类似于 `const babel = code => code;` ，将代码解析之后再输出同样的代码。如果想要 Babel 做一些实际的工作，就需要为其添加插件
 
 ### 7.2 babel-loader 在 webpack 中的注意事项
 
 webpack loader
-babel-loader
+babel-loader	（babel-loader，7.0之后，整体的名字，全都变了一波）
 babel-loader 6.0
-babel-plugin-proposal-decorators
+babel-plugin-proposal-decorators （这个超级坑爹，不推荐）
 babel-preset-env
+
+⚠️ babel-loader ，6.0 到 7.0 是**非兼容升级**
 
 babel-loader 7.0 @babel/plugin-proposal-decorators
 
+```js
 module: {
     use: {
         test: /\.js$/,
         loader: 'babel-loader'
     }
 }
+```
+
+⚠️ 没有特殊要求的话，推荐装最新版本的！去查看[官网文档](https://babeljs.io/)。不要在网上乱搜，网上乱七八糟的教程，基本都是针对老版本的。

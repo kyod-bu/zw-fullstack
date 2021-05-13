@@ -1,0 +1,15 @@
+{
+    "presets": [
+        [
+            "./mypreset",
+            {
+                "targets": {
+                    "edge": "17",
+                    "firefox": "60",
+                    "chrome": "47",
+                    "safari": "11.1",
+                }
+            }
+        ]
+    ]
+}
