@@ -237,7 +237,7 @@ async function buyAmountAsync() {
 
 ### 3.2 如何封装旧的函数以适应 async/await 语法
 
-将 error first 风格的函数，封装为 **Promise 形式 ** 的函数即可
+将 error first 风格的函数，封装为**Promise 形式**的函数即可
 
 ```javascript
 function buy(name, cb) {
@@ -277,8 +277,8 @@ cd generators/
 
 看编译后的源码：
 
-generators -> 代码切割
-async/await 的原理还是老一套（generators）
+* generators -> 代码切割
+* async/await 的原理还是老一套（generators）
 
 ### 3.4 优势
 
@@ -287,6 +287,8 @@ async/await 的原理还是老一套（generators）
 ```javascript
 axios()
     .then(function () {
+        // 如何终止呢？有点难受
+        // 流里面报错，很难抛到外面去
         new Promise(() => {
             reject();
         });
@@ -300,8 +302,10 @@ axios()
 ```
 
 1. 对于流的控制，更加精细化
-2. 直接简单的try-catch体验
+2. 在 async/await 里面，直接简单的 try-catch 体验
 3. 同步的书写体验
+
+⚠️ 建议：在书写代码的时候，尽量都使用 async/await  的语法，实在要对之前的代码 make 的话，可以结合 promise 使用。
 
 ## 4. Proxy 与 Reflect用法
 
