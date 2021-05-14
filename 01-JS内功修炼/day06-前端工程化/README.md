@@ -125,11 +125,11 @@ babel 官⽹为 <https://babeljs.io/>
 对于⼀个项⽬来说，我们可以通过 `npm install --save-dev @babel/core @babel/cli` 来安装 babel 所需要的⼯具。
 
 * `@babel/core` 是 babel 内部核⼼的编译和⽣成代码的⽅法
-* `@babel/cli` 是 babel 命令⾏⼯具内部解析相关⽅法
+* `@babel/cli` （cli：command line tool）是 babel 命令⾏⼯具内部解析相关⽅法
 
 安装了这两个包之后，我们就能够使⽤ babel 相关⽅法对代码进⾏操作，接下来我们需要配置，告诉 babel 我们需要将代码变成什么。
 
-增加⼀个 babel 的 preset，preset 代表的是我们希望编译的结果的预设值。在最新的 babel ⼯具链中，统⼀使⽤了 `@babel/preset-env` 作为环境预设值。我们安装 `npm install --save-dev @babel/preset-env` 之后，新建 **.babelrc** ⾥⾯，通过配置
+增加⼀个 babel 的 preset，preset 代表的是我们希望编译的结果的预设值。在最新的 babel ⼯具链中，统⼀使⽤了 `@babel/preset-env` 作为**环境预设值**。我们安装 `npm install --save-dev @babel/preset-env` 之后，新建 **.babelrc** ⾥⾯，通过配置
 
 ```json
 {
@@ -142,6 +142,21 @@ babel 官⽹为 <https://babeljs.io/>
 这⼀步只是编译语法层⾯的内容，如果我们使⽤了⼀些新的⽅法的话，还需要增加⼀个 polyfill
 
 使⽤ `npm install @babel/polyfill` 安装了所有符合规范的 polyfill 之后，我们需要在⼊⼝⽂件引⼊这个模块，就能正常的使⽤规范中定义的⽅法了。
+
+关于 targets 的配置，可以参考 <https://caniuse.com/>
+
+```json
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": "> 1.5%"
+            }
+        ]
+    ]
+}
+```
 
 ### 2.4 JS 打包工具
 
@@ -183,13 +198,13 @@ uglify3 地址 <https://github.com/mishoo/UglifyJS2>
 
 流式处理⼯具⽐较常说的两个是 grunt 和 gulp。本⼩节我们分别介绍⼀下这两个⼯具。
 
-##### 7.1.1 grunt
+#### 3.1.1 grunt （使用已经不多了，可以忽略）
 
 grunt 官⽹ <https://gruntjs.com/> 。⾸先通过 `npm install --save-dev grunt` 安装 grunt ⼯具，新建gruntfile.js 通过 gruntfile.js 中的配置来让 grunt 做不同的操作。
 
 这⾥我们安装 `npm --save-dev @babel/core @babel/preset-env grunt-babel grunt-contrib-uglify` 来完整的进⾏⼀个项⽬的构建，通过配置 gruntfile 脚本，我们分别执⾏了编译、压缩的过程⽣成最后 js 脚本。
 
-##### 7.1.2 gulp
+#### 3.1.2 gulp（使用已经不多了，但是可以学习一下它的设计思路）
 
 gulp 官⽹ <https://gulpjs.com/>。同样的我们使⽤ `npm install --save-dev gulp` 安装 gulp ⼯具，新建gulpfile.js 配置。
 
@@ -205,6 +220,6 @@ fis 是国内百度公司在早期发布的⼀款前端通⽤处理⼯具（⽐ 
 
 fis3 和 webpack 他们有个最⼤的特点就是，他们已经不再是⼀个普通⼯具，⽽是⼀个具有插件化的系统，有着丰富和完善的社区环境，他们属于 **前端解决⽅案** 这么⼀个领域。理论上他们可以做⾮常多的事情，⽽不像上⾯介绍的⼤部分⼯具，只能处理某⼀个垂直分类下的内容。
 
-webpack 实际上和 gulp grunt 这类的任务处理⼯具有些类似，但是它本身具有打包的功能，同时也⽀持通过中间件和插件实现其他领域的功能，最终通过⼀个命令就能处理完成所有操作。
+**[webpack](https://webpack.js.org/)** 实际上和 gulp grunt 这类的任务处理⼯具有些类似，但是它本身具有打包的功能，同时也⽀持通过中间件和插件实现其他领域的功能，最终通过⼀个命令就能处理完成所有操作。
 
-webpack 通过 webpack.config.js 配置，配置 loader 中间件来对不同⽂件进⾏操作，同时通过插件化的配置，⽀持例如压缩等等操作，这⾥我们重新通过 webpack 来演示⼀下之前的例⼦。
+webpack 通过 **webpack.config.js** 配置，配置 loader 中间件来对不同⽂件进⾏操作，同时通过插件化的配置，⽀持例如压缩等等操作，这⾥我们重新通过 webpack 来演示⼀下之前的例⼦。

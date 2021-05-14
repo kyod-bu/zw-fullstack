@@ -1,18 +1,17 @@
 {
-  "name": "1-lint-demo",
+  "name": "4-tree-shaking",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --fix *.js"
+    "rollup": "rollup index.js --file output.js"
   },
   "keywords": [],
-  "author": "kyod-bu",
+  "author": "",
   "license": "ISC",
+  "dependencies": {},
   "devDependencies": {
-    "eslint": "^7.26.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1"
+    "rollup": "^2.47.0"
   }
 }

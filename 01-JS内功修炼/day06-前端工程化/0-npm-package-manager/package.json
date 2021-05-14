@@ -1,5 +1,5 @@
 {
-  "name": "1-package-manager",
+  "name": "0-npm-package-manager",
   "version": "1.0.0",
   "description": "包管理工具：npm（体验）",
   "main": "index.js",
