@@ -2,6 +2,7 @@
 
 # dependencies 依赖
 node_modules
+bower_components
 
 # testing 测试
 
