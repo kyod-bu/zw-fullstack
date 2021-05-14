@@ -1,0 +1,19 @@
+{
+  "name": "1-package-manager",
+  "version": "1.0.0",
+  "description": "包管理工具：npm（体验）",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test2": "node -e 'console.log(123);'"
+  },
+  "keywords": [],
+  "author": "kyod-bu",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0"
+  }
+}

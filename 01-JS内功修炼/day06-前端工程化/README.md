@@ -53,7 +53,7 @@ bower 内容的介绍⽐较简单，现在新项⽬中使⽤已经不多，包�
 
 同时，我们可以通过 `npm install` 来安装⼀个模块，例如上⾯的例⼦中，我们就可以通过 `npm install jquery` 来安装 jquery，npm 会将模块安装到 node_modules ⽬录中。
 
-⼀个合格的 npm 包，必须拥有 package.json 这个⽬录，⾥⾯有以下⼏个常⻅字段：
+⼀个合格的 npm 包，必须拥有 package.json 这个文件，⾥⾯有以下⼏个常⻅字段：
 
 * **name**:	包或者模块的名称
 * **version**:	版本
@@ -62,53 +62,55 @@ bower 内容的介绍⽐较简单，现在新项⽬中使⽤已经不多，包�
 * **dependencies**:	运⾏时需要的模块
 * **devDependencies**:	本地开发需要运⾏的模块
 * **optionalDependencies**:	可选的模块，即使安装失败安装进程也会正常退出
-* **peerDependencies**:	必要依赖的版本
+* **peerDependencies**:	必要依赖的版本（难点⭐️）
 
-其中 dependencies 和 devDependencies ⾥⾯的版本号通过 “⼤版本.次要版本.⼩版本” 的格式规定。我们通过 `npm install` 安装的模块，最终都会在⾥⾯进⾏记录。同时，我们通过 `npm install` 时，还会安装这⾥记录但是 node_modules 中没有的模块。
+其中 dependencies 和 devDependencies ⾥⾯的版本号通过 **“⼤版本.次要版本.⼩版本”** 的格式规定。我们通过 `npm install` 安装的模块，最终都会在⾥⾯进⾏记录。同时，我们通过 `npm install` 时，还会安装这⾥记录但是 node_modules 中没有的模块。
 
 如果前⾯带有波浪号（~），则以⼤版本号和次要版本号为主，例如 "~1.3.2" 的版本，最终安装时就会安装 1.3.x 的最新版本。
 
 如果前⾯带有插⼊号（^），则以⼤版本号为主，例如 "^1.3.2" 的版本，最终安装就会安装 1.x.x 的最新版本。
 
-⾼版本的 npm 会将所有依赖进⾏「打平」操作，这样能保证尽可能少的安装相同的模块。
+⚠️ ⾼版本的 npm 会将所有依赖进⾏「打平」操作，这样能保证尽可能少的安装相同的模块。
 
-所有下载的模块，最终都会记录在 `package-lock.json` 完全锁定版本，下次我们再 npm install 时，就会
-
-先下载 package-lock ⾥⾯的版本。
+所有下载的模块，最终都会记录在 `package-lock.json` 完全锁定版本，下次我们再 npm install 时，就会先下载 package-lock ⾥⾯的版本。
 
 #### 2.1.3 yarn
 
-**yarn** 是⼀个新兴的包管理⼯具，他与 npm 有着相似的功能，最⼤的优势就是并发和快。
+**[yarn](https://yarnpkg.com/)** 是⼀个新兴的包管理⼯具，他与 npm 有着相似的功能，最⼤的优势就是**并发**和**快**。
 
 我们可以通过 `yarn add` 来安装⼀个模块，通过 `yarn xxx` 来运⾏ scripts 中的脚本。
 
-### 2.2 devDependencies、dependencies、optionDependencies 和 peerDependencies 区别
+#### 2.1.4 devDependencies、dependencies、optionDependencies 和 peerDependencies 区别
 
-devDependencies 是指使⽤本地开发时需要使⽤的模块，⽽真正的业务运⾏时不⽤的内容。
+devDependencies 是指使⽤**本地开发**时需要使⽤的模块，⽽真正的业务运⾏时不⽤的内容。
 
-dependencies 是指业务运⾏时需要的模块
+dependencies 是指**业务运⾏**时需要的模块
 
-optionalDependencies 是可选模块，安不安装均可，即使安装失败，包的安装过程也不会报错
+optionalDependencies 是**可选模块**，安不安装均可，即使安装失败，包的安装过程也不会报错
 
-peerDependencies ⼀般⽤在⼤型框架和库的插件上，例如我们写 webpack--xx-plugin 的时候，对于使⽤者⽽⾔，他⼀定会先有 webpack 再安装我们的这个模块，这⾥的 peerDependencies 就是约束了这个例⼦中webpack 的版本。
+peerDependencies ⼀般⽤在**⼤型**框架和库的插件上，例如我们写 webpack--xx-plugin 的时候，对于使⽤者⽽⾔，他⼀定会先有 webpack 再安装我们的这个模块，这⾥的 peerDependencies 就是约束了这个例⼦中webpack 的版本。
 
-### 2.3 npm 中 --save-dev 和 --save 之间的区别
+#### 2.1.5 npm 中 --save-dev 和 --save 之间的区别
 
-save-dev 和 save 都会把模块安装到 node_modules ⽬录下，但 save-dev 会将依赖名称和版本写到devDependencies 下，⽽ save 会将依赖名称和版本写到 dependencies 下。
+--save-dev 和 --save 都会把模块安装到 node_modules ⽬录下，但 --save-dev 会将依赖名称和版本写到 devDependencies 下，⽽ --save 会将依赖名称和版本写到 dependencies 下。
 
-如果我们使⽤ `npm --production install` 这样的命令安装模块的话，就只会安装 save 安装的包。
+如果我们使⽤ `npm --production install` 这样的命令安装模块的话，就只会安装 --save 安装的包。
 
 ### 2.2 源代码静态检查和格式化工具
 
 静态检查指的是我们在本地写源代码时，我们使⽤的编辑器对我们所写代码的 **提示**，**检查** 和 **格式化**。在⼤型项⽬中，**提示** 这⼀步因⼈⽽异⼤部分不做共同要求，检查和格式化⼀般会对团队使⽤的内容进⾏约束，以保证⼤家能写出「正确」的代码和统⼀的代码⻛格。
 
-对于代码的检查和格式化，在前端发展中⽐较经典的是 **jslint**，**jshint**，**eslint** 和 **prettier**。他们基本上都是⼀类的⼯具，再细分的话，jslint，jshint 和 eslint 是⼀类，他们专⻔处理 JS 格式化和静态语法检查，prettier 是另⼀类，他能处理多语⾔的格式化。
+对于代码的检查和格式化，在前端发展中⽐较经典的是 **jslint**，**jshint**，**eslint** 和 **prettier**。
 
-我们以 eslint 为例，只需要在项⽬中通过 `npm install --save-dev eslint` 安装他，通过配置 `.eslintrc` 我们就可以使⽤了。配合 eslint 的编辑器插件，我们就可以在编辑代码时 eslint 对我们的代码进⾏提示和修复。
+他们基本上都是⼀类的⼯具，再细分的话，jslint，jshint 和 eslint 是⼀类，他们专⻔处理 JS 格式化和静态语法检查；prettier 是另⼀类，他能处理多语⾔的格式化。
+
+#### 2.2.1 eslint
+
+我们以 **[eslint](https://eslint.org/)** 为例，只需要在项⽬中通过 `npm install --save-dev eslint` 安装他，通过配置 **.eslintrc** （rc：runtime config）我们就可以使⽤了。配合 eslint 的编辑器插件，我们就可以在编辑代码时 eslint 对我们的代码进⾏提示和修复。
 
 通过配置 `eslint index.js` 这样的脚本，就可以对脚本⽂件进⾏静态校验。
 
-注意这⾥是 `--save-dev` 因为我们只需要在项⽬开发过程中使⽤它⽽不是运⾏过程使⽤这个模块。
+⚠️ 这⾥是 `--save-dev` 因为我们只需要在项⽬开发过程中使⽤它⽽不是运⾏过程使⽤这个模块。
 
 ### 2.3 ES6 及其他泛 JS 语言的编译
 
