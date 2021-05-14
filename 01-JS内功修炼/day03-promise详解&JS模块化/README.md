@@ -718,7 +718,7 @@ g.next();
 
 Node.js 就是一个基于 v8 引擎，事件驱动 I/O 的服务端 JS 运行环境，在2009年刚推出时，它就实现了一套名为 **CommonJS** 的模块化规范。
 
-在 CommonJS 规范里，每个 JS 文件就是一个 **模块（module）**，每个模块内部可以使用 `require` 函数和`module.export` 对象来对模块进行导入和导出。
+在 CommonJS 规范里，每个 JS 文件就是一个 **模块（module）**，每个模块内部可以使用 `require` 函数和`module.exports` 对象来对模块进行导入和导出。
 
 ```javascript
 // 一个比较简单的 CommonJS 模块
