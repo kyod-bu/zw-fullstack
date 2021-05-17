@@ -13,7 +13,7 @@ module.exports = {
                 options: {
                     presets: ['@babel/preset-env'],
                     plugins: [
-                        ["@bable/plugin-proposal-decorators", { "legacy": true }],
+                        ["@babel/plugin-proposal-decorators", { "legacy": true }],
                         ["@babel/plugin-proposal-class-properties", { "loose": true }],
                         ["@babel/plugin-transform-regenerator"]
                     ]
@@ -22,4 +22,3 @@ module.exports = {
         }]
     }
 };
-
