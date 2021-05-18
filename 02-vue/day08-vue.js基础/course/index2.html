@@ -1,0 +1,39 @@
+<!-- 模板渲染，需要 引入全部的vue.js，即就是 https://cdn.jsdelivr.net/npm/vue/dist/vue.js -->
+<!-- render渲染，只需要 引入部分vue.js即可，即就是 https://cdn.jsdelivr.net/npm/vue/dist/vue.runtime.js -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 使用模板渲染，页面会先加载出来一个 {{message}} ，然后再加载模板编译后的文件 -->
+            <!-- <div>
+                <span>{{message}}</span>
+            </div> -->
+        </div>
+
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.runtime.js"></script>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'hello world',
+                },
+                // 把模板删掉，直接渲染（省去了 编译 的步骤）
+                render(createElement) {
+                    // body 只有 <div id="app"></app>
+                    // return createElement('div', this.message);
+                    // body 内部有一些复杂的嵌套
+                    return createElement(
+                        'div', 
+                        null,
+                        [createElement('span', this.message)]
+                    );
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <input type="text" v-model="message" />
+            <input type="text" v-model="message2" />
+            <!-- <input type="text" v-on:input="onInput" v-bind:value="message" /> -->
+            <p>Message is: {{ message }}</p>
+            <div v-bind:title="message">我绑定了 title 的值为 {{message}}</div>
+            <ul>v-for 数组测试
+                <li v-for="(item, index) in items">
+                    {{ item.value }} - {{ index }}
+                </li>
+            </ul>
+            <ul>v-for 对象测试
+                <li v-for="(value, key) in items2">
+                    {{ value }} - {{ key }}
+                </li>
+            </ul>
+            <div v-if="message.length >= 5">这里的 message 长度大于等于 5</div>
+            <div v-else>这里的 message 长度小于 5</div>
+
+            <div v-show="message.length >= 5">这里的 message 长度大于等于 5</div>
+            <div v-show="message.length < 5">这里的 message 长度小于 5</div>
+
+            <!-- <div v-html="html"></div> -->
+
+            <!-- <div v-if="validMessage">这里的 message 长度大于等于 5</div>
+            <div v-else>这里的 message 长度小于 5</div> -->
+            <!-- 注意比较 validMessage 和 validMessageFunc() 的区别 -->
+            <div v-if="validMessageFunc()">这里的 message 长度大于等于 5</div>
+            <div v-else>这里的 message 长度小于 5</div>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 'hello world',
+                    message2: 'hello world2',
+                    items: [
+                        {value: 1},
+                        {value: 2}
+                    ],
+                    items2: {
+                        key1: 'value1',
+                        key2: 'value2'
+                    }
+                },
+                computed: { // 计算属性
+                    validMessage() {
+                        console.log('validMessage trigger');
+                        return this.message.length >= 5;
+                        // return 一个方法的话，也可以和函数一样传递参数，但是会牺牲“惰性求值”的优势【不推荐】
+                        // console.log('hello world');
+                        // return function() {
+                        //     console.log('validMessage trigger');
+                        //     return this.message.length >= 5;
+                        // }
+                    }
+                },
+                methods: {
+                    onInput(e) {
+                        this.message = e.target.value;
+                    },
+                    validMessageFunc() {
+                        console.log('validMessageFunc trigger');
+                        return this.message.length >= 5;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
