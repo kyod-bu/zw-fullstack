@@ -118,7 +118,7 @@ new Vue({
 ./node_modules/.bin/webpack --watch
 ```
 
-查看浏览器的加载结果，http://localhost:8099/static/dist/index.js 请求结果正常，则工程搭建成功。
+查看浏览器的加载结果，<http://localhost:8099/static/dist/index.js> 请求结果正常，则工程搭建成功。
 
 #### 基本的流程
 
