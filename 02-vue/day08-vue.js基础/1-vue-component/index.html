@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Document</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <!-- 使用自定义的 hello-world  组件 -->
+            <!-- <hello-world></hello-world> -->
+
+            <!-- 通过 v-for 来渲染 items -->
+            <hello-world v-for="item in items" :item="item" :key="item.id"></hello-world>
+        </div>
+        <script>
+            // 定义一个 hello-world  组件
+            Vue.component('hello-world', {
+                // data: function() {
+                //     return {
+                //         message: 'hello world'
+                //     }
+                // },
+                props: ['item'], // 从父组件传递进来的
+                // template: '<p>{{message}}</p>',
+                template: '<p>{{item.title}}</p>'
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    // 这里的 items 模拟了从后台获取的一个集合
+                    items: [
+                        {id: 1, title: 'hello id1'},
+                        {id: 2, title: 'hello id2'},
+                        {id: 3, title: 'hello id3'}
+                    ]
+                }
+            });
+        </script>
+    </body>
+</html>
