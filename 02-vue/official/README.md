@@ -93,7 +93,7 @@ Vue 提供了一个 [官方的 CLI](https://github.com/vuejs/vue-cli)，为单�
   * 为打包工具提供的 ESM：为诸如 **webpack 2** 或 **Rollup** 提供的现代打包工具。ESM 格式被设计为可以被静态分析，所以打包工具可以利用这一点来进行 **“tree-shaking”** 并将用不到的代码排除出最终的包。为这些打包工具提供的默认文件（`pkg.module`）是只包含运行时的 ES Module 构建（`vue.runtime.esm.js`）。
   * 为浏览器提供的 ESM（2.6+）：用于在现代浏览器中通过 `<script type="module">` 直接导入。
 
-##### 1.1.5.2 运行时+编译器 <span style="color: red">*VS.*</span> 只包含运行时
+##### 1.1.5.2 运行时+编译器 *VS.* 只包含运行时
 
 如果你需要在客户端编译模板（比如：传入一个字符串给 `template` 选项，或 挂载到一个元素上并以其 DOM 内部的 HTML 作为模板），就将需要加上编译器，即完整版：
 
@@ -144,7 +144,6 @@ rollup({
 ```
 
 **Browserify**
-
 添加到你项目的 `package.json`
 
 ```json
@@ -157,7 +156,6 @@ rollup({
 ```
 
 **Parcel**
-
 添加到你项目的 `package.json`
 
 ```json
@@ -169,7 +167,7 @@ rollup({
 }
 ```
 
-##### 1.1.5.3 开发环境 <span style="color: red">*VS.*</span> 生产环境
+##### 1.1.5.3 开发环境 *VS.* 生产环境
 
 对于 UMD 版本来说，开发环境/生产环境模式是硬编码好的：开发环境下用未压缩的代码，生产环境下使用压缩后的代码。
 
@@ -178,7 +176,6 @@ CommonJS 和 ES Module 版本是用于打包工具的，因此我们不提供压
 CommonJS 和 ES Module 版本同时保留原始的 `process.env.NODE_ENV` 检测，以决定它们应该运行在什么模式下。你应该使用适当的打包工具配置来替换这些环境变量以便控制 Vue 所运行的模式。把 `process.env.NODE_ENV` 替换为字符串字面量同时可以让 **UglifyJS** 之类的压缩工具完全丢掉仅供开发环境的代码块，以减少最终的文件尺寸。
 
 **webpack**
-
 在 webpack 4+ 中，你可以使用 `mode` 选项：
 
 ```js
@@ -206,7 +203,6 @@ module.exports = {
 ```
 
 **Rollup**
-
 使用 [rollup-plugin-replace](https://github.com/rollup/rollup-plugin-replace)：
 
 ```js
@@ -223,7 +219,6 @@ rollup({
 ```
 
 **Browserify**
-
 为你的包应用一次全局的 [envify](https://github.com/hughsk/envify) 转换。
 
 ```shell
@@ -914,7 +909,6 @@ var vm = new Vue({
 ```
 
 **结果：**
-
 ```
 Original message: "Hello"
 
@@ -1415,7 +1409,7 @@ Vue 会尽可能高效地渲染元素，通常会复用已有元素而不是从�
 
 现在，每次切换时，输入框都将被重新渲染。请看！
 
-⚠️ ` <label>` 元素仍然会被高效地复用，因为它们没有添加 `key` attribute。
+⚠️ `<label>` 元素仍然会被高效地复用，因为它们没有添加 `key` attribute。
 
 #### 1.7.2 `v-show`
 
@@ -1473,8 +1467,8 @@ var example1 = new Vue({
 
 结果：
 
-- Foo
-- Bar
+* Foo
+* Bar
 
 在 `v-for` 块中，我们可以访问所有父作用域的 property。`v-for` 还支持一个可选的第二个参数，即当前项的索引。
 
@@ -1501,8 +1495,8 @@ var example2 = new Vue({
 
 结果：
 
-- Parent - 0 - Foo
-- Parent - 1 - Bar
+* Parent - 0 - Foo
+* Parent - 1 - Bar
 
 你也可以用 `of` 替代 `in` 作为分隔符，因为它更接近 JavaScript 迭代器的语法：
 
@@ -1537,9 +1531,9 @@ new Vue({
 
 结果：
 
-- How to do lists in Vue
-- Jane Doe
-- 2016-04-10
+* How to do lists in Vue
+* Jane Doe
+* 2016-04-10
 
 你也可以提供第二个的参数为 property 名称 (也就是键名)：
 
@@ -1599,13 +1593,13 @@ publishedAt: 2016-04-10
 
 Vue 将被侦听的数组的变更方法进行了包裹，所以它们也将会触发视图更新。这些被包裹过的方法包括：
 
-- `push()`
-- `pop()`
-- `shift()`
-- `unshift()`
-- `splice()`
-- `sort()`
-- `reverse()`
+* `push()`
+* `pop()`
+* `shift()`
+* `unshift()`
+* `splice()`
+* `sort()`
+* `reverse()`
 
 你可以打开控制台，然后对前面例子的 `items` 数组尝试调用变更方法。比如 `example1.items.push({ message: 'Baz' })`。
 
@@ -1685,7 +1679,7 @@ methods: {
 1 2 3 4 5 6 7 8 9 10
 ```
 
-#### 1.8.7 在 `<template>` 上使用 `v-for` 
+#### 1.8.7 在 `<template>` 上使用 `v-for`
 
 类似于 `v-if`，你也可以利用带有 `v-for` 的 `<template>` 来循环渲染一段包含多个元素的内容。比如：
 
