@@ -3,7 +3,13 @@
     <head>
         <meta charset="utf-8">
         <title>My first Vue app</title>
-        <script src="https://unpkg.com/vue"></script>
+        <!-- <script src="https://unpkg.com/vue"></script> -->
+
+        <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        
+        <!-- 生产环境版本，优化了尺寸和速度 -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
     </head>
     <body>
         <div id="app">
@@ -12,10 +18,32 @@
         </div>
 
         <div id="app-2">
-            <span v-bind:title="message">
-              鼠标悬停几秒钟查看此处动态绑定的提示信息！
-            </span>
-          </div>
+            <p v-bind:title="message">
+                鼠标悬停几秒钟查看此处动态绑定的提示信息！
+            </p>
+        </div>
+
+        <div id="app-3">
+            <p v-if="seen">
+                条件seen为true，你就能看到我了
+            </p>
+        </div>
+
+        <div id="app-4">
+            <ol>
+                <li v-for="todo in todos">{{ todo.text }}</li>
+            </ol>
+        </div>
+
+        <div id="app-5">
+            <p>{{ message }}</p>
+            <button v-on:click="reverseMessage">反转消息</button>
+        </div>
+
+        <div id="app-6">
+            <p>{{ message }}</p>
+            <input v-model="message" />
+        </div>
 
         <script>
             var app = new Vue({
@@ -30,7 +58,44 @@
                 data: {
                     message: '页面加载于 ' + new Date().toLocaleString()
                 }
-            })
+            });
+
+            var app3 = new Vue({
+                el: '#app-3',
+                data: {
+                    seen: true
+                }
+            });
+
+            var app4 = new Vue({
+                el: '#app-4',
+                data: {
+                    todos: [
+                        { text: '吃饭' },
+                        { text: '睡觉' },
+                        { text: '打豆豆' }
+                    ]
+                }
+            });
+
+            var app5 = new Vue({
+                el: '#app-5',
+                data: {
+                    message: '123456789'
+                },
+                methods: {
+                    reverseMessage: function() {
+                        this.message = this.message.split('').reverse().join('');
+                    }
+                }
+            });
+
+            var app6 = new Vue({
+                el: '#app-6',
+                data: {
+                    message: 'Heelo Vue'
+                }
+            });
         </script>
     </body>
 </html>
