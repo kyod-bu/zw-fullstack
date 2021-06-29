@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello Vue</title>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h1>Hello Vue</h1>
+            <p v-bind:title="ptitle">{{ message }}</p>
+            <p v-if="seen">条件seen为true，你就能看到我了</p>
+            <p v-else>条件seen为false，该我了</p>
+            <ul>
+                <li v-for="item in lists">{{ item.title }}</li>
+            </ul>
+            <button v-on:click="reverseMessage">反转message</button>
+            <p>{{ msg }}</p>
+            <input v-model="msg" placeholder="input something...">
+
+            <form v-on:submit.prevent="addNewTodo">
+                <label for="new-todo">新增一个待办事项：</label>
+                <input id="new-todo" v-model="newTodoContent" placeholder="例：打游戏">
+                <button>新增</button>
+            </form>
+            <ol>
+                <li
+                    is="todo-item" 
+                    v-for="(todo, index) in todos"
+                    v-bind:key="todo.id"
+                    v-bind:todo="todo"
+                    v-on:remove="todos.splice(index, 1)"
+                ></todo-item>
+            </ol>
+        </div>
+        <script>
+            Vue.component('todo-item', {
+                props: ['todo'],
+                template: '\
+                    <li>\
+                        {{ todo.content }}\
+                        <button v-on:click="$emit(\'remove\')">删除</button>\
+                    </li>\
+                '
+            });
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    message: '大家好，我是 message',
+                    ptitle: '我是动态绑定的title，悬停几秒就能看到我啦😊',
+                    seen: true,
+                    lists: [
+                        { id: 1, title: 'aaa' },
+                        { id: 2, title: 'bbb' },
+                        { id: 3, title: 'ccc' },
+                    ],
+                    msg: '',
+                    todos: [
+                        { id: 1, content: '吃饭' },
+                        { id: 2, content: '睡觉' },
+                        { id: 3, content: '打豆豆' }
+                    ],
+                    newTodoId: 4,
+                    newTodoContent: '',
+                    
+                },
+                methods: {
+                    reverseMessage: function () {
+                        this.message = this.message.split('').reverse().join('');
+                    },
+                    addNewTodo: function () {
+                        this.todos.push({
+                            id: this.newTodoId++,
+                            content: this.newTodoContent
+                        });
+                        this.newTodoContent = '';
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
