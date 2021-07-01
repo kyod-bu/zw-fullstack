@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>组件基础</title>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </div>
+        <script>
+            Vue.component('button-counter', {
+                data: function () {
+                    return {
+                        counter: 0
+                    }
+                },
+                template: '<button v-on:click="counter++">You clicked me {{ counter }} times.</button>'
+            })
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    message: ''
+                }
+            })
+        </script>
+    </body>
+</html>
