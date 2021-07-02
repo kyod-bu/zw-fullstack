@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>在动态组件上使用 keep-alive</title>
+        <meta charset="utf-8">
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <style></style>
+        <link rel="stylesheet" type="text/css" href="./style.css" />
+    </head>
+    <body>
+        <div id="app">
+            <button 
+                v-for="tab in tabs"
+                v-bind:key="tab"
+                v-on:click="currentTab = tab"
+                v-bind:class="['tab-button', { active: currentTab === tab }]"
+            >
+                {{ tab }}
+            </button>
+            
+            <keep-alive>
+                <component v-bind:is="currentTabComponent" class="tab"></component>
+            </keep-alive>
+        </div>
+
+        <script>
+            Vue.component('tag-home', {
+                template: `<div>Home Component</div>` 
+            });
+            Vue.component('tag-posts', {
+                data: function () {
+                    return {
+                        posts: [
+                            { id: 1, title: 'Cat', content: '<p>Cat Content ...</p>'},
+                            { id: 2, title: 'Dog', content: '<p>Dog Content ...</p>'},
+                            { id: 3, title: 'Other', content: '<p>Other Content ...</p>'}
+                        ],
+                        selectedPost: null
+                    }
+                },
+                template: `
+                    <div class="posts-tab">
+                        <ul class="posts-siderbar">
+                            <li
+                                v-for="post in posts"
+                                v-bind:key="post.id"
+                                v-on:click="selectedPost = post"
+                                v-bind:class="{ selected: post === selectedPost}"
+                            >
+                                {{ post.title }}
+                            </li>
+                        </ul>
+                        <div class="selected-post-container">
+                            <div v-if="selectedPost" class="selected-post">
+                                <h3>{{ selectedPost.title }}</h3>
+                                <div v-html="selectedPost.content"></div>
+                            </div>
+                            <strong v-else>
+                                Click on a blog title to the left to view it.
+                            </strong>
+                        </div>
+                    </div>
+                ` 
+            });
+            Vue.component('tag-archive', {
+                template: `<div>Archive Component</div>` 
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    tabs: ['Home', 'Posts', 'Archive'],
+                    currentTab: 'Posts'
+                },
+                computed: {
+                    currentTabComponent: function () {
+                        return 'tag-' + this.currentTab.toLowerCase()
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
