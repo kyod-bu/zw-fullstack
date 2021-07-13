@@ -1,0 +1,8 @@
+{
+  "name": "2-vue-ssr",
+  "dependencies": {
+    "express": "^4.17.1",
+    "vue": "^2.6.14",
+    "vue-server-renderer": "^2.6.14"
+  }
+}

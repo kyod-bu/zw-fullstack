@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>vue-router</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+            <router-link to="/">点击切换到根组件</router-link>
+            <router-link to="/component-1">点击切换到组件 1</router-link>
+            <router-link to="/component-2">点击切换到组件 2</router-link>
+            
+        </p>
+        <router-view></router-view>
+      </div>
+
+      <script>
+        const component1 = Vue.component('component-1', {
+            template: '<div>这里是组件 1</div>'
+        });
+        const component2 = Vue.component('component-2', {
+            template: '<div>这里是组件 2</div>'
+        });
+        const router = new VueRouter({
+            mode: 'history',
+            routes: [
+                { path: '/', component: {template: '<div>root</div>'}},
+                { path: '/component-1', component: component1 },
+                { path: '/component-2', component: component2 }
+            ]
+        });
+
+        new Vue({
+            router,
+            el: '#app'
+        });
+      </script>
+</body>
+</html>
