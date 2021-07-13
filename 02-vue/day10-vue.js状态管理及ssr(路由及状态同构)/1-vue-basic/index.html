@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>vue基础</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            #app {
+                border: 2px solid black;
+            }
+            .child {
+                width: 500px;
+                height: 100px;
+                display: inline-block;
+                border: 2px solid black;
+            }
+            .left-child {
+                background-color: yellowgreen;
+            }
+            .right-child {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div>{{ count }}</div>
+            <button @click="count++">+</button>
+            <button @click="count--">-</button>
+            这里是父亲组件
+            <div>
+                <left-child
+                    :count="count"
+                    @increament-count="increamentCount"
+                    @decreament-count="decreamentCount"
+                >
+                </left-child>
+                <right-child :count="count"></right-child>
+            </div>
+        </div>
+
+        <script>
+            // 我们通过将 count 数据置于所有组件的公共父级当中去，在这个例子就是 app 组件，定义所有的更新方法也在父级中，这样就能在所有组件中共享数据
+            Vue.component('left-child', {
+                props: ['count'],
+                methods: {
+                    addCount() {
+                        this.$emit('increament-count');
+                    },
+                    subCount() {
+                        this.$emit('decreament-count');
+                    },
+                },
+                template: `
+                    <div class="child left-child">
+                        这里是左子组件：{{ count }}
+                        <button @click="addCount">+</button>
+                        <button @click="subCount">-</button>    
+                    </div>
+                `
+            });
+            
+            Vue.component('right-child', {
+                props: ['count'],
+                template: `
+                    <div class="child right-child">
+                        这里是右子组件：{{ count }}    
+                    </div>
+                `
+            });
+
+            new Vue({
+                el: '#app',
+                data: {
+                    count: 0
+                },
+                methods: {
+                    increamentCount() {
+                        this.count++;
+                    },
+                    decreamentCount() {
+                        this.count--;
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

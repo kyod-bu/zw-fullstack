@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>vuex</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuex/dist/vuex.js"></script>
+
+        <style>
+            #app {
+                border: 2px solid black;
+            }
+            .child {
+                width: 500px;
+                height: 100px;
+                display: inline-block;
+                border: 2px solid black;
+            }
+            .left-child {
+                background-color: yellowgreen;
+            }
+            .right-child {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            状态：{{ $store.state.status }}
+            <div v-if="$store.state.status === 'fetching'">
+                获取中...
+            </div>
+            <div v-else-if="$store.state.status==='success'">
+                <div v-for="item in $store.state.data" :key="item.id">
+                    <p>{{ item.title }}</p>
+                </div>
+            </div>
+            <div v-else>
+                获取失败
+            </div>
+        </div>
+
+        <script>
+            // 一个简单的渲染列表的例子，在生命周期中调用 dispatch action 发布一个异步的 action
+            // 需要注意的是：action 内部还是 commit mutation
+            // 通过 mapMutations 可以进行映射
+            const store = new Vuex.Store({
+                state: {
+                    status: 'fetching',
+                    data: []
+                },
+                mutations: {
+                    startFetch(state) {
+                        state.status = 'fetching';
+                    },
+                    fetchSuccess(state, payload) {
+                        state.status = 'success';
+                        state.data = payload;
+                    },
+                    fetchFailed(state, errMsg) {
+                        state.status = 'failed';
+                        console.log('err info: ', errMsg);
+                    }
+                },
+                actions: {
+                    fetchData(context) {
+                        // 这里传递的是 context ，可以防止 this 丢失
+                        try {
+                            // 这里模拟一个后台请求
+                            // 当然，在真正的场景中，这里应该是发起一个后台请求
+                            setTimeout(function() {
+                                context.commit('fetchSuccess', [{ title: 'hello list1', id: 1 }, { title: 'hello list2', id: 2 }]);
+                            }, 1000);
+                        } catch (e) {
+                            context.commit('fetchFailed');
+                        }
+                    }
+                }
+            });
+
+            new Vue({
+                el: '#app',
+                store: store,
+                // 在 mounted 的生命周期里面发送请求
+                mounted() {
+                    this.$store.dispatch('fetchData');
+                },
+                // methods: {
+                //     ...mapMutations(['fetchSuccess']),
+                //     ...mapMutations({ add: fetchSuccess })
+                // }
+            });
+        </script>
+    </body>
+</html>

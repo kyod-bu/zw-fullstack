@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>vuex</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuex/dist/vuex.js"></script>
+        <style>
+            #app {
+                border: 2px solid black;
+            }
+            .child {
+                width: 500px;
+                height: 100px;
+                display: inline-block;
+                border: 2px solid black;
+            }
+            .left-child {
+                background-color: yellowgreen;
+            }
+            .right-child {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            这是父组件
+            <div>
+                <left-component></left-component>
+                <right-component></right-component>
+            </div>
+        </div>
+
+        <script>
+            // 借助 vuex 定义一个 全局 store
+            // 通过 mutation 来同步改变 state
+            // 在组件中通过 commit 进行调用更改 state
+            const store = new Vuex.Store({
+                state: {
+                    count: 0
+                },
+                mutations: {
+                    addCount(state, payload) {
+                        state.count++;
+                        // state.message = payload; 组件中通过commit来调用，payload为调用时使用的参数
+                        console.log(payload);
+                    },
+                    subCount(state) {
+                        state.count--;
+                    }
+                },
+                actions: {
+                }
+            });
+
+            Vue.component('left-component', {
+                store,
+                template: `
+                    <div class="child left-child">
+                        左侧子组件：{{ $store.state.count }}
+                        <button @click="$store.commit('addCount', 'hello-mutation')">+</button>
+                        <button @click="$store.commit('subCount')">-</button>
+                    </div>
+                `
+            });
+            
+            Vue.component('right-component', {
+                store,
+                template: `
+                    <div class="child right-child">右侧子组件：{{ $store.state.count }}</div>
+                `
+            });
+
+            new Vue({
+                el: '#app',
+                store: store
+            });
+        </script>
+    </body>
+</html>

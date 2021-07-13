@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>vue基础</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style>
+            #app {
+                border: 2px solid black;
+            }
+            .child {
+                width: 500px;
+                height: 100px;
+                display: inline-block;
+                border: 2px solid black;
+            }
+            .left-child {
+                background-color: yellowgreen;
+            }
+            .right-child {
+                background-color: yellow;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div>{{ count }}</div>
+            <!-- <button @click="count++">+</button> -->
+            <!-- <button @click="count--">-</button> -->
+            这里是父亲组件
+            <div>
+                <left-child></left-child>
+                <right-child></right-child>
+            </div>
+        </div>
+
+        <script>
+            // 我们也可以直接通过 prototype 来共享数据，但问题是它并不是响应式的，无法响应式更新 UI
+            Vue.component('left-child', {
+                methods: {
+                    addCount() {
+                        this.count++;
+                        console.log('left add: ', this.count);
+                    },
+                    subCount() {
+                        this.count--;
+                        console.log('left sub: ', this.count);
+                    },
+                },
+                template: `
+                    <div class="child left-child">
+                        这里是左子组件：{{ count }}
+                        <button @click="addCount">+</button>
+                        <button @click="subCount">-</button>    
+                    </div>
+                `
+            });
+            
+            Vue.component('right-child', {
+                template: `
+                    <div class="child right-child">
+                        这里是右子组件：{{ count }}    
+                    </div>
+                `
+            });
+
+            Vue.prototype.count = 100;
+
+            new Vue({
+                el: '#app'
+            });
+        </script>
+    </body>
+</html>
