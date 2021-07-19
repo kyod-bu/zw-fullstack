@@ -1,5 +1,6 @@
 /**
- * yuanxin
+ * @file
+ * @author kyod
  */
 
 // (function () {
