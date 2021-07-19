@@ -6,11 +6,8 @@
 
 <script>
 export default {
-
     props: ['tabs'],
-
     methods: {
-
     }
 };
 </script>

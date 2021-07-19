@@ -10,7 +10,7 @@
         </nav-head>
         <div class="tab-list">
             <template v-for="(tab, name) in tabs">
-                <transition name="fade">
+                <transition v-bind:key="name" name="fade">
                     <div v-show="name === curTab">
                         <slot name="content" v-bind:list="tab.list"></slot>
                     </div>
@@ -23,18 +23,15 @@
 <script>
 /**
  * @file tab容器页
- * @author yuanxin
+ * @author kyod
  */
 import Head from './head.vue';
 
 export default {
-
     components: {
         'nav-head': Head
     },
-
     props: ['tabs', 'curTab'],
-
     methods: {
         getMoreEvent(event) {
             this.$emit('more', event);

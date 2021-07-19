@@ -12,7 +12,7 @@
             </span>
         </div>
         <ul class="controlDetail">
-            <li class="channelFigure tuijian" v-for="tab in tabs">
+            <li class="channelFigure tuijian" v-for="tab in tabs" v-bind:key="tab.label">
                 <a>{{tab.label}}</a>
             </li>
         </ul>

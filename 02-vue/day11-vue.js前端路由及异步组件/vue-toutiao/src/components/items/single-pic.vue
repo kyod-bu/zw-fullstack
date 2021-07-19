@@ -13,7 +13,7 @@
 import BaseOptions from './base.js';
 /**
  * @file feed流单图item
- * @author yuanxin
+ * @author kyod
  */
 export default {
     extends: BaseOptions

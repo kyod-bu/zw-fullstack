@@ -1,6 +1,6 @@
 /**
  * @file 
- * @author yuanxin
+ * @author kyod
  */
  import echarts from 'echarts';
  // let echarts = window.echarts;

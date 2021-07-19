@@ -94,8 +94,7 @@ module.exports = {
             });
 
             app.post('/login', function(req, res) {
-                // res.header('Set-Cookie', 'uid=yuanxin');
-                res.setHeader('Set-Cookie', 'uid=yuanxin');
+                res.setHeader('Set-Cookie', 'uid=kyod');
                 res.send(JSON.stringify({
                     res: 1 
                 }));

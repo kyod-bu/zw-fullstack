@@ -8,7 +8,7 @@
 <script>
 /**
  * @file feed流多图item
- * @author yuanxin
+ * @author kyod
  */
 import BaseOptions from './base.js';
 export default {
@@ -22,7 +22,7 @@ export default {
             // replace掉目前的路由，转而换成replace中的path
             // push是在历史栈中新增一个页面
             this.$router.push({
-                path: '/page/detail/yuanxin/video'
+                path: '/page/detail/kyod/video'
             });
         }
     }

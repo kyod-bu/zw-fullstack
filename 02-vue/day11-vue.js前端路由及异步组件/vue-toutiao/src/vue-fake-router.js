@@ -1,6 +1,6 @@
 /**
  * @file router
- * @author yuanxin
+ * @author kyod
  */
 
  const createRouteStack = route => {

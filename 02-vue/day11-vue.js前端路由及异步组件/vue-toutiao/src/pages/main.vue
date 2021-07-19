@@ -11,6 +11,7 @@
             <template v-slot:content="{list}">
                 <component
                     v-for="item in list"
+                    v-bind:key="item.id"
                     v-bind:is="item.type | formatComponentName"
                     v-bind="item.data"
                 >
@@ -29,7 +30,7 @@ import * as components from '../components/items/index';
 import Tab from '../components/tab.vue';
 import Loading from '../components/loading.vue';
 import Setting from '../pages/setting.vue';
-import {TABS} from '../config';
+import { TABS } from '../config';
 
 const convertPlainObject = obj => Object.keys(obj).reduce((res, key) => (res[key] = obj[key], res), {});
 

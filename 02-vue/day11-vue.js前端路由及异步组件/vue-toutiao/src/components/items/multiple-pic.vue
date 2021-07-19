@@ -4,7 +4,7 @@
             {{title}}
         </h3>
         <div class="image-list">
-            <img v-for="image in imageList" v-bind:src="image" />
+            <img v-for="image in imageList" v-bind:src="image" v-bind:key="id" />
         </div>
     </div>
 </template>
@@ -13,7 +13,7 @@
 import BaseOptions from './base.js';
 /**
  * @file feed流多图item
- * @author yuanxin
+ * @author kyod
  */
 export default {
     extends: BaseOptions

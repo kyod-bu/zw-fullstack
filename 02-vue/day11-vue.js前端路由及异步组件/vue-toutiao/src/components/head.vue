@@ -3,6 +3,7 @@
         <div class="nav-content">
             <span
                 v-for="(tab, name) in tabs"
+                v-bind:key="name"
                 v-bind:data-name="name"
                 v-on:click="$emit('select', name)"
             >
@@ -34,7 +35,7 @@ export default {
     methods: {
         clicking() {
             this.$emit('more', {
-                name: 'yuanxin'
+                name: 'kyod'
             });
         }
     }

@@ -1,6 +1,6 @@
 /**
  * @file config of project
- * @author yuanxin
+ * @author kyod
  */
 
  export const routes = {

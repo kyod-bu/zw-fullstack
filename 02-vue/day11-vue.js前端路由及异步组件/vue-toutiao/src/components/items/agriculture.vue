@@ -14,7 +14,7 @@
 <script>
 /**
  * @file feed流单图item
- * @author yuanxin
+ * @author kyod
  */
 export default {
 
