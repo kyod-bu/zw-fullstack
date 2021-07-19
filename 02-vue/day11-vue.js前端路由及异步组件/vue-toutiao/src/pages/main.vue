@@ -71,6 +71,7 @@ export default {
     },
 
     created() {
+        console.log('re-create');
         this.getListData(this.curTab)
             .then(listData => {
                 this.setTabsData(this.curTab, {

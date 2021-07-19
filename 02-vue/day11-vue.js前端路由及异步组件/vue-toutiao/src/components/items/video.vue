@@ -11,16 +11,11 @@
  * @author kyod
  */
 import BaseOptions from './base.js';
+
 export default {
     props: ['title', 'avatar'],
-
     methods: {
-
         skip(e) {
-            // 通过this可以直接找到router？？？
-            // 怎么来的？？？
-            // replace掉目前的路由，转而换成replace中的path
-            // push是在历史栈中新增一个页面
             this.$router.push({
                 path: '/page/detail/kyod/video'
             });

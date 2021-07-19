@@ -4,7 +4,7 @@
             {{title}}
         </h3>
         <div class="image-list">
-            <img v-for="image in imageList" v-bind:src="image" v-bind:key="id" />
+            <img v-for="image in imageList" v-bind:src="image" v-bind:key="image.id" />
         </div>
     </div>
 </template>
