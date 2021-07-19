@@ -1,15 +1,18 @@
 /**
+ * @file 自己尝试一下 vue-router 插件
  * @author kyod 
  */
 
  class History {
 
+    // 监听路由变化，hash版
     listen(callback) {
         window.addEventListener('hashchange', () => {
             callback && callback(window.location.hash);
         });
     }
 
+    // 改 hash
     push(path) {
         window.location.hash = '#' + path;
     }
@@ -73,13 +76,13 @@ const createMatcher = routesConfig => {
 export default class VueRouter {
 
     constructor(options) {
-        // 存一份配置表，方便之后渲然组件的时候使用
+        // 存一份配置路由表，方便之后渲然组件的时候使用
         this.routes = options.routes;
         // 可以检测路由的变化
         this.history = new History();
         // 路由真的变了的时候，可以刷新组件
         this.history.listen(newHash => {
-            console.log('变了hash::', newHash);
+            console.log('hash变了，新的hash::', newHash);
             // 一会儿等到路由变了之后，刷新一下我的组件
             this.vm.$forceUpdate();
         });
@@ -98,17 +101,20 @@ export default class VueRouter {
         this.history.push(path);
     }
 
+    // 静态方法 install，供 Vue.use() 使用
     static install(Vue, options) {
-        // 让每个组件，都可以拥有一个this.$router
+        // 让每个组件，都可以拥有一个 this.$router
         Vue.mixin({
             created() {
                 if (this.$options.router) {
+                    // 如果根组件的options里面有router，挂到this上面
                     this.$router = this.$options.router;
                     // vm一会要用
                     this.$router.vm = this;
                     this._routerRoot = this;
                 }
                 else {
+                    // 否则，往上找，在父组件、爷爷组件……去找
                     this.$router = this.$parent.$router;
                     this._routerRoot = this.$parent._routerRoot;
                 }
@@ -144,6 +150,7 @@ export default class VueRouter {
                 return createElement(finalRoute.component, data);
             }
         });
+
         // 这个组件，每次渲然的时候，根据当前页面的path，找到要渲然的界面
     }
 

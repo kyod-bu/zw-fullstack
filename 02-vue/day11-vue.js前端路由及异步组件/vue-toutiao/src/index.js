@@ -5,8 +5,8 @@
 
  import Vue from 'vue';
  import Main from './pages/main.vue';
-//  import VueRouter from './yx-router';
- import VueRouter from 'vue-router';
+ import VueRouter from './my-router'; // 使用自己写的 vue-router
+//  import VueRouter from 'vue-router';
  import Detail from './pages/detail.vue';
  import Setting from './pages/setting.vue';
  import Login from './pages/login.vue';
@@ -15,6 +15,7 @@
  import { reachBottomNotify, functionalTool } from './utils';
  
  // 1. 以插件的方式使用之
+//  想要use一个插件，该插件必须有一个install方法，即，Vue.install(XXX),
  Vue.use(VueRouter);
  Vue.use(reachBottomNotify);
  Vue.use(functionalTool);
@@ -49,12 +50,12 @@
  // 3. 用自己的配置文件创建之
  const router = new VueRouter({
      routes,
-     // 滚动行为
-     scrollBehavior(to, from, savedPosition) {
-      //  借助 window.pageXOffset 和 window.pageYOffset
-      // return 期望滚动到哪个的位置
-      return {x: 0, y: 200};
-     }
+    //  // 滚动行为
+    //  scrollBehavior(to, from, savedPosition) {
+    //   //  借助 window.pageXOffset 和 window.pageYOffset
+    //   // return 期望滚动到哪个的位置
+    //   return {x: 0, y: 200};
+    //  }
  });
  
 // //  导航守卫------每次跳转路由时，做一些事情（比如拦截，或者跳转到login）
@@ -82,7 +83,7 @@
  
      render(createElement) {
        return createElement('router-view');
-       
+
       //  // 返回页面的时候，不希望重新加载数据。需要借助`keep-alive`缓存一下之前的信息
       //  return createElement('keep-alive', [
       //   createElement('router-view')
