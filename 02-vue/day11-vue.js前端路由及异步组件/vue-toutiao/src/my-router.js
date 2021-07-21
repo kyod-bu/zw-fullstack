@@ -9,17 +9,19 @@
     listen(callback) {
         window.addEventListener('hashchange', () => {
             callback && callback(window.location.hash);
-        });
+        }); 
     }
 
     // 改 hash
     push(path) {
         window.location.hash = '#' + path;
+        // window.history.pushState('', '', path); // 关注一下 pushState 的优势
     }
 
     static getPath() {
         const curHash = window.location.hash;
         return curHash.replace(/^\#/, ''); // 修饰毛边, 去掉hash中开头的`#`
+        // window.location.path; // 另一种模式
     }
 }
 
