@@ -54,9 +54,26 @@ const getComponentsStack = route => {
     return routeStack;
 };
 
+// 分装一个工具函数（根据routes返回一个matcher，之后matcher将会掌管大权）
 const createMatcher = routesConfig => {
-    console.log('routesConfig::', routesConfig);
+    // 序列化一下routes
+    // const pathMap = routesConfig.map(route => {
+    //     return convert(route);
+    // });
 
+    // 考虑到上面的方式，只能序列化 单层路由，碰到嵌套路由就傻眼了
+    // 下面我们处理一下 嵌套路由（这里借助了“递归”的思路）
+    // 实现的思路：将下面的“嵌套路由结构”拍平为：{ path: '/page/detail/:id/video', component: Video }
+    // {
+    //     path: '/page/detail/:id',
+    //     component: Detail,
+    //     children: [
+    //       {
+    //         path: 'video',
+    //         component: Video
+    //       }
+    //     ]
+    // }
     const formatRoutes = (routes, basePath = '', parent = null) => {
         return routes.reduce((flatternArr, route) => {
             if (route.children) {
@@ -69,6 +86,9 @@ const createMatcher = routesConfig => {
     }
 
     const pathMap = formatRoutes(routesConfig);
+    console.log('pathMap::', pathMap);
+
+    // 根据传进来的path，经过处理，返回一个route
     const match = curPath => {
         return pathMap.find(route => {
             return route.regx.exec(curPath);
@@ -89,7 +109,7 @@ export default class VueRouter {
         this.history = new History();
         // 路由真的变了的时候，可以刷新组件
         this.history.listen(newHash => {
-            console.log('hash变了，新的hash::', newHash);
+            // console.log('hash变了，新的hash::', newHash);
             // 一会儿等到路由变了之后，刷新一下我的组件
             this.vm.$forceUpdate();
         });
@@ -98,6 +118,11 @@ export default class VueRouter {
 
     getRoute(path) {
         // return this.routes.find(item => item.path === path);
+
+        // 上面的 === 看上去很傻，也不能完全匹配得到，因此我们考虑采用“正则匹配”
+        // const gettedRoute = this.matcher.match(path);
+        // console.log('gettedRoute::', gettedRoute);
+        // return gettedRoute;
         return this.matcher.match(path);
     }
 
@@ -169,5 +194,4 @@ export default class VueRouter {
 
         // 这个组件，每次渲然的时候，根据当前页面的path，找到要渲然的界面
     }
-
 }
