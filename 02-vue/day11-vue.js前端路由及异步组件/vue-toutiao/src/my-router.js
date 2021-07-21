@@ -45,6 +45,9 @@ const convert = (route, parent) => {
     };
 };
 
+// 这里用 栈（stack） 或 队列（queue） 都行
+// 栈（stack）：不停的往前面 推
+// 队列（queue：不停的在后面 追加
 const getComponentsStack = route => {
     let routeStack = [];
     while (route) {
@@ -169,9 +172,11 @@ export default class VueRouter {
                 // 先找到孩子
                 const singleRoute = router.getRoute(currentPath); // 这里拿到的其实就是一个route对象，如 {path: '/page', component: Main}
                 // console.log('singleRoute::', singleRoute);
+
                 // 根据孩子的线索，找到自己所有的祖先，排成一排
                 const componentsStack = getComponentsStack(singleRoute);
                 // console.log('componentsStack::', componentsStack);
+                
                 // 根据自己在第几层，决定，要那个祖先
                 let depth = 0;
                 while (parent) {
@@ -181,7 +186,7 @@ export default class VueRouter {
                     }
                     parent = parent.$parent;
                 }
-                const finalRoute = componentsStack[depth];
+                const finalRoute = componentsStack[depth]; // 直接找到对应层的，渲染之即可
                 if (!finalRoute) {
                     return null;
                 }
