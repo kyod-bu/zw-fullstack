@@ -19,18 +19,24 @@
 
     static getPath() {
         const curHash = window.location.hash;
-        return curHash.replace(/^\#/, '');
+        return curHash.replace(/^\#/, ''); // 修饰毛边, 去掉hash中开头的`#`
     }
 }
 
 const convert = (route, parent) => {
     const path = route.path;
+    // console.log('path::::', path);
     const normalPath = '/' + path.split('/')
         .filter(item => item !== '')
         .join('/');
+    // console.log('normalPath:::', normalPath);
+
+    // 更换 变量 为正则表达式
+    // 如：/page/detail/:id 里面的 :id 替换为正则 `非/的东西`
     const regexStr = normalPath
         .replace(/(\:\w+)/g, '([^\/]+)')
-        .replace(/\//g, () => '\\/') + '$'
+        .replace(/\//g, () => '\\/') + '$';
+
     const pathRegx = new RegExp(regexStr);
     return {
         ...route,
@@ -49,6 +55,7 @@ const getComponentsStack = route => {
 };
 
 const createMatcher = routesConfig => {
+    console.log('routesConfig::', routesConfig);
 
     const formatRoutes = (routes, basePath = '', parent = null) => {
         return routes.reduce((flatternArr, route) => {
@@ -90,6 +97,7 @@ export default class VueRouter {
     }
 
     getRoute(path) {
+        // return this.routes.find(item => item.path === path);
         return this.matcher.match(path);
     }
 
@@ -103,13 +111,14 @@ export default class VueRouter {
 
     // 静态方法 install，供 Vue.use() 使用
     static install(Vue, options) {
+        // mixin 进来一个生命周期
         // 让每个组件，都可以拥有一个 this.$router
         Vue.mixin({
             created() {
                 if (this.$options.router) {
                     // 如果根组件的options里面有router，挂到this上面
                     this.$router = this.$options.router;
-                    // vm一会要用
+                    // 把我们的`router`记录一下，vm一会要用
                     this.$router.vm = this;
                     this._routerRoot = this;
                 }
@@ -124,16 +133,20 @@ export default class VueRouter {
         // 创建一个组件，组件，functional
         Vue.component('router-view', {
 
-            functional: true,
+            functional: true, 
 
+            // 渲染
             render(createElement, {data, props, children, parent}) {
                 const router = parent.$router;
                 data.routeView = true;
-                const currentPath = History.getPath();
+                const currentPath = History.getPath(); // 获取当前的path，即window.location.hash，不包含hash头部的`#`
+                // console.log('currentPath::', currentPath);
                 // 先找到孩子
-                const singleRoute = router.getRoute(currentPath);
+                const singleRoute = router.getRoute(currentPath); // 这里拿到的其实就是一个route对象，如 {path: '/page', component: Main}
+                // console.log('singleRoute::', singleRoute);
                 // 根据孩子的线索，找到自己所有的祖先，排成一排
                 const componentsStack = getComponentsStack(singleRoute);
+                // console.log('componentsStack::', componentsStack);
                 // 根据自己在第几层，决定，要那个祖先
                 let depth = 0;
                 while (parent) {
@@ -147,6 +160,9 @@ export default class VueRouter {
                 if (!finalRoute) {
                     return null;
                 }
+                // return createElement('span', 'this is span'); // 测试一下渲染
+                // 但是我们真正需要渲染的应该是根据 route.path 渲染出来的组件
+                // return createElement(singleRoute.component, data);
                 return createElement(finalRoute.component, data);
             }
         });
