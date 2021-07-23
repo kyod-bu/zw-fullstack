@@ -143,13 +143,13 @@ Mock.mock('/api/search', function (options) {
   return data
 })
 
-function json (str) {
-  let arr = str.split('&')
-  let obj = {}
-  arr.forEach(item => {
-    let key = item.split('=')[0]
-    let value = item.split('=')[1]
-    obj[key] = value
-  })
-  return obj
-}
+// function json (str) {
+//   let arr = str.split('&')
+//   let obj = {}
+//   arr.forEach(item => {
+//     let key = item.split('=')[0]
+//     let value = item.split('=')[1]
+//     obj[key] = value
+//   })
+//   return obj
+// }

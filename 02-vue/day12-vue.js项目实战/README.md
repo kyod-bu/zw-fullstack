@@ -49,14 +49,40 @@ npm run start
 
 others
 
-### 搭建静态环境
+### 搭建
 
 把**页面(page)** 和 **业务组件(components)**分开，创建2个目录
 
 * 配置一下路由信息 `/src/router/index.js`
-* 实现相关页面（静态）：home、search、channels ...
+* 实现相关页面（**静态**）：home、search、channels ...
 * 实现业务组件：header、slider、news、modal ... （这一部分可以借助第三方库来实现，如：`vant` 等等）
+* 借助 **vuex** 实现一下状态管理 `/src/store/store.js`
+* 借助 **mockjs** 模拟后台
 
 
 
-视频时长 **02:23:12**
+### 问题
+
+1. mockjs
+
+2. 虚拟列表（推荐阅读**设计模式*之* [享元模式](https://www.runoob.com/design-pattern/flyweight-pattern.html)**）
+
+3. [Web worker](https://www.ruanyifeng.com/blog/2018/07/web-worker.html)
+
+4. 路由懒加载，分包处理
+
+   **参考：**
+
+   [Vue加载组件、动态加载组件的几种方式](https://www.cnblogs.com/micro-chen/p/9824728.html)
+
+   [带你玩转prefetch, preload, dns-prefetch，defer和async](https://www.cnblogs.com/10manongit/p/12206580.html)
+
+   ⚠️ 这里，重点关注一下**preload**和**prefetch**的区别
+
+   **preload：** 反动势力卡就哭了（使用场景：）
+
+   **prefetch：** 一开始（使用场景：）
+
+   **Webpack** 也支持这2个，可以用来**优化页面应用**
+
+5. 
