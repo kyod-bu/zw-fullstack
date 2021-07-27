@@ -52,35 +52,82 @@ vue add @vue/unit-mocha
 yarn test:unit
 ```
 
-### 创建一个`vue-cli-plugin-mytoutiao`插件
+### 创建一个 `vue-cli-plugin-mydemo` 插件
 
-#### 用`vue add vue-cli-plugin-mytoutiao` 安装试试看
+通常的 CLI 插件目录结构是这样的：
 
-#### 执行`test:unit`命令测试一下
+```sh
+.
+├── README.md
+├── generator.js  # generator（可选）
+├── index.js      # service 插件
+├── package.json
+├── prompts.js    # prompt 文件（可选）
+└── ui.js         # Vue UI 集成（可选）
+```
 
-## markdown插件
+1. 创建一个文件夹：vue-cli-plugin-mydemo
 
-让产品经理们，可以简单的书写markdown，从而更新官网。
+2. 新建文件 index.js ，在 index.js 里面注册一个 cli-service 命令
 
-把开发者工程里面配的所有markdown全都读出来，全都转换成html????
+   ```js
+   module.exports = (api, options) => {
+       api.registerCommand('test-kyod', args => {
+           console.log('test invoking');
+       })
+   }
+   ```
 
-做一个插件，可以把markdown转换成vue组件 或 静态html
+3. 发布插件到官方源（并非淘宝源）
+
+   ```shell
+   npm publish --registry=https://registry.npmjs.org/
+   
+   # OR
+   # 把上面的命令封装成 publish.sh 文件，直接执行即可
+   sh publish.sh
+   ```
+
+4. 用 `vue add vue-cli-plugin-mydemo` 安装试试看
+
+5. 执行 `./node_modules/.bin/vue-cli-service test-kyod` 命令测试一下
+
+## markdown 插件
+
+**需求：** 让产品经理们，可以简单的书写markdown，从而更新官网。
+
+​			把开发者工程里面配的所有markdown全都读出来，全都转换成html????
+
+**需要做的事情：** 做一个插件，可以把 markdown 转换成 **vue组件** 或 **静态html**
 
 ## 源码解析
 
 ### `vue` 全局的执行脚本
 
-### `./node_modules/.bin/vue-cli-service` 工程内的私有脚本 
+### `./node_modules/.bin/vue-cli-service` 工程内的私有脚本
 
 ## Tips
 
-`vue add` === `npm install` + `vue invoke`
+开发 npm 包，一直操作 npm publish 会觉得很麻烦，我们可以在 `my-project` 工程根目录下，创建一个 `add.sh`
 
-`vue-cli-plugin-xxxx`
+```sh
+# 把 插件文件夹(vue-cli-plugin-mydemo) 当成 一个`npm包`导入当前工程中
+npm link /Users/yafbu/workspace/zw-fullstack/02-vue/day13-vue-cli详解/vue-cli-plugin-mydemo
+# 强行激活
+vue invoke vue-cli-plugin-mydemo
+# 执行 在`vue-cli-plugin-mydemo/index.js`里面注册的 cli-service 命令（如：test-kyod）
+./node_modules/.bin/vue-cli-service test-kyod
+```
+
+**备注：** `vue add xxx` === `npm install xxx` + `vue invoke`
+
+插件命名：`vue-cli-plugin-xxxx`
+
+## 问题集锦
 
 0. npm i 不管用了吧？
 
-1. npm 安装就会加命令吗？
+1. npm 安装就会加命令吗？---------不会
 
 2. cli 里面集成了webpack?
 
@@ -88,12 +135,9 @@ yarn test:unit
    # 发布插件到官方源（并非淘宝源）
    npm publish --registry=https://registry.npmjs.org/
    
-   # 这个发布插件的命令经常使用，推荐分装成一个.sh文件
+   # 这个发布插件的命令经常使用，推荐封装成一个.sh文件
    ```
 
-   
+   others
 
-3. 
-
-
-
+3. Ooo
