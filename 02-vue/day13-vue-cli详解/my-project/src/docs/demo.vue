@@ -6,7 +6,7 @@
 <p>详细使用方法如下：</p>
 <pre><code class="sh language-sh">npm install vue-cli-plugin-mytoutiao
 </code></pre>
-<p>2020年新增内容，新增了自动发布markdown功能2号3号</p>
+<p>2020年新增内容，自动发布markdown功能1，功能2，功能3</p>
             </div>
         </template>
 

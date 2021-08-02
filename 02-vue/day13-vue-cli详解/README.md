@@ -100,9 +100,22 @@ yarn test:unit
 
 **需要做的事情：** 做一个插件，可以把 markdown 转换成 **vue组件** 或 **静态html**
 
+### 总结一下写插件的流程
+
 ## 源码解析
 
 ### `vue` 全局的执行脚本
+
+```shell
+# 查询 vue 的安装目录
+❯ which vue
+/usr/local/bin/vue
+
+# 一般 lib 和 bin 是同级的
+# /usr/local/lib/node_modules/@vue/cli/bin/vue.js 其实我们执行 vue 命令，用到的就是这个文件
+# 我们可以在顶部添加一行 `console.log('test...')` 进行测试
+# 这个其实就是 vue-cli 的起始
+```
 
 ### `./node_modules/.bin/vue-cli-service` 工程内的私有脚本
 
@@ -125,19 +138,28 @@ vue invoke vue-cli-plugin-mydemo
 
 ## 问题集锦
 
-0. npm i 不管用了吧？
+### npm i 不管用了吧？
 
-1. npm 安装就会加命令吗？---------不会
+### npm 安装就会加命令吗？
 
-2. cli 里面集成了webpack?
+---------不会。
 
-   ```shell
-   # 发布插件到官方源（并非淘宝源）
-   npm publish --registry=https://registry.npmjs.org/
-   
-   # 这个发布插件的命令经常使用，推荐封装成一个.sh文件
-   ```
+**如：**我们在 `vue-cli-plugin-mydemo/index.js` 里面自己封装的命令 `test-kyod` 和 `generator-md`
 
-   others
+```js
+module.exports = (api, options) => {
+    // 注册一个新的 cli-service 命令 `test-kyod`
+    api.registerCommand('test-kyod', args => {
+        console.log('test invoking');
+    });
+};
 
-3. Ooo
+```
+
+### cli 里面集成了webpack?
+
+---------是的。
+
+### 遗留问题：为什么选择前端开发？
+
+写脚本，工程构建相关（建议：20～25%时间），不用跟产品经理什么的沟通，免去**写UI**的麻烦

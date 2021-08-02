@@ -8,4 +8,4 @@
 npm install vue-cli-plugin-mytoutiao
 ```
 
-2020年新增内容，新增了自动发布markdown功能2号3号
+2020年新增内容，自动发布markdown功能1，功能2，功能3
