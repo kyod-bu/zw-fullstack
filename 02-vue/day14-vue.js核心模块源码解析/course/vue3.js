@@ -37,8 +37,8 @@
 
         // 别人依赖我，我一旦变（notify）了，则告诉所有自己的孩子们，调用一下 update
         notify() {
-            console.log('notify???');
             this.subs.forEach(sub => {
+                // console.log('sub::::', sub);
                 sub.update();
             });
         }
@@ -86,6 +86,7 @@
                 if (newValue === value) {
                     return;
                 }
+                // console.log('dep:::', dep);
                 dep.notify();
                 value = newValue;
             },
@@ -141,12 +142,11 @@
     }
 
     // 作用：
-    // 1. 把vnode渲染到真DOM上
+    // 1. 把 vnode 渲染到 真DOM 上
     // 2. 某两次 render 发生以后，把不一样的 vnode 追加到页面上，而不是整个页面在刷
     class Patcher {
 
         createElement(vNode, parentElm) {
-            console.log('chuangjian::;', vNode)
             vNode.elm = document.createElement(vNode.tagName);
             if (vNode.text) {
                 vNode.elm.textContent = vNode.text;
@@ -175,7 +175,7 @@
                 const oldVnode = oldVnodeChildren[startIndex];
                 const newVnode = newVnodeChildren[startIndex];
                 if (sameVnode(oldVnode, newVnode)) {
-                    console.log('=========111', oldVnode, newVnode, oldVnode.elm);
+                    // console.log('=========111', oldVnode, newVnode);
                     this.patchVnode(oldVnode, newVnode, oldVnode.elm);
                 } else {
                     this.createElement(newVnode, parentElm);
@@ -208,7 +208,6 @@
                     // 把新的vnode下的所有children挂到oldVnode的elm上
                 }
             } else if (newVnode.text !== oldVnode.text) {
-                console.log('2222=======', newVnode, oldVnode);
                 oldVnode.elm.textContent = newVnode.text;
             }
         }

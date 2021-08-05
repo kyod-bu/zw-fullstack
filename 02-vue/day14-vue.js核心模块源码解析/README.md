@@ -10,5 +10,3 @@ git上拉取源码：`git clone https://github.com/vuejs/vue.git`
 
 others
 
-⚠️ 后面看视频的话，可以直接从 **01:40:00 / 03:28:00** 开始。
-

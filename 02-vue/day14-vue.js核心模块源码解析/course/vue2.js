@@ -57,8 +57,10 @@
         get() {
             // Dep.depTarget = this; // 调用前，记一下
             Dep.depTargets.push(this);
+
             // 函数发生的时候，必然依赖了很多 Dep
             let value = this.getter(); // 用到属性的时候
+
             // Dep.depTarget = null; // 调用后
             Dep.depTargets.pop();
             return value;
@@ -91,8 +93,10 @@
 
             get() {
                 // dep.addSub(Dep.depTarget);
+
                 const topTarget = Dep.depTargets[Dep.depTargets.length - 1];
                 dep.addSub(topTarget);
+                
                 // console.log('我被调用了：', key);
                 return value;
             }
