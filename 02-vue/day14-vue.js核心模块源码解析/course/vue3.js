@@ -37,6 +37,7 @@
 
         // 别人依赖我，我一旦变（notify）了，则告诉所有自己的孩子们，调用一下 update
         notify() {
+            console.log('notify???');
             this.subs.forEach(sub => {
                 sub.update();
             });
@@ -123,6 +124,108 @@
         return walk(value);
     }
 
+    class Vnode {
+        constructor(tagName, data, children) {
+            this.tagName = tagName;
+            this.data = data;
+            if (typeTo(children) === '[object Array]') {
+                this.children = children;
+            } else {
+                this.text = children;
+            }
+        }
+    }
+
+    const sameVnode = (oldVnode, newVnode) => {
+        return oldVnode.tagName === newVnode.tagName || oldVnode.key === newVnode.key;
+    }
+
+    // 作用：
+    // 1. 把vnode渲染到真DOM上
+    // 2. 某两次 render 发生以后，把不一样的 vnode 追加到页面上，而不是整个页面在刷
+    class Patcher {
+
+        createElement(vNode, parentElm) {
+            console.log('chuangjian::;', vNode)
+            vNode.elm = document.createElement(vNode.tagName);
+            if (vNode.text) {
+                vNode.elm.textContent = vNode.text;
+            } else if (vNode.children) {
+                vNode.children.forEach(child => {
+                    this.createElement(child, vNode.elm);
+                });
+            }
+            parentElm.appendChild(vNode.elm);
+        }
+
+        insertBefore(newVnode, oldVnode, parentElm) {
+            parentElm.insertBefore(newVnode.elm, oldVnode.elm);
+        }
+
+        removeVnode(vNode, parentElm) {
+            parentElm.removeChild(vNode.elm);
+        }
+
+        // A B C D A R T G
+        // A F C D
+        updateChildren(parentElm, oldVnodeChildren, newVnodeChildren) {
+            const endIndex = newVnodeChildren.length;
+            let startIndex = 0;
+            for (; startIndex < endIndex; startIndex++) {
+                const oldVnode = oldVnodeChildren[startIndex];
+                const newVnode = newVnodeChildren[startIndex];
+                if (sameVnode(oldVnode, newVnode)) {
+                    console.log('=========111', oldVnode, newVnode, oldVnode.elm);
+                    this.patchVnode(oldVnode, newVnode, oldVnode.elm);
+                } else {
+                    this.createElement(newVnode, parentElm);
+                    this.insertBefore(newVnode, oldVnode, parentElm);
+                }
+            }
+            let oldEnd = oldVnodeChildren.length;
+            for (; startIndex < oldEnd; startIndex) {
+                const oldVnode =  oldVnodeChildren[startIndex];
+                this.removeVnode(oldVnode, parentElm);
+            }
+        }
+
+        // attributeFlush(oldVnode, newVnode) {
+        //     // console.log('newVnode.data.attr::::', newVnode.data.attr)
+        // }
+
+        patchVnode(oldVnode, newVnode, parentElm) {
+            if (oldVnode === newVnode) {
+                return;
+            }
+            // this.attributeFlush(oldVnode, newVnode);
+            if (!newVnode.text) {
+                let oldVnodeChildren = oldVnode.children;
+                let newVnodeChildren = newVnode.children;
+                if (oldVnodeChildren && newVnodeChildren) {
+                    // 递归比较
+                    this.updateChildren(oldVnode.elm, oldVnodeChildren, newVnodeChildren);
+                } else if (newVnodeChildren) {
+                    // 把新的vnode下的所有children挂到oldVnode的elm上
+                }
+            } else if (newVnode.text !== oldVnode.text) {
+                console.log('2222=======', newVnode, oldVnode);
+                oldVnode.elm.textContent = newVnode.text;
+            }
+        }
+
+        patch(parentElm, oldVnode, newVnode) {
+            if (!oldVnode) {
+                // this newVnode 创建 -> 塞入parentElm
+                this.createElement(newVnode, parentElm)
+            } else {
+                if (sameVnode(oldVnode, newVnode)) {
+                    console.log('进入了比对模式====');
+                    this.patchVnode(oldVnode, newVnode, parentElm);   
+                }
+            }
+        }
+    }
+
     // kyod
     // 目的：有个地方存储数据，当数据改变之后，相应的视图跟着动起来
     class Vue {
@@ -135,50 +238,25 @@
                 ? document.querySelector(options.el) 
                 : options.el;
             observe(this._data);
+            this.patcher = new Patcher();
             // 按需调用
             new Watcher(this._data, () => {
-                // // 嵌套
-                // new Watcher(this._data, () => {
-                //     let message = this._data.info.message;
-                //     console.log('getter 里面的 message::', message); 
-                // })
-
-                // 依赖采集
-                // 只有在 render 中 用到的数据，发生了变化，才会调用这个 callback
-                // 这里的 callback 函数，应该依赖于 属性（eg: price）
-                // console.log('getter 里面的 price::', this._data.price);
                 this.$mount(this.$el);
             });
-
             // this.$mount(this.$el);
             
         }
 
         // 创建一个元素
         createElement(tagName, data, children) {
-            let element = document.createElement(tagName);
-            if (typeTo(children) === '[object Array]') {
-                children.forEach(child => {
-                    element.appendChild(child);
-                }); 
-            } else {
-                element.textContent = children;
-            }
-            return element;
+            return new Vnode(tagName, data, children);
         }
 
         // 挂载（渲染到页面上）
         $mount(root) {
-            // let divNode = document.createElement('div');
-            // divNode.innerHTML = '123123123';
-            // root.appendChild(divNode);
-            // 当然，我们不用上面的这种方法。在这里，我们调用一下 `render`方法
-            const element = this.render(this.createElement); // 得到一个元素
-            root.innerHTML = '';
-            // root.forEach(child => {
-            //     element.appendChild(child);
-            // }); 
-            root.appendChild(element); // 把得到的元素，插到root上
+            let newVnode = this.render(this.createElement);
+            this.patcher.patch(root, this.vNode, newVnode);
+            this.vNode = newVnode;
         }
     }
 
@@ -197,24 +275,29 @@
         // 只有在顶层的时候，会写个 render
         // template: `<div><span>{{this.price}}</span></div>`,
         render(createElement) {
-            console.log('data:::', this._data.price);
-            // 源码中的形参`h`，是`hyper`缩写
             return createElement(
                 'div',
                 {
-                    // attrs: {
+                    // attr: {
+                    //     price: this._data.price,
                     //     title: this._data.info.message
                     // }
                 },
                 [
-                    createElement('span', {}, `价格标签：${this._data.price}`)
+                    // createElement('span', {}, `${+new Date()}价格标签：${this._data.price}`)
+                    // createElement('div', {}, '我是一样的，不要渲染我'),
+                    createElement('span', {}, `价格标签：${this._data.price}`),
+                    // createElement('p', {}, [
+                    //     createElement('span', {}, `价格标签：${this._data.price}`)
+                    // ])
                 ]
             );
         }
     });
 
     setTimeout(() => {
-        window.app._data.price = Math.floor(Math.random() * 100);
+        window.app._data.price = 6;
+        // window.app._data.price = Math.floor(Math.random() * 100);
         // window.app._data.info.message = '新的message';
         console.log('window.app.price:: ', window.app._data.price);
         // console.log('window.app.message:: ', window.app._data.info.message);
