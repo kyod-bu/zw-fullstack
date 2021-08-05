@@ -8,5 +8,6 @@ git上拉取源码：`git clone https://github.com/vuejs/vue.git`
 2. 写一下响应式与vdom
 3. 看源码
 
-others
+## 核心模块源码
 
+/vue/src/core
