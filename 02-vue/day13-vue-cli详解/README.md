@@ -52,6 +52,15 @@ vue add @vue/unit-mocha
 yarn test:unit
 ```
 
+### 插件开发核心概念
+
+* Creator
+* Service
+* Cli 插件
+* Service 插件
+* Generator
+* Prompts
+
 ### 创建一个 `vue-cli-plugin-mydemo` 插件
 
 通常的 CLI 插件目录结构是这样的：
