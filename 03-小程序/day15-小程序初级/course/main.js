@@ -4,7 +4,6 @@
  */
 const worker = new Worker("./worker.js");
 // worker.postMessage("我是主worker");
-
 const MEvent = new Event("main");
 const msg = {
     data: "hello xjy",

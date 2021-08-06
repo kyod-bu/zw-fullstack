@@ -11,16 +11,16 @@ importScripts("./event.js");
 // 监听事件
 onmessage = function (e) {
     console.log('我是 webworker...', e);
-    postMessage('hello');
+    // postMessage('hello');
 
     _event = new Event("page");
     App = begin();
     if (e.data.isInit) {
+        // 首次渲染结束
         workerMessage({
             type: "endInit",
             opt: Object.keys(App).map((item) => {
-                const { id, data, methods, template, mth, eventTypeMaps } =
-                    App[item];
+                const { id, data, methods, template, mth, eventTypeMaps } = App[item];
                 return {
                     id,
                     data: Object.assign({}, data, ...mth),
