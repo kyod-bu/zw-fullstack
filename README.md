@@ -55,3 +55,7 @@
 ## 06
 
 ## 07
+
+## others
+
+对于中国大陆用户，建议将 NPM 源设置为 [国内的镜像](https://npm.taobao.org/) （http://r.npm.taobao.org/），可以大幅提升安装速度。
