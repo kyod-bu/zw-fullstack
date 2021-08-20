@@ -1,0 +1,6 @@
+<view id="app">
+    <view>
+        <text>Hello miniprogram-{{ message }}</text>
+        <button bindtap="onclick">点击切换</button>
+    </view>
+</view>

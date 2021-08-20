@@ -1,5 +1,7 @@
 # 工程化开发小程序
 
+这里我们关注的是：**小程序端** 和 **浏览器端**
+
 ## 小程序工程化详解
 
 任何一个平台的小程序内容，都有自己的**项目结构**要求，例如微信小程序中需要 `app.json` 配置，里面需要配置一些小程序规范的配置，同时每个小程序页面都要求使用 `.wxml` `.wxss` 之类的小程序内部文件格式。
@@ -24,10 +26,34 @@
 
 ### wept 和 kbone
 
-[wept](https://github.com/wetools/wept) 是一个将小程序代码实时运行和显示在浏览器端的一个工具。
+[wept](https://github.com/wetools/wept) 是一个将**小程序**代码实时运行和显示在**浏览器端**的一个工具。
 
 [kbone](https://github.com/Tencent/kbone) 是另一个腾讯官方出品的浏览器 h5 和 小程序实时预览的框架。
 
 他们都是在工程化领域的框架，通过框架内部的实现，让小程序的开发和同构变得非常简单，唯一有区别的地方在于，wept 是将小程序代码转化为了 h5，而 kbone 是将 h5 代码转化为可以在小程序运行时执行的内容。
 
 kbone 是官方新出的框架，我们可以重点学习一下它的使用和源码详情。
+
+### wept
+
+**wept**（ Wechat app page development tool ）同构鼻祖，可以学一下其原理。
+
+```sh
+# 1. 安装 wept
+npm install --save-dev wept
+# 2. 运行一下 wept 工具
+./node_modules/.bin/wept
+# 这个时候就可以在浏览器中欣赏效果啦 http://localhost:3000/
+```
+
+源码学习：https://github.com/wetools/wept
+
+* /bin/ 下面的4的小工具，是从微信小程序开发者工具中拷贝所得。解决了wxml->html，wxss->css
+
+局限性：依赖了微信小程序开发者工具中的 bin工具，每次别人发版本，我们也需要更新，耦合性太大。
+
+⚠️ 我们需要关注的是 **思路**。
+
+### kbone
+
+**kbone** 一个致力于微信小程序和 Web 端同构的解决方案。
