@@ -57,3 +57,18 @@ npm install --save-dev wept
 ### kbone
 
 **kbone** 一个致力于微信小程序和 Web 端同构的解决方案。
+
+```sh
+# 借助 脚手架工具(kbone-cli) 体验一把 kbone
+# 安装 kbone-cli
+npm install -g kbone-cli
+# 1. 创建项目`kbone-template`（根据需要选择模板即可，推荐React）
+kbone init kbone-template
+# 2. 进入项目，按照 README.md 的指引进行开发即可
+cd kbone-template
+npm run mp # 开发小程序端
+npm run web # 开发 web 端
+npm run build # 构建 web 端
+```
+
+Todo: 40min
