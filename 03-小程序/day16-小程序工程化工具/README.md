@@ -71,4 +71,6 @@ npm run web # 开发 web 端
 npm run build # 构建 web 端
 ```
 
-Todo: 40min
+直接使用 `kbone-cli` 创建的工程，看上去结构比较复杂。
+
+我们可以先自己手动创建一个 `kbone-hello-world` 项目。
