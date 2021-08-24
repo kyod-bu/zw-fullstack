@@ -94,4 +94,4 @@ react 并没有提供根组件实例的销毁方法（如 vue.$destroy），所�
 
 ## License
 
-MIT 
+MIT
