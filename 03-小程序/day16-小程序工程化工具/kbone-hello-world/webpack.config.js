@@ -1,5 +1,8 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
+
+// kbone 自带的插件
+const MpPlugin = require('mp-webpack-plugin')
 
 module.exports = {
     mode: "production",
@@ -16,5 +19,10 @@ module.exports = {
         libraryTarget: 'window'
     },
     target: 'web',
-    plugins: []
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env.isMiniprogram': process.env.isMiniprogram, // 注入环境变量，用于业务代码判断
+        }),
+        new MpPlugin(require('./config'))
+    ]
 }
