@@ -74,3 +74,38 @@ npm run build # 构建 web 端
 直接使用 `kbone-cli` 创建的工程，看上去结构比较复杂。
 
 我们可以先自己手动创建一个 `kbone-hello-world` 项目。
+
+```sh
+npm i --save-dev webpack webpack-cli mp-webpack-plugin
+```
+
+创建一个路由相关的项目`kbone-router` ，看看如何跳转？
+
+```sh
+kbone init kbone-router
+```
+
+借助 `react-router` 这个库：
+
+先删掉 /src/components/ 这个目录，创建一个/src/components/router
+
+```sh
+npm install --save react-router-dom
+```
+
+这里注意区分：【h5的路由跳转】和【微信小程序的路由跳转】
+
+### kbone 源码解析
+
+```sh
+git clone https://github.com/Tencent/kbone.git
+```
+
+学习源码之前，先学习一下如何使用
+
+1. ./lerna.json 包集中管理，发布比较方便
+2. ./packages/kbone-cli/
+   * /bin/ 可执行文件 （commander库，交互式命令）
+3. ./packages/miniprogram-element/ ⭐️⭐️⭐️⭐️⭐️
+4. ./packages/miniprogram-render/ ⭐️⭐️⭐️⭐️⭐️
+5. 
