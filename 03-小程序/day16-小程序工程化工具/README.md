@@ -104,8 +104,23 @@ git clone https://github.com/Tencent/kbone.git
 学习源码之前，先学习一下如何使用
 
 1. ./lerna.json 包集中管理，发布比较方便
+
 2. ./packages/kbone-cli/
+
    * /bin/ 可执行文件 （commander库，交互式命令）
+
 3. ./packages/miniprogram-element/ ⭐️⭐️⭐️⭐️⭐️
+
+   通过配置，变更ui
+
+   ```js
+   document.createElement('div')=>this.setData({childNodes: [{type: 'view'}]})
+   ```
+
+   把 JS 和 UI 绑定到了一起
+
 4. ./packages/miniprogram-render/ ⭐️⭐️⭐️⭐️⭐️
-5. 
+
+5. ./packages/mp-webpack-plugin/ ⭐️⭐️⭐️
+
+6. ./packages/reduce-loader/ ⭐️⭐️
