@@ -272,3 +272,10 @@ export default class Index extends Component {
 对于微信⼩程序的转译，我们只需要关注 taro-tarnsformer-wx 即可，在 index.ts 中，通过 ts 和 babel 将编译的结果进⾏分析，将分析到的 AST 结构进⾏处理，通过不同的 AST 结果执⾏不同的操作。
 
 执⾏完成之后，通过 parseJSXChildren 等解析⽅法，将 jsx 转化为 wxml。
+
+### 总结一下
+
+* **wepy:** 几乎是纯静态的，运行前编译成小程序标准代码
+* **wpvue:** 比较折中，预编译标签【借助 vue 的运行时】
+* **remax:** 运行时动态编译【借助 react 运行时】(react语法框架书写 => 编译 => 拿到vnode数据 => 灌进模板中 => 实现小程序界面)
+* **taro:** 静态编译
