@@ -21,7 +21,7 @@
    ```js
    import moment from 'moment';
    // import { camelCase } from 'lodash';
-   
+
    App({
      onLaunch: function () {
        let time = moment(new Date().getTime()).format("YY-MM-DD hh:mm:ss");
@@ -166,23 +166,35 @@ npm install --save-dev typescript ts-loader source-map-loader
 
 2. 使用到的辅助工具
 
-   ```txt
-   chalk: node 彩⾊输出
-   commander： 获取指令⼯具
-   download-git-repo： 下载github代码
-   inquirer： 产⽣⼀些问题供⽤户选择的插件
-   ora： 进度条⼯具
+   ``` sh
+   chalk      # node 彩⾊输出
+   commander  # 获取指令⼯具
+   download-git-repo # 下载github代码
+   inquirer  # 产⽣⼀些问题供⽤户选择的插件 ⭐️
+   ora  # 进度条⼯具
    ```
 
 3. 写一个自己的 cli 具体的过程
 
-   ```sh
+   ``` sh
    # 1. 创建一个cli项目，初始化
    mkdir my-cli
    cd my-cli
    npm init -y
    # 2. 安装依赖
    npm i chalk commander download-git-repo inquirer ora
+   # 3. 创建 /bin/my-cli
+   # 4. 在 package.json 里面配置
+   		 "bin" : {
+   		   "me": "./bin/my-cli"
+   		 }
+   # 5. 本地调试
+   sudo npm link
+   cd ~
+   mkdir test
+   cd test
+   me init mtest
+   # 6. demo
    ```
 
-demo
+others
