@@ -69,8 +69,8 @@ React.createElement 主要分为三类参数，第⼀个是组件的名字，第
 
 ### JSX 总结
 
-* jsx 是⼀种语法糖，我们需要将他们编译为 **`React.createElement`** 的形式
-* 写 jsx 需要注意类型必须合法，尤其是写布尔表达式的时候需要额外注意，尽量使⽤三⽬运算符来书写 jsx
+* jsx 是⼀种**语法糖**，我们需要将他们编译为 **`React.createElement`** 的形式
+* 写 jsx 需要注意**类型必须合法**，尤其是写布尔表达式的时候需要额外注意，尽量使⽤三⽬运算符来书写 jsx
 * 需要注意 class 和 for 标签在书写时需要改为 `className` 和 `htmlFor`
 
 ## create-react-app cli 的使用
@@ -115,7 +115,7 @@ class Bar extends React.Component {
 
 `componentWillMount` -> `render` -> `componentDidMount` -> `componentWillReceiveProps` -> `componentWillUpdate` -> `render` -> `componentDidUpdate`
 
-这⾥需要注意的就是，同 vue 的声明周期⼀样，我们最好在 **componentDidMount** 中发送请求，这样整个组件对服务端渲染会⽐较友好。
+⚠️ 这⾥需要注意的就是，同 vue 的声明周期⼀样，我们最好在 **componentDidMount** 中发送请求，这样整个组件对服务端渲染会⽐较友好。
 
 ## 常见错误和性能问题
 
@@ -123,16 +123,20 @@ class Bar extends React.Component {
 
 全局单例的 event 对象，所以在异步对象中使⽤ react 事件时需要额外注意。异步操作最好将对象内部需要的值先进⾏拷⻉赋值。
 
-```js
+```jsx
 handleClick(e) {
+  // const text = e.currentTarget.innerText; // 优化：先进⾏拷⻉赋值，后面直接使用 text 即可
   setTimeout(function() {
-    console.log('button1 click', e.currentTarget.innerText); // 错误
+    console.log('button1 click', e.currentTarget.innerText); // 会发生错误
+    // 因为全局单例的 event 对象，在等待的1秒内，被别人使用或者修改了
   }, 1000);
   console.log('button1 click', e.currentTarget.innerText);
 }
 ```
 
 组件⽣命周期，它描述了整个组件在创建、实例化、销毁过程中不同过程中执⾏的⽅法。我们需要特别注意，不要在 render 中定义单独引⽤的内容。也就是不要在 render 中使⽤箭头函数，否则很容易运⾏时造成⼦组件的重新渲染。
+
+⚠️ render 内部不要 bind。TODO：总结一下原因……
 
 为了保证这种引⽤的相等，我们都会使⽤ ***immutable*** 的不可变数据，来保证组件间传递的数据引⽤相等。
 
@@ -142,7 +146,7 @@ handleClick(e) {
 
 * why-did-you-render
 
-  why did you render 是⼀个能检测你的⻚⾯中的元素是否出现了不必要的重渲染。https://www.npmjs.com/package/@welldone-so!ware/why-did-you-render 我们可以将它应⽤于我们的项⽬中，来检测是否有⽆意义的渲染的情况。
+  why did you render 是⼀个能检测你的⻚⾯中的元素是否出现了不必要的重渲染。 https://www.npmjs.com/package/@welldone-software/why-did-you-render 我们可以将它应⽤于我们的项⽬中，来检测是否有⽆意义的渲染的情况。
 
 * class 中提前声明箭头函数，保证 render 执⾏过程中的函数不会因为引⽤问题导致重新渲染。
 
