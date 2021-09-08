@@ -190,4 +190,3 @@ class childComponent extends React.Component {
   }
 }
 ```
-
