@@ -54,6 +54,7 @@ class App extends Component {
                 <RenderText
                     // aProps={cloneDeep(obj)}
                     // aProps={immutable.fromJS(obj)}
+                    // aProps={immer.produce(obj)}
                     text={this.state.text}
                     renderRandomText={this.renderRandomText}
                 />
