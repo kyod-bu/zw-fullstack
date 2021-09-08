@@ -125,8 +125,7 @@ export class extends React.Component {
 ```js
 export class extends React.Component {
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    // 可以在内部访问到组件实例 this，获取最新的
-    this.props
+    // 可以在内部访问到组件实例 this，获取最新的 this.props
   }
 }
 ```
@@ -134,11 +133,11 @@ export class extends React.Component {
 总结⼀下所有 react 新⽼的⽣命周期，我们可以进⾏的操作：
 
 * **getDerivedStateFromProps**： 构造函数上的 static ⽅法，可以在⾥⾯基于当前传⼊的 props 更新当前组件的 state。
-* **componentDidMount**：发送请求、给原⽣ DOM 绑定事件等。
+* **componentDidMount**：发送请求、给原⽣ DOM 绑定事件等。⭐️⭐️⭐️
 * **shouldComponentUpdate**：做⼦组件数据判断的优化，返回 false 则不会触发⼦组件的渲染。
 * **getSnapshotBeforeUpdate**：获取⼀些当前更新之后的 DOM 元素等。
-* **componentDidUpdate**：更新完成的操作，例如有时候通过 props 的不同发送请求。
-* **componentWillUnmount**：组件被取消挂载时的操作，通常是解除 componentDidMount 时挂载的⼀些事件，计时器等内容。
+* **componentDidUpdate**：更新完成的操作，例如有时候通过 props 的不同发送请求。⭐️⭐️
+* **componentWillUnmount**：组件被取消挂载时的操作，通常是解除 componentDidMount 时挂载的⼀些事件，计时器等内容。⭐️
 
 ### hook
 
