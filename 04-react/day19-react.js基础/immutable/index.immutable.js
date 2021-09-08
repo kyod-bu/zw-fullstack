@@ -22,7 +22,7 @@ const b = a.set('key1', 'valueb');
 // 查看结果
 console.log('a.key1 :>> ', a.get('key1'));
 console.log('b.key1 :>> ', b.get('key1'));
-console.log('a.key2 === b.key2 :>> ', a.key2 === b.key2); // false
+console.log('a.key2 === b.key2 :>> ', a.key2 === b.key2); // true
 
 /**
  * 总结一下：
