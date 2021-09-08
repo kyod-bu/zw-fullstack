@@ -157,3 +157,37 @@ react 提供了以下⼏类 hook：
 * **useMemo**：传⼊⼀个函数和⼀个数组，当数组内容没有变化时，返回值永远与之前相同。
 
 useCallback 简单来说是缓存第⼀个参数的函数，⽽ useMemo 是缓存第⼀个参数的结果。
+
+## dynamic import & Suspense
+
+在 ESMoudle 中，我们定义了一种新的模块**异步导入**方式，就是通过 import() 进行异步打包，最终通过一个 jsonp 在运行时获取这段 js 代码并加载在页面中。
+
+我们可以在代码中，使用如下的代码，对异步组件进行统一管理：
+
+```jsx
+import { Suspense } from 'react';
+
+<Suspense fallback={<loading />}
+  <childComponent />
+</Suspense>
+```
+
+在 childComponent 中，我们就无需关注组件的加载状态，完全可以在 render 中发送请求，这样减少我们组件中的 loading 状态。
+
+```jsx
+import { unstable_createResource } from 'react-cache';
+
+const resource = unstable_createResource((id) => {
+  return fetch(`/demo/${id}`)
+})
+
+class childComponent extends React.Component {
+  render() {
+    const data = resource(xxx)
+    return (
+      <div>{data}</div>
+    );
+  }
+}
+```
+

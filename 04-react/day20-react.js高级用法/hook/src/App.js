@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import './App.css';
 
 // 自定义 hook
@@ -14,8 +14,23 @@ function useCheck() {
     return [num, setRandomTextHOC];
 }
 
+function doSomething() {
+    console.log('doSomething...');
+}
+
 function App() {
     const [num, setRandomText] = useCheck();
+
+    // useCallback 缓存第⼀个参数的函数
+    const callback = useCallback(() => {
+        // 有副作用的操作
+        doSomething(num)
+    }, [num]);
+
+    // useMemo 缓存第⼀个参数的结果
+    const memo = useMemo(() => {
+        return doSomething(num)
+    }, [num]);
 
     return (
         <div className="App">
