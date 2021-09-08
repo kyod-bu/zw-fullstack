@@ -150,10 +150,12 @@ handleClick(e) {
 
 * class 中提前声明箭头函数，保证 render 执⾏过程中的函数不会因为引⽤问题导致重新渲染。
 
-### 介绍 immutable 库 和 immutable-js 和 immer
+### 介绍 immutable 库：immutable.js 和 immer.js
 
-为了配合 shouldComponentUpdate 来进⾏性能优化，⼤部分时候我们需要复杂的层级判断，这⾥我们介绍两个配合 react 最⼩更新的 immutable 库 **immutable-js** 和 **immer** 。
+为了配合 shouldComponentUpdate 来进⾏性能优化，⼤部分时候我们需要复杂的层级判断，这⾥我们介绍两个配合 react 最⼩更新的 immutable 库 **immutable.js** 和 **immer.js** 。
 
-immutable-js 是 facebook 的⼯程师在 2014 年推出的，immer 则是 mobx 作者 2018 年推出的。他们的推出其实是为了实现**不可变数据**，但实际上这种做法更多的是为了优化我们的 react 应⽤⽽做的。
+immutable.js 是 facebook 的⼯程师在 2014 年推出的，immer.js 则是 mobx 作者 2018 年推出的。他们的推出其实是为了实现**不可变数据**，但实际上这种做法更多的是为了优化我们的 react 应⽤⽽做的。
 
-我们可以简单看⼀下 immutable-js 的⽤法，着重讲⼀下 immer 的原理，便于⼤家更好的理解数据传递过程中的不可变性。
+我们可以简单看⼀下 immutable.js 的⽤法，着重讲⼀下 immer.js 的原理，便于⼤家更好的理解数据传递过程中的不可变性。
+
+💡【推荐使用 immer.js】，API 比较简单
