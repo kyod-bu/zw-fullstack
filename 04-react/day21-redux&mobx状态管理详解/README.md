@@ -2,11 +2,25 @@
 
 ## 什么是状态管理
 
-React.js 是一个 ui 渲染库，其核心概念就是 **data -> UI** 的逻辑。在复杂的业务逻辑下，组件的状态，需要被其他组件所共享，由此发展出了状态管理。在 react 生态中，有2个状态管理方案是最有名的，即redux 和 mobx。
+React.js 是一个 ui 渲染库，其核心概念就是 **data -> UI** 的逻辑。
+
+```js
+// 映射关系
+y = f(x)
+UI = React(data) // data -> UI
+```
+
+**为什么要做状态管理？**
+
+====**答：** React.js 是 UI 库，并不提供状态管理方案。
+
+在复杂的业务逻辑下，组件的状态，需要被其他组件所**共享**，由此发展出了状态管理。在 react 生态中，有2个状态管理方案是最有名的，即redux 和 mobx。
 
 ## Redux
 
 ### Redux 的核心概念
+
+![redux核心概念](./img/redux核心概念.png)
 
 #### action
 
@@ -27,6 +41,35 @@ store 是所有状态的中心，并且提供 api 给外部调用，以此完成
 ### Redux Demo
 
 使用 Redux 进行状态管理，进行一个 Demo 项目。通过这个项目，了解如何借用 redux 来实现产品的业务逻辑。
+
+```sh
+# 利用脚手架 创建一个demo项目
+npx create-react-app redux-demo
+
+cd redux-demo
+yarn start
+```
+
+安装 redux：
+
+```yarn add redux
+yarn add redux
+yarn add react-redux
+```
+
+#### 思路
+
+**需求：**实现一个 TodoApp（CRUD，create｜read｜update｜delete）
+
+**特点：**麻雀虽小，五脏俱全
+
+**步骤：**
+
+1. 先分析需求--页面布局，初步构建页面组件 `/src/components/`
+2. 创建 状态管理 redux 文件夹，处理数据 `/src/redux/`
+   * action 实现：Action creator
+   * reducer 实现
+3. 使用 react-redux 的 Provider 组件进行包装
 
 ### Redux 原理解析
 
