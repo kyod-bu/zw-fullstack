@@ -26,6 +26,20 @@ UI = React(data) // data -> UI
 
 action 是一种用户端发出的动作，可以是 button 的 onClick，也可以是组件首次渲染发出的请求数据动作，等等
 
+```js
+/**
+ * Action creator
+ */
+const REMOVE_ITEM = "removeItem";
+
+export const removeTodo = (id) => {
+    return {
+        type: REMOVE_ITEM,
+        payload: { id }
+    };
+};
+```
+
 #### dispatch
 
 dispatch 是一个方法，它的作用就是把 action 发送到 store 中，同时，会经历所有的 middleware，来为 redux 提供更多的扩展功能
@@ -33,6 +47,26 @@ dispatch 是一个方法，它的作用就是把 action 发送到 store 中，�
 #### reducer
 
 在 redux 中有一个强约束，所有对 store 的修改，必须是经过 reducer 来完成的。每一次经历了 reducer 改动的 store，必须是 immutable 的改动，基于这个约束，我们就可以用“**时间旅行**”的方式来进行调试
+
+```js
+// const REMOVE_ITEM = "removeItem";
+
+const initialState = [];
+
+/**
+ * immutable 不可变类型
+ */
+export const reducer = (state = initialState, action) => {
+    switch (action.type) {
+        case REMOVE_ITEM: {
+            const id = action.payload.id;
+            return state.filter((todo) => todo.id !== id);
+        }
+        default:
+            return state;
+    }
+};
+```
 
 #### store
 

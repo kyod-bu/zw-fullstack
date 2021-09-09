@@ -8,3 +8,34 @@ export const store = createStore(
     rootReducer,
     composeEnhancers(applyMiddleware(...[ReduxThunk]))
 );
+
+// const addAction = {
+//   type: 'increment',
+// }
+
+// let state = {
+//   count: 0,
+// }
+
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case 'increment': {
+//       return {
+//         ...state,
+//         count: state.count + 1,
+//       }
+//     }
+//     default:
+//       return state;
+//   }
+// }
+
+// const dispatch = (action) => {
+//   state = reducer(state, action);
+// }
+
+// console.log(state.count); // 0
+
+// dispatch(addAction);
+
+// console.log(state.count); // 1
