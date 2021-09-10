@@ -102,9 +102,8 @@ cd redux-demo
 yarn start
 ```
 
-安装 redux：
-
-```yarn add redux
+```sh
+# 安装 redux：
 yarn add redux
 yarn add react-redux
 ```
@@ -201,21 +200,21 @@ computed 修饰过的对象是一种计算属性，这也是 mobx 的优势，�
 # 利用脚手架 创建一个demo项目（这里我们尝试一下 ts 构建）
 yarn create react-app mobx-app --template typescript
 
-cd redux-demo
+cd mobx-demo
 yarn start
 ```
-
-
 
 ```sh
 # 安装 mobx
 yarn add mobx
+yarn add mobx-react
 ```
+
+⚠️ 使用装饰器功能，需要在 tsconfig.json 里面配置 `"experimentalDecorators": true`
 
 ### Mobx 原理解析
 
-讲
-
-### React *VS* Mobx 工程实践对比
+## React *VS* Mobx 工程实践对比
 
 经过了2个 Demo 项目，通过对两个 Demo 项目进行对比，来展示两种状态方案的优劣。
+
