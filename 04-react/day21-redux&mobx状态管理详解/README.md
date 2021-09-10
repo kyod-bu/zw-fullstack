@@ -180,6 +180,8 @@ console.log(state.count); // 1
 
 ### Mobx 的核心概念
 
+![moxb之flow](./img/moxb之flow.png)
+
 #### observable
 
 在 mobx 中，observable 修饰过的对象，就可以被 mobx 监控，一旦该对象有任何变化，都会通知所有他的观察者。
@@ -212,9 +214,216 @@ yarn add mobx-react
 
 ⚠️ 使用装饰器功能，需要在 tsconfig.json 里面配置 `"experimentalDecorators": true`
 
+#### 思路
+
+1. 先分析需求--页面布局，初步构建页面组件 `/src/components/`
+2. 创建 状态管理 mobx 文件夹，处理数据 `/src/mobx/todo.ts`
+3. 在 todo.ts 里面利用装饰器进行处理 `import { observable, computed, action } from 'mobx'`
+
+#### 实现
+
+```tsx
+// App.tsx
+import React from 'react';
+import './App.css';
+
+import { TodoApp } from './components/TodoApp';
+import { Todos } from './mobx/todo';
+
+const todos = new Todos();
+
+function App() {
+  return <TodoApp todos={todos} />;
+}
+
+export default App;
+```
+
+```tsx
+// TodoApp.tsx
+import React, { useState } from 'react';
+import { Todos } from '../mobx/todo';
+import { observer } from 'mobx-react';
+
+const filterInfos = [
+    {
+        label: 'all',
+        value: '',
+    },
+    {
+        label: 'completed',
+        value: 'completed',
+    }
+];
+
+interface TodoAppProps {
+    todos: Todos;
+}
+
+export const TodoApp: React.FC<TodoAppProps> = observer((props) => {
+    const { todos } = props;
+    const [text, setText] = useState('');
+
+    const onChangeInput = (e: React.FormEvent<HTMLInputElement>) => {
+        setText(e.currentTarget.value);
+      };
+
+    const addTodo = () => {
+        todos.addTodo(text);
+        setText('');
+    };
+
+    return (
+        <div>
+            <h1>Mobx-demo: TodoApp</h1>
+            <div>
+                <div>
+                    <input value={text} onChange={onChangeInput} />
+                    <button onClick={addTodo}>add</button>
+                </div>
+                <ul>
+                    {
+                        todos.filteredTodos.map((todo) => {
+                            const { id, text, completed } = todo;
+                            return (
+                                <li key={id}>
+                                    <input
+                                        type="checkbox"
+                                        checked={completed}
+                                        onChange={() => {
+                                            todos.toggleTodo(id);
+                                        }}
+                                    />
+                                    {text}
+                                    <button onClick={() => {
+                                        // removeTodo
+                                        const idx = todos.data.findIndex((todo) => todo.id === id);
+                                        todos.data.splice(idx, 1);
+                                    }}>delete</button>
+                                </li>
+                            );
+                        })
+                    }
+                </ul>
+                <div>
+                    {
+                        filterInfos.map((info) => {
+                            const { label, value } = info;
+                            return (
+                                <button key={value} onClick={() => {
+                                    todos.setFilterText(value);
+                                }}>
+                                    {label}
+                                </button>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+        </div>
+    );
+});
+
+```
+
+```ts
+import { observable, computed, action } from 'mobx';
+
+// 模拟异步方法
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+class Todo {
+    id: number = Math.random();
+
+    @observable
+    text: string = '';
+
+    @observable
+    completed: boolean = false;
+
+    @action
+    toggleTodo = () => {
+        this.completed = !this.completed;
+    };
+}
+
+class Todos {
+    @observable
+    data: Todo[] = [];
+
+    @observable
+    filterText: string = '';
+
+    @computed
+    get filteredTodos() {
+        return this.data.filter((todo) => {
+            if(this.filterText === 'completed') {
+                return todo.completed;
+            }
+            return true
+        });
+    };
+
+    @action
+    async addTodo(text: string) {
+        await delay(2000);
+        const todo = new Todo();
+        todo.text = text;
+        this.data.push(todo);
+    }
+
+    @action
+    setFilterText(text: string) {
+        this.filterText = text;
+    }
+
+    toggleTodo(id: number) {
+        const idx = this.data.findIndex((todo) => todo.id === id);
+        this.data[idx].toggleTodo();
+    }
+}
+
+const TodosInstance = new Todos();
+
+export { Todo, Todos, TodosInstance };
+```
+
 ### Mobx 原理解析
 
-## React *VS* Mobx 工程实践对比
+![mobx实现原理](./img/mobx实现原理.png)
 
-经过了2个 Demo 项目，通过对两个 Demo 项目进行对比，来展示两种状态方案的优劣。
+## Redux *VS* Mobx 工程实践对比
 
+通过对 2 个 Demo 项目进行对比，来展示两种状态方案的优劣。
+
+### Redux
+
+并没有什么黑魔法
+
+* **优势**：注重维护
+
+* **劣势**：写起来比较麻烦
+
+#### 时间旅行
+
+在 devtools 里，可以通过播放条滑动，查看各个瞬间的状态
+
+### Mobx
+
+黑魔法比较多
+
+* **优势**：
+  * 自带性能优化
+  * 写起来比较快
+
+* **劣势**：
+  * 新的 key 没监听上
+  * mobx4 和 mobx5 版本差异性比较大
+  * devtools ，没有 redux 的好用，记录层级不是很清楚
+
+### 如何抉择
+
+* 注重**维护**【推荐 redux】
+* 注重**性能**【推荐 mobx】
+
+⚠️ 选择状态管理方案，需要关注团队技术栈，和书写风格！
