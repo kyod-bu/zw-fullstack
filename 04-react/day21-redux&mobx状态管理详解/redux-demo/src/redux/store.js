@@ -9,6 +9,10 @@ export const store = createStore(
     composeEnhancers(applyMiddleware(...[ReduxThunk]))
 );
 
+/**
+ * Redux 原理解析
+ * @desc 并没有什么黑魔法哦～
+ */
 // const addAction = {
 //   type: 'increment',
 // }

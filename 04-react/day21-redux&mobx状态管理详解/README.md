@@ -72,6 +72,19 @@ export const reducer = (state = initialState, action) => {
 
 store 是所有状态的中心，并且提供 api 给外部调用，以此完成中心化的状态管理过程
 
+```js
+// store.js
+import { createStore, compose, applyMiddleware } from 'redux';
+import { reducer } from './reducer';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(
+    reducer,
+    composeEnhancers(applyMiddleware(...[ReduxThunk]))
+);
+```
+
 ### Redux Demo
 
 使用 Redux 进行状态管理，进行一个 Demo 项目。通过这个项目，了解如何借用 redux 来实现产品的业务逻辑。
@@ -79,6 +92,11 @@ store 是所有状态的中心，并且提供 api 给外部调用，以此完成
 ```sh
 # 利用脚手架 创建一个demo项目
 npx create-react-app redux-demo
+
+# 使用 npm:
+npm init react-app redux-demo
+# 使用 yarn:
+yarn create react-app redux-demo
 
 cd redux-demo
 yarn start
@@ -97,17 +115,67 @@ yarn add react-redux
 
 **特点：**麻雀虽小，五脏俱全
 
+![TodoApp设计图](./img/TodoApp设计图.png)
+
 **步骤：**
 
 1. 先分析需求--页面布局，初步构建页面组件 `/src/components/`
+
 2. 创建 状态管理 redux 文件夹，处理数据 `/src/redux/`
+
    * action 实现：Action creator
    * reducer 实现
-3. 使用 react-redux 的 Provider 组件进行包装
+
+3. 构建 store
+
+4. 使用 react-redux 的 **Provider** 包裹你的整个组件 `TodoApp`
+
+5. 引用 react-redux 的 **useDispatch**, **useSelector**
+
+6. 实际项目中，不可能是一个简单的 reducer，或许会有很多个。这时候，我们借用 redux 的 `combineReducers` 将所有的 reducer 组合成一个 rootReducer，在 redux 的 createStore 里使用的时候，我们可以用 rootReducer
+
+7. 还有一个异步的遗留问题：
+
+   解决方案：使用 **redux-thunk**
 
 ### Redux 原理解析
 
-讲解 Redux 的原理、模式
+⚠️ Redux 有一个全局的 store
+
+```js
+/**
+ * Redux 原理解析
+ * @desc 并没有什么黑魔法哦～
+ */
+const addAction = {
+  type: 'increment',
+}
+
+let state = {
+  count: 0,
+}
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'increment': {
+      return {
+        ...state,
+        count: state.count + 1,
+      }
+    }
+    default:
+      return state;
+  }
+}
+
+const dispatch = (action) => {
+  state = reducer(state, action);
+}
+
+console.log(state.count); // 0
+dispatch(addAction); // dispatch
+console.log(state.count); // 1
+```
 
 ## Mobx
 
@@ -128,6 +196,21 @@ computed 修饰过的对象是一种计算属性，这也是 mobx 的优势，�
 ### Mobx Demo
 
 使用 mobx 进行状态管，进行一个 Demo 项目。借用 mobx 进行状态管理，来实践一个产品的业务逻辑。
+
+```sh
+# 利用脚手架 创建一个demo项目（这里我们尝试一下 ts 构建）
+yarn create react-app mobx-app --template typescript
+
+cd redux-demo
+yarn start
+```
+
+
+
+```sh
+# 安装 mobx
+yarn add mobx
+```
 
 ### Mobx 原理解析
 

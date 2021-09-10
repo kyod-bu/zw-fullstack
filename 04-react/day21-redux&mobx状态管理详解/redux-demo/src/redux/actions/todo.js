@@ -12,6 +12,7 @@ import {
 
 let id = 1;
 
+// 模拟异步方法
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const addTodo = (text) => {
