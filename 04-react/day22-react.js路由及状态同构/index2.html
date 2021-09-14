@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Docunment</title>
+    </head>
+    <body>
+        <!-- 这里的 `#` 代表 hash-->
+        <a onclick="clickRoute('home')">Home</a>
+        <a onclick="clickRoute('about')">About</a>
+
+        <!-- 需要挂载的组件-->
+        <div id="app">hello</div>
+    </body>
+
+    <script>
+        // 配置（为了组件的渲染而准备）
+        const map = {
+            home: function() {
+                const $div = document.getElementById('app');
+                $div.innerHTML = 'home';
+            },
+            about: function() {
+                const $div = document.getElementById('app');
+                $div.innerHTML = 'about';
+            },
+        };
+
+        // pushState 和 replaceState
+        function clickRoute(route) {
+            console.log(`route:::`, route);
+            history.pushState(route, route, route);
+            // history.replaceState();
+            const renderFun = map[route];
+            renderFun();
+        }
+
+        // 路由的实现方案二：history
+    </script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Docunment</title>
+    </head>
+    <body>
+        <!-- 这里的 `#` 代表 hash-->
+        <a href="/#home">Home</a>
+        <a href="/#about">About</a>
+
+        <!-- 需要挂载的组件-->
+        <div id="app">hello</div>
+    </body>
+
+    <script>
+        // 配置（为了组件的渲染而准备）
+        const map = {
+            home: function() {
+                const $div = document.getElementById('app');
+                $div.innerHTML = 'home';
+            },
+            about: function() {
+                const $div = document.getElementById('app');
+                $div.innerHTML = 'about';
+            },
+        };
+
+        // 通过监听 onhashchange 可以判断路由变化，从⽽判断需要渲染的组件
+        window.onhashchange = function(e) {
+            // console.log('onhashchange::::', e);
+            const hash = window.location.hash.replace('#', ''); // 顺便去掉 hash 里面的 `#`
+            // console.log(`hash::::`, hash)
+            const renderFun = map[hash];
+            renderFun();
+        }
+
+        // 路由的实现方案一：hash
+    </script>
+</html>
