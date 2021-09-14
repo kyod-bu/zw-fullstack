@@ -132,6 +132,8 @@ const history = createBrowserHistory();
 
 同时我们也使⽤了 path-to-regexp 这个库，来对我们的路径进⾏处理，由它来确认我们当前的路由是否是符合定义的路由格式。
 
+备注：Switch 组件，自己看一下，并不是重点。
+
 ### Router-demo
 
 ```sh
@@ -141,17 +143,52 @@ cd router-demo
 yarn start
 ```
 
-
+```sh
+# 安装第三方库：
+# history
+# path-to-regexp
+yarn add history
+yarn add path-to-regexp
+```
 
 ## 服务端渲染及同构
 
 前⾯我们学到过，对于服务端渲染和客户端渲染来说，虽然最终显示⻚⾯的结果都相同，但是对于不同⽅式来说，他们的渲染过程不尽相同。
 
-react 的**服务端渲染**相对来说就简单⼀些，我们只需要使⽤ ReactDOM 包中的 server 部分模块进⾏即可，这⾥我们启动⼀个 node.js 服务器来做这件事情。
+react 的**服务端渲染**相对来说就简单⼀些，我们只需要使⽤ **ReactDOM 包中的 server 部分**模块进⾏即可，这⾥我们**启动⼀个 node.js 服务器**来做这件事情。
+
+```js
+// react-server.js 单纯的服务端渲染
+const express = require('express');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+
+const app = express();
+const Component = React.createElement('div', null, 'hello world');
+
+app.get('/', function(req, res){
+    const componentStr =  ReactDOMServer.renderToString(Component);
+    // console.log('server get /', componentStr);
+    res.send(
+        `
+            <html>
+                <body>${componentStr}</body>
+            </html>
+        `
+    );
+});
+
+app.listen(8080);
+
+// 启动该 node 服务：
+// node react-server.js
+```
 
 在渲染的结果中，我们能够看到 react 在标签中增加了⼀些 hash 值，他的作⽤是在**客户端渲染**时，如果 vdom 对⽐的结果与之相同，则不需要通过客户端⽅法进⾏挂载，减少客户端渲染时的压⼒。
 
-我们可以使⽤很多框架来实现这种同构效果，例如 **next.js 来达到⼀个同构的效果**，需要注意的是它内部会使⽤⼀些 server 端的内容。所以在写法上我们需要额外注意⼀些。
+### 同构
+
+我们可以使⽤很多框架来实现这种**同构**效果，例如 **next.js 来达到⼀个同构的效果**，需要注意的是它内部会使⽤⼀些 server 端的内容。所以在写法上我们需要额外注意⼀些。
 
 ```jsx
 import React from 'react'
@@ -175,8 +212,6 @@ export default class extends React.Component {
 
 ⽐如这就是⼀个使⽤ next 运⾏的例⼦，next 的应⽤中会有 `getInitialProps` 这个⽅法，他的作⽤就是对应⽤初始值进⾏获取。当然这⾥针对不同的环境，这个 next 应⽤的⽣命周期的表现也完全不同。
 
-### 服务端渲染
-
 **服务端**有的参数内容：
 
 * req: HTTP请求对象
@@ -184,8 +219,6 @@ export default class extends React.Component {
 * pathname: URL中的路径部分
 * query：URL中的查询字符串部分解析出的对象
 * err：错误对象，如果在渲染时发⽣了错误
-
-### 客户端渲染
 
 **客户端**渲染有的参数内容：
 

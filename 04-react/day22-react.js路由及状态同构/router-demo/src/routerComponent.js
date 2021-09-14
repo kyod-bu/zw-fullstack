@@ -3,6 +3,7 @@ import { createBrowserHistory } from 'history';
 import { match as matchPath } from 'path-to-regexp';
 
 // matchPath('/about/:id', '/about/test');
+// const matchPath = (targetPath, currentPath) => targetPath === currentPath;
 
 const history = createBrowserHistory();
 
@@ -40,8 +41,6 @@ export class Route extends React.Component {
         return null;
     }
 }
-
-// const matchPath = (targetPath, currentPath) => targetPath === currentPath;
 
 // 触发 URL 的变化
 export class Link extends React.Component {
