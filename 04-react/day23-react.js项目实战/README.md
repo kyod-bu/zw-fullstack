@@ -24,6 +24,10 @@
 
 redux、react-redux、@redux/toolkit
 
+**状态管理（redux）的好处：**
+
+把数据和UI分离，这样有利于多端同构。即针对不同的端，只需要重新编写页面UI，而数据层面是可以共用的。👍
+
 ### 数据
 
 分析今日头条的 API，构建 mock data，来完成数据的模拟
@@ -52,4 +56,62 @@ yarn add classnames
 
 # 时间处理
 yarn add moment
+
+# 无限滚动
+yarn add react-infinite-scroll-hook
 ```
+
+### 注意事项
+
+1. Jsx 中列表渲染时，key 值必须存在；（key 值，做性能优化）
+
+2. 性能优化方面
+
+3. hooks 中其实存在好多坑
+
+   ```jsx
+   import React, { useState, useEffect } from 'react';
+   
+   export const Demo = (props) => {
+     const [data, setData] = useSate([]);
+     
+     useEffect(() => {
+       const timeId = setTimeout(() => {
+         // dosomething...
+         setData([1, 2, 3]);
+       }, 3000)
+       
+       return () => {
+         clearTimeout(timeId);
+       }
+     }, [])
+     
+     return (
+       <div>hooks demo</div>
+     );
+   }
+   
+   // 小结一下：
+   // 如果在3s里面,unMound了，这时候data就不存在了，如果再执行setData，就会报错
+   // 这个时候，就需要添加 return () => { clearTimeout(timeId); }
+   ```
+
+4. 断网等问题
+
+5. 异步相关处理
+
+6. Event 对象
+
+7. 事件委托
+
+8. ……
+
+### TODO：可以继续完善项目
+
+* 登录注册------需要**后端**和**数据库**
+* jwt 校验
+* 权限控制
+* 首页
+* 用户中心
+* 一些列表等
+* ……
