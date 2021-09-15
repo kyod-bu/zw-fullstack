@@ -2,7 +2,7 @@
 
 ## 界面分析
 
-访问 https://www.toutiao.com/
+访问 <https://www.toutiao.com/>
 
 ![头条界面](./img/头条界面.png)
 
@@ -32,6 +32,24 @@ redux、react-redux、@redux/toolkit
 
 实践页面中最核心的 Feed 组件，来体会生产级别的 react 项目代码。
 
-1. 初步构建页面组件
+1. 初步构建页面组件 `/src/components/`
 2. 正确获取信息流数据
 3. 将数据链接到 Feed 组件
+
+```sh
+# 初始化一个项目
+npx create-react-app toutiao # 或 yarn create create-app toutiao
+cd toutiao
+yarn start
+
+# 安装第三方包（状态管理）
+yarn add redux react-redux @reduxjs/toolkit
+
+# 构建模拟数据 mock data
+
+# 样式处理
+yarn add classnames
+
+# 时间处理
+yarn add moment
+```
