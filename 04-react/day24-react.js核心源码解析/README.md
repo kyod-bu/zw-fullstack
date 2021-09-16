@@ -71,13 +71,13 @@ https://github.com/facebook/react.git
         // 更新组件树
         updateContainer(element, container) {
         },
-      
+
         updateChild(oldChild, newChild, container, inst) {
         },
-      
+
         flattern(children, prefix = '', res = {}) {
         },
-      
+
         // 更新组件树实现（核心）
         updateChildren(oldChildren, newChildren, container) {
         }
@@ -100,20 +100,119 @@ https://github.com/facebook/react.git
 
 ![实现预期](./img/实现预期.png)
 
-### 项目结构 `/origin`
+## 新版本的 react
 
-```sh
-.
-├── src/
-    ├── index.jsx
-├── index.html
-├── package.json
-└── webpack.config.js
+### 新版本 react 应用 `/origin`
+
+和旧版本的应用，是一样的。
+
+不一样的是**渲染方式**
+
+```jsx
+// 旧版本的应用
+ReactDOM.render(
+    <App />,
+    document.getElementById('app')
+);
+
+// 新版本的应用
+ReactDOM.createRoot(document.getElementById('app')).render(<App />);
 ```
 
-others：
+## 总结一下
 
-## 核心模块源码
+* **比 diff**（消耗 js）
+* **改 DOM**（交给浏览器）
 
-/vue/src/core
+### 之前的方案
 
+```js
+// 组件树
+div1
+    div2,
+        span1
+    span2,
+    span3
+```
+
+### 新版本的方案
+
+```js
+// 组件树
+div1(vdom)(fiber)
+    div2(vdom)(fiber),
+        span1(vdom)(fiber)
+    span2(vdom)(fiber),
+    span3(vdom)(fiber)
+
+// fiber 其实还是一个对象：
+fiber{
+  expirationTime: ,
+  stateNode: DOM!, // 指向原来的 DOM
+  updateQueue,effect:
+}
+
+// vdom
+vdom {
+    -> dom
+}
+
+// vdom 结构
+div1.children = [div2, span2, span3];
+div2.children = [span1];
+
+// fiber 结构
+div1.child = div2;
+div2.sibling = span2;
+span2.sibling = span3;
+div2.child = span1;
+```
+
+```js
+flag = false;
+lastNode = null;
+onClick = () => {
+    ajax();
+    // 改DOM？？？
+    // 改vdom
+    // 给节点？？？// 优先安排
+    flag = true;
+};
+
+// propsDiff???
+function visit(node) {
+    // 变量？？？
+    if (flag === true) {
+        lastNode = node;
+        return;
+    }
+    if (node.children) {
+        setTimeout(function () {
+            node.children.forEach(visit);
+        }, 1);
+    }
+};
+/*链表式的结构
+                 div1
+       /          |    \
+     div2       span2  span3
+  /    |   \
+span1 span5 span6
+*/
+```
+
+#### 比diff
+
+比较 diff(算DOMdiff))
+div1 -> div2 -> span1 -> onClick -> span4 -> span5 div2-span2 span3
+
+```markdown
+                div1(updateQueue)
+            /
+div2(updateQueue = [''(updateQueue)]) ----- span2(updateQueue = ['add', props]) ----- span3(updateQueue = [])
+        | 👆         👆          👆
+span1(updateQueue) - span5(updateQueue) - span6(updateQueue)
+```
+
+// 不可打断
+commit -> 改DOM!!

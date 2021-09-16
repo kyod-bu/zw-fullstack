@@ -47,6 +47,7 @@
             inst.oldChild = newChild;
         },
 
+        // 数组拍平：数组拍平成对象
         flattern(children, prefix = '', res = {}) {
             for (let i = 0, len = children.length; i < len; i++) {
                 let child = children[i];
@@ -66,10 +67,7 @@
         },
 
         updateChildren(oldChildren, newChildren, container) {
-            console.log('\ndiff=========================');
-            console.log('oldChildren:::', oldChildren);
-            console.log('newChildren:::', newChildren);
-            console.log('container:::', container);
+            console.log('diff:::', oldChildren, newChildren, container);
             if (typeof newChildren === 'string') {
                 works.renderContentText(
                     container, newChildren
@@ -80,6 +78,7 @@
             oldChildren = [].concat(oldChildren);
             const newflatedChildren = this.flattern(newChildren);
             const oldflatedChildren = this.flattern(oldChildren);
+            console.log('flatternRes::', newflatedChildren);
             // for (let i = 0, len = newChildren.length; i < len; i++) {
             // 从左到右，从右到左？？顺序？？?
             // 以key做索引去循环，而不是两边向中间缩小

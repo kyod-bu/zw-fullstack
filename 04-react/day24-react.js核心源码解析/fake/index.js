@@ -25,19 +25,18 @@ class App extends React.Component {
             this.state.list.map(item => {
                 return React.createElement('span', {
                     key: item
-                }, '这是 span');
+                }, `这是span：${item}`);
             }),
             this.state.list.map(item => {
                 return React.createElement('span', {
                     key: item
-                }, '这是 span');
+                }, `这是另一个列表里的span：${item}`);
             })
         ]);
     }
 }
 
 ReactDOM.render(
-    // <App />,
     React.createElement(App),
     document.getElementById('app')
 );
