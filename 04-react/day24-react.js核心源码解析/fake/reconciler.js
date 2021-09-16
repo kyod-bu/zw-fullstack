@@ -3,6 +3,7 @@
  */
 (function (global) {
     const oprations = {
+        // 创建 react 组件
         ReactComponentClass(element) {
             const Component = element.type;
             const inst = (new Component());
@@ -15,7 +16,7 @@
             return docElem;
         },
 
-        instElement(element) {
+        initElement(element) {
             if (typeof element === 'function') {
                 return this.ReactComponentClass(element);
             }
@@ -48,7 +49,7 @@
 
         flattern(children, prefix = '', res = {}) {
             for (let i = 0, len = children.length; i < len; i++) {
-                const child = children[i];
+                let child = children[i];
                 if (Object.prototype.toString.call(child) === '[object Array]') {
                     this.flattern(child, '' + i, res);
                 } else {
@@ -65,6 +66,10 @@
         },
 
         updateChildren(oldChildren, newChildren, container) {
+            console.log('\ndiff=========================');
+            console.log('oldChildren:::', oldChildren);
+            console.log('newChildren:::', newChildren);
+            console.log('container:::', container);
             if (typeof newChildren === 'string') {
                 works.renderContentText(
                     container, newChildren
@@ -76,9 +81,9 @@
             const newflatedChildren = this.flattern(newChildren);
             const oldflatedChildren = this.flattern(oldChildren);
             // for (let i = 0, len = newChildren.length; i < len; i++) {
-            // 从左到右，从右到左？？顺序？？
+            // 从左到右，从右到左？？顺序？？?
             // 以key做索引去循环，而不是两边向中间缩小
-            for (name in newChildren.length) {
+            for (name in newflatedChildren) {
                 const oldChild = oldflatedChildren[name];
                 const newChild = newflatedChildren[name];
                 // 之前的节点可以复用！
@@ -90,7 +95,7 @@
                             oldChild.curElement
                         );
                     }
-                } else if (!oldChild) {
+                } else if (!oldChild) { // 如果没有旧元素的情况
                     const newElement = oprations.createHostComponent(newChild);
                     if (newChild.props.children) {
                         this.updateChildren(

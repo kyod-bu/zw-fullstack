@@ -21,7 +21,12 @@ class App extends React.Component {
         return React.createElement('div', {
             className: 'appContainer'
         }, [
-            React.createElement('div', {}, '这事上面的 div'),
+            React.createElement('div', {}, '这是上面的 div'),
+            this.state.list.map(item => {
+                return React.createElement('span', {
+                    key: item
+                }, '这是 span');
+            }),
             this.state.list.map(item => {
                 return React.createElement('span', {
                     key: item
@@ -32,6 +37,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render(
+    // <App />,
     React.createElement(App),
     document.getElementById('app')
 );

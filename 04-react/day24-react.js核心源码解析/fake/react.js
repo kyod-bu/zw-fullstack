@@ -9,7 +9,8 @@
                 ...this.state,
                 ...partialState
             };
-            // 更新组件树 update???
+            // 从当前开始更新组件树
+            // update???
             Reconciler.updateChild(
                 this.oldChild,
                 this.render(),

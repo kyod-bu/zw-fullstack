@@ -18,10 +18,10 @@ https://github.com/facebook/react.git
 ```sh
 .
 ├── src/
-		├── index.jsx
+    ├── index.jsx
 ├── index.html
 ├── package.json
-└── webpack.config.js	# webpack 配置
+└── webpack.config.js # webpack 配置
 
 # 编译
 ./node_modules/.bin/webpack --watch
@@ -33,27 +33,18 @@ https://github.com/facebook/react.git
 .
 ├── index.html
 ├── index.js # 应用 React 和 ReactDOM
-├── react.js			# 包含 React（负责 createElement 和 Component）
-├── react-dom.js	# 包含 ReactDOM（负责 render：把 element 渲染到 container 上）
-└── reconciler.js	# 类比于 vue 中的 snabdom -- 比较`DIFF`用！
+├── react.js # 包含 React（负责 createElement 和 Component）
+├── react-dom.js # 包含 ReactDOM（负责 render：把 element 渲染到 container 上）
+└── reconciler.js # 类比于 vue 中的 snabdom -- 比较`DIFF`用！
 ```
 
 #### `react.js`
 
 ```js
 (function (global) {
-
-    // 所有组件的基类
-    class Component {
-    }
-
-    // 创建一个 vdom 的方法
-    const createElement = (type, props, children) => {
-    };
-
     global.React = {
-        createElement,
-        Component
+        createElement, // 创建 vdom 的方法
+        Component // 组件的基类
     }
 })(window);
 ```
@@ -62,13 +53,8 @@ https://github.com/facebook/react.git
 
 ```js
 (function (global) {
-    // 渲染组件树 vdomTree
-    const render = (element, container) => {
-        Reconciler.updateContainer(element, container);
-    };
-
     global.ReactDOM = {
-        render
+        render // 渲染组件树 vdomTree
     };
 })(window);
 ```
@@ -81,51 +67,48 @@ https://github.com/facebook/react.git
  * 类比于 vue 中的 snabdom -- 比较`DIFF`用！
  */
 (function (global) {
-    const oprations = {
-        ReactComponentClass(element) {
-        },
-
-        createHostComponent(element) {
-        },
-
-        instElement(element) {
-        }
-    };
-
-    const works = {
-        renderContentText(container, text) {
-        }
-    };
-
-    const shouldUpdate = (oldChild, newChild) => {
-    };
-
     global.Reconciler = {
-      	// 更新组件树
+        // 更新组件树
         updateContainer(element, container) {
         },
-
+      
         updateChild(oldChild, newChild, container, inst) {
         },
       
         flattern(children, prefix = '', res = {}) {
         },
-
+      
+        // 更新组件树实现（核心）
         updateChildren(oldChildren, newChildren, container) {
         }
     };
 })(window);
 ```
 
+#### 实例模块分析
+
+```html
+<div id="app">
+  <div className="appContainer">
+    <div></div>
+    <span>111</span>
+    <span>222</span>
+    <span>333</span>
+  </div>
+</div>
+```
+
+![实现预期](./img/实现预期.png)
+
 ### 项目结构 `/origin`
 
 ```sh
 .
 ├── src/
-		├── index.jsx
-├── index.html  	# generator（可选）
-├── package.json  # generator（可选）
-└── webpack.config.js	# webpack 配置
+    ├── index.jsx
+├── index.html
+├── package.json
+└── webpack.config.js
 ```
 
 others：
@@ -133,3 +116,4 @@ others：
 ## 核心模块源码
 
 /vue/src/core
+
