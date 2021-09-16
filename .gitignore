@@ -21,5 +21,8 @@ yarn.lock
 *.log*
 
 # other
-/other 
+/other
 /npm_project
+
+# 源码
+node-v14.17.6
