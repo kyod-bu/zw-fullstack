@@ -8,3 +8,5 @@ const proxy = http.createServer((req, res) => {
 proxy.listen(8888, '127.0.0.1', () => {
     console.log('server start ...');
 });
+
+// 访问 http://localhost:8888/
