@@ -219,3 +219,21 @@ pm2 list
 pm2 monit
 pm2 logs ws-server.js
 ```
+
+## 遗留问题
+
+1. 微服务架构
+
+2. websocket 兼容性|使用场景等
+
+   参考文档：<https://developer.mozilla.org/zh-CN/docs/Web/API/WebSocket>
+
+3. pm2 的使用
+
+4. 真正的**轮循**不会是无脑刷吧？？
+
+5. 项目升级 HTTP2，需要做哪些工作？？
+
+6. 大屏、直播推流、拉流跟 websocket 有关系吗？？
+
+7. others ……
