@@ -12,7 +12,7 @@
 
 之前我们也简单了解过，node.js 内部有⾮常多的内置模块，其中就有 http 模块，**express/koa 实际上就是对这个 http 模块的再封装**，增加了中间件策略和其他各种路由的通⽤处理，让我们写起来更加⽅便。
 
-### 使⽤ express 来定义⼀个 http 服务器
+#### 使⽤ express 来定义⼀个 http 服务器
 
 我们需要在⼀台已经安装了 node.js 的系统中，使⽤ npm 或其他包管理⼯具，安装我们的 express 框架。
 
@@ -22,17 +22,57 @@ npm install express
 
 之后我们就能直接通过 node.js 的 CommonJS 模块化规范，加载 express 模块。
 
-### 使⽤常见的 express 中间件
+```js
+/**
+ * server.js
+ * 使⽤ express 来定义⼀个 http 服务器
+ */
+const express = require('express');
+
+const app = express();
+
+// 快速定义一个路由
+app.get('/', function(req, res) {
+    // 正常，发送的 send 里面的内容
+    res.send('hello express...');
+});
+  
+app.listen(8080, function() {
+    console.log('server start...');
+});
+```
+
+#### 使⽤常见的 express 中间件
 
 对于⼤型应⽤来说，我们的应⽤⼀般需要使⽤到 body-parser 和 cookie-parser 这两个中间件，他们的作⽤是处理我们常⻅请求中 body 和 cookie 的部分。
 
-### 编写一个自定义 express 中间件
+```js
+// 中间件
+function middleware(req, res, next) {
+  // 1. express request 对象
+  // 2. express response 对象
+  // 3. express 的一个合法中间件
+  console.log('hello middleware...');
+}
+
+// 使用中间件
+app.use(middleware);
+```
+
+#### 编写一个自定义 express 中间件
 
 这⾥我们可以⾃⾏编写⼀个业务中会使⽤到的中间件，来加深我们的理解。
 
-### 中间件原理
+```js
+// 处理 404 响应
+app.use(function(req, res, next) {
+  res.status(404).send('Sorry cant find that!');
+});
+```
 
-中间件实际上我们可以这样理解，就是对于需要多次书写的业务逻辑，我们可以使⽤⼀种切⾯的形式，对相同逻辑进⾏通⽤处理。
+#### 中间件原理
+
+中间件实际上我们可以这样理解，就是对于需要多次书写的业务逻辑，我们可以使⽤⼀种**切⾯的形式**，对相同逻辑进⾏通⽤处理。
 
 ## sequelize ORM 框架
 
