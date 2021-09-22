@@ -1,5 +1,7 @@
 # node.js 服务端框架及 ORM 框架介绍
 
+💡 监听文件更新 `nodemon` ，不用每次修改都去重启服务。
+
 ## node.js 服务端框架 express
 
 在 node.js 中，有⾮常多优秀的服务端框架，例如 express/koa/think/egg 等等，其中很多框架都是由国内的团队完成的，也取得了不错的反响。
@@ -42,9 +44,9 @@ app.listen(8080, function() {
 });
 ```
 
-#### 使⽤常见的 express 中间件
+#### 中间件原理
 
-对于⼤型应⽤来说，我们的应⽤⼀般需要使⽤到 body-parser 和 cookie-parser 这两个中间件，他们的作⽤是处理我们常⻅请求中 body 和 cookie 的部分。
+中间件实际上我们可以这样理解，就是对于需要多次书写的业务逻辑，我们可以使⽤⼀种**切⾯的形式**，对相同逻辑进⾏通⽤处理。
 
 ```js
 // 中间件
@@ -59,20 +61,122 @@ function middleware(req, res, next) {
 app.use(middleware);
 ```
 
-#### 编写一个自定义 express 中间件
-
-这⾥我们可以⾃⾏编写⼀个业务中会使⽤到的中间件，来加深我们的理解。
-
 ```js
-// 处理 404 响应
+// 使用中间件，处理 404 响应
 app.use(function(req, res, next) {
   res.status(404).send('Sorry cant find that!');
 });
 ```
 
-#### 中间件原理
+#### 使⽤常见的 express 中间件
 
-中间件实际上我们可以这样理解，就是对于需要多次书写的业务逻辑，我们可以使⽤⼀种**切⾯的形式**，对相同逻辑进⾏通⽤处理。
+对于⼤型应⽤来说，我们的应⽤⼀般需要使⽤到 `body-parser` 和 `cookie-parser` 这两个中间件，他们的作⽤是处理我们常⻅请求中 body 和 cookie 的部分。
+
+* **`body-parser` 中间件**：适用于post请求，可以解析 body 为 object
+* **`cookie-parser` 中间件**：用于解析 cookie
+
+```html
+<!--login.html-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            fetch('/api/data', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        payload: 'postData'
+                    })
+                })
+                .then(resp => resp.json())
+                .then(res => {
+                    console.log('=======', res);
+                });
+        </script>
+    </body>
+</html>
+```
+
+```js
+/**
+ * 使⽤常见的 express 中间件：`body-parser` 和 `cookie-parser`
+ * @description 处理我们常⻅请求中 body 和 cookie 的部分
+ */
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+
+app.get('/', function(req, res, next) {
+    res.setHeader('X-zhuawa', 'zhuawa');
+    res.sendFile(path.resolve(__dirname, './login.html'));
+});
+
+app.post('/api/data', function(req, res) {
+    const { body } = req;
+    // 若不使用中间件`body-parser`， 这里的body将会是 undefined
+    console.log(body, typeof body);
+    res.json({
+        data: 'success'
+    });
+});
+
+app.listen(8080, function() {
+    console.log('server start...');
+});
+```
+
+#### 编写一个自定义 express 中间件
+
+这⾥我们可以⾃⾏编写⼀个业务中会使⽤到的中间件，来加深我们的理解。
+
+```js
+// 封装一个中间件`loginRequired`
+// 这样一来的话，需要鉴权的路由，都可以使用它了👍
+function loginRequired(req, res, next) {
+  const cookie = req.cookies;
+  const loginToken = cookie.loginToken;
+
+  const data = require('./data');
+  const userInfo = data.find(item => item.id === loginToken);
+
+  if (!userInfo) {
+    res.redirect('/login');
+  } else {
+    req.userInfo = userInfo;
+    next();
+  }
+}
+
+
+// 中间件的使用
+// 方法一：通过 use 访问
+app.use(loginRequired)
+// 方法二：限制路由的访问
+app.get('/', loginRequired, function(req, res, next) {
+  // 在这里就可以直接拿到 userInfo 了
+  const userInfo = req.userInfo;
+  // 可以针对性的做一些业务操作了
+  res.send(`当前登录的用户：：${JSON.stringify(userInfo)}`);
+});
+
+// ⚠️ 中间件的使用，和它的顺序有关系
+```
+
+⚠️ 注意总结一下“中间件”的**作用**和**使用场景**
 
 ## sequelize ORM 框架
 

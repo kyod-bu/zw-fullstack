@@ -45,7 +45,8 @@ app.get('/file', function(req, res) {
     res.sendFile(path.resolve(__dirname, './login.html'));
 })
 
-// 动态路由，使用场景如：详情页数据（/api/data/1, /api/data/2, ...）
+// 动态路由
+// 使用场景如：详情页数据（/api/data/:dataId）
 app.get('/:pathname', function(req, res) {
     // 读取 req 内容
     const { params, query, method, headers, path } = req;

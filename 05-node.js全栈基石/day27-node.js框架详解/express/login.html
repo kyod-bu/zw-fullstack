@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
     </head>
     <body>
-        <label>
-            用户名
-            <input type="text" id="username"></input>
-        </label>
-        <label>
-            密码
-            <input type="password" id="password"></input>
-        </label>
-        <button onclick="submit()">登陆</button>
+        <label>用户名</label>
+        <input type="text" id="username"></input>
+        <label>密码</label>
+        <input type="password" id="password"></input>
+        <button onclick="submit()">登录</button>
 
         <script>
             function submit() {
@@ -33,10 +29,11 @@
                 })
                 .then(resp => resp.json())
                 .then(res => {
-                    console.log('=======', res);
+                    console.log('登录结果为:::', res);
                     const redirectUrl = res.data.redirectUrl;
+                    console.log('准备跳转到:::', redirectUrl);
                     window.location.href = redirectUrl;
-                });
+                })
             }
         </script>
     </body>
