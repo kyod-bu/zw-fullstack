@@ -8,7 +8,7 @@
 
 ⽽影响⼒最⼤的两个服务端框架就是 express 和 koa，它们在 node.js 服务端框架来说是⿐祖⼀般的存在，很多框架都是基于他们的思路来实现和封装的。
 
-### express
+### express ⭐️⭐️⭐️
 
 在服务端，我们要区分清楚 request 和 response 的概念，request 是由客户端发起的，经过服务端处理之后，服务端的返回内容叫做 response。
 
@@ -161,7 +161,6 @@ function loginRequired(req, res, next) {
   }
 }
 
-
 // 中间件的使用
 // 方法一：通过 use 访问
 app.use(loginRequired)
@@ -177,6 +176,70 @@ app.get('/', loginRequired, function(req, res, next) {
 ```
 
 ⚠️ 注意总结一下“中间件”的**作用**和**使用场景**
+
+#### 中间件使用注意事项
+
+1. 顺序相关
+
+2. next 流程
+
+   ```js
+   // 定义2个中间件
+   // NO1:
+   app.use(function(req, res, next) {
+     console.log('middleware1 start', new Date().getTime());
+     next();
+     console.log('middleware1 end', new Date().getTime());
+   });
+   
+   // NO2:
+   app.use(function(req, res, next) {
+     console.log('middleware2 start', new Date().getTime());
+     next();
+     console.log('middleware2 end', new Date().getTime());
+   });
+   
+   /**
+    * ⚠️ 同步模式下：完美的洋葱模型
+    * 结果：1->2->2->1
+   middleware1 start 1632306505458
+   middleware2 start 1632306505459
+   middleware2 end 1632306505462
+   middleware1 end 1632306505462
+    */
+   ```
+
+   ```js
+   // 定义2个中间件
+   // NO1:
+   app.use(async function(req, res, next) {
+       console.log('middleware1 start', new Date().getTime());
+       await sleep(1).then(next);
+       console.log('middleware1 end', new Date().getTime());
+   });
+   
+     // NO2:
+   app.use(async function(req, res, next) {
+       console.log('middleware2 start', new Date().getTime());
+       await sleep(1.5).then(next);
+       console.log('middleware2 end', new Date().getTime());
+   });
+   
+   function sleep(time) {
+       return new Promise(resolve => {
+           setTimeout(resolve, time * 1000);
+       });
+   }
+   
+   /**
+    * ⚠️ 异步模式下：`不`完美的洋葱模型
+    * 结果：1->2->1->2
+   middleware1 start 1632306843655
+   middleware2 start 1632306844660
+   middleware1 end 1632306844660
+   middleware2 end 1632306846171
+    */
+   ```
 
 ## sequelize ORM 框架
 
