@@ -31,14 +31,14 @@ function loginRequired(req, res, next) {
     const pageSize = req.query.pageSize;
     const pageNumber = req.query.pageNumber;
 
-    // // 静态查询 可以变更为：查询数据库表
-    // User.findAndCountAll({
-    //     limit: +pageSize,
-    //     offset: +((pageNumber - 1) * pageSize),
-    // }).then(result => {
-    //     console.log('查询数据库表结果-result::', result);
-    //     res.json(result);
-    // });
+    // 分页处理
+    User.findAndCountAll({
+        limit: +pageSize, // 每页数据条数
+        offset: +((pageNumber - 1) * pageSize), // 页面偏移量
+    }).then(result => {
+        console.log('查询数据库表结果-result::', result);
+        res.json(result);
+    });
 
     // 静态查询 可以变更为：查询数据库表
     User.findOne({
