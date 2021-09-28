@@ -2,7 +2,9 @@
 
 ## Event Loop 事件循环模型
 
-### 正常调用栈
+### 调用栈的三种情况
+
+#### 正常调用栈
 
 ```js
 function multiply(a, b) {
@@ -18,9 +20,11 @@ function printSquare(n) {
 }
 
 printSquare(4);
+
+// 调用栈: printSquare(4) -> square(4) -> multiply(4, 4)
 ```
 
-### 调用栈出错
+#### 调用栈出错
 
 ```js
 function multiply(a, b) {
@@ -36,9 +40,12 @@ function printSquare(n) {
 }
 
 printSquare(4);
+
+// 调用栈: printSquare(4) -> square(4) -> multiply(4, 4) 
+// 在 multiply(4, 4) 这里会报错
 ```
 
-### 调用栈溢出
+#### 调用栈溢出
 
 ```js
 function fn(a) {
@@ -46,21 +53,36 @@ function fn(a) {
 }
 
 fn(1);
+
+// 调用栈: fn(1) -> fn(1) -> fn(1) -> ...
+// 调用栈溢出，即`死循环`
+// 写递归时，一定要注意！！！
 ```
 
-### 阻塞调用
+### 阻塞调用&异步调用
+
+#### 阻塞调用
+
+💡同步调用
 
 ```js
 const fs = require('fs');
 
-fs.readFileSync('./a.txt');
+fs.readFileSync('./a.txt'); // 同步读取文档内容
 fs.readFileSync('./b.txt');
 fs.readFileSync('./c.txt');
-                
-console.log('finish')
+
+console.log('finish');
+
+// ❓同步带来的问题：我们代码的书写顺序，和执行顺序是一致的
+// 时序：read a.txt -> read b.txt -> read c.txt -> finish
+// IO 操作时，等～
+// CPU 利用率不高，浪费时间
 ```
 
-### 异步调用
+#### 异步调用
+
+💡非阻塞调用
 
 ```js
 const fs = require('fs');
@@ -70,7 +92,63 @@ fs.readFile('./b.txt');
 fs.readFile('./c.txt');
                 
 console.log('finish')
+
+// event loop，事件循环机制
 ```
+
+![异步调用时序](./img/异步调用时序.png)
+
+```js
+const fs = require('fs');
+
+// 异步调用举例
+fs.readFile('./a.txt', (err, data) => {
+  // 可以打印一下 err 信息，看一下。
+  // 可能是文件不存在，可能是无权限 ……
+  if (err) {
+    console.log(err);
+    return;
+  }
+  
+  // handle data
+  console.log(data);
+  
+  // IO 读取文件是单线程的吗？？
+  // ------并不是程序所应该关心的，文件系统跟你的操作系统相关
+  
+  if (data.length < 1) {
+    // 
+    fs.readFile('./b.txt', (err, bFileData) => {
+      // error
+      
+      // bFileData
+      
+      fs.readFile('./b.txt', (err, cFileData) => {
+        // error
+        
+        // cFileData
+      })
+    })
+  } else {
+    // demo
+  }
+});
+
+// ⚠️ 回调地狱
+
+// 优化回调地狱 async/await
+callback(null, {});
+
+async function main() {
+  const aFileContent = await fs.readFilePromise('./a.txt');
+  const bFileContent = await fs.readFilePromise('./b.txt');
+  const cFileContent = await fs.readFilePromise('./c.txt');
+}
+
+
+```
+
+⚠️ 区别**异步调用**和**阻塞调用**的时序图！！！
 
 ### 事件循环讲解
 
@@ -80,11 +158,37 @@ setTimeout(() => {
 }, 5000)
 
 console.log('hello');
+
+// 输出：
+// hello
+// timeout
 ```
 
-### 宏任务与微任务
+⚠️ 注意4个阶段：调用栈｜定时器｜log｜任务队列
+
+### 宏任务&微任务
+
+#### 宏任务
+
+* setTimeout
+* setInterval
+* js 主代码
+
+#### 微任务
+
+* process.nextTick
+* Promise
+
+#### 区别
+
+任务队列被分为：**宏任务队列** 和 **微任务队列**
+
+微任务队列**率先**执行，直到清空
+
+当微任务队列为空时，执行宏任务队列
 
 ```js
+// 宏任务
 setTimeout(() => {
   console.log('timeout');
 }, 0)
@@ -96,8 +200,17 @@ new Promise((resolve) => {
   console.log('then');
 })
 
+// 宏任务
 console.log('hello');
+
+// 输出：
+// promise
+// hello
+// then
+// timeout
 ```
+
+⚠️ 调用栈｜定时器｜微任务｜宏任务｜log
 
 ### Buffer
 
