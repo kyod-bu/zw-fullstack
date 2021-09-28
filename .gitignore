@@ -23,6 +23,7 @@ yarn.lock
 # other
 /other
 /npm_project
+unsplash
 
 # 源码
 node-v14.17.6
