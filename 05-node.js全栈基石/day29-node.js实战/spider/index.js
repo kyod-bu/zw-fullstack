@@ -34,4 +34,7 @@ axios.get(url)
                 fs.writeFileSync(path.resolve(__dirname, `./unsplash/${id}`), buffer);
             });
         });
+    })
+    .catch(e => {
+        console.log(e);
     });
