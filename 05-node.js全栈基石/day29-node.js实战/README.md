@@ -35,7 +35,7 @@
 
 ## cli
 
-cli 是一种通过命令行来交互的工具应用，全称是 Command Line Interface。比较常见的就是 create-react-app，due-cli 等，他们都能够将一段 js 脚本，通过封装为可执行代码的形式，进行一些操作。
+cli 是一种通过命令行来交互的工具应用，全称是 Command Line Interface。比较常见的就是 create-react-app，vue-cli 等，他们都能够将一段 js 脚本，通过封装为可执行代码的形式，进行一些操作。
 
 使用 cli 之后呢，能快速的创建一些我们业务中的样板文件，比如快速创建一个项目内容，配置公共的 eslint 、webpack 等等配置工具。
 
@@ -56,3 +56,69 @@ commander 对命令行进行了解析，可以让我们比较方便的进行命�
 chalk 对应的是命令行文字颜色的更改
 
 clui 是一个命令行中展示 loading 效果的库
+
+### 总结一下流程
+
+```js
+#! /usr/bin/env node
+console.log('hello world');
+
+// const readLine = require('readline);
+const path = require('path');
+const childProcess = require('child_process');
+const { program } = require('commander');
+const inquirer = require('inquirer');
+const chalk = require('chalk');
+const clui = require('clui');
+
+// console.log(process.argv);
+
+program
+    .arguments('<dir>')
+    .description('this is apply')
+    .action((dir) => {
+        inquirer.prompt([
+            {
+                type: 'list',
+                name: 'framework',
+                message: 'which framework do you like?',
+                choices: ['react', 'vue', 'others']
+            }
+        ])
+        .then((answers) => {
+            console.log('answers: ', answers);
+            console.log('dir input is: ', dir);
+            // const fullDir = path.resolve(__dirname, dir); // 文件路径
+          	const fullDir = path.resolve(process.cwd(), dir); // 当前路径
+            const command = `git clone https://github/loatheb/${answers.framework}-boilerplate.git ${fullDir}`;
+            console.log('command: ', command);
+            childProcess.execSync(command);
+        })
+    });
+
+program.parse( process.argv);
+```
+
+**流程：**
+
+编写 cli 工具应用如上 `index.js`
+
+在 package.json 文件中添加：
+
+⚠️ name 不要跟别人的重命名！（比如：*cli-name*）
+
+```json
+"bin": {
+	"cli": "./index.js"
+},
+```
+
+在GitHub上，创建多个模板仓库：`react-boilerplate` `vue-boilerplate`
+
+执行 `npm link` 命令
+
+发布 cli 工具： `npm publish`
+
+**使用：**
+
+**本地**全局安装 cli 工具：`npm install -g cli-name`，安装成功之后，我们就有了全局的 `cli` 这个命令（这是我们在package.json 文件中设置的**bin**）。
