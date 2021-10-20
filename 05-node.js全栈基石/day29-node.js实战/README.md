@@ -122,3 +122,11 @@ program.parse( process.argv);
 **使用：**
 
 **本地**全局安装 cli 工具：`npm install -g cli-name`，安装成功之后，我们就有了全局的 `cli` 这个命令（这是我们在package.json 文件中设置的**bin**）。
+
+```sh
+# 使用 cli 工具创建工程
+cli my-project-name
+
+# 或直接使用 npx
+npx cli-name my-project-name
+```
