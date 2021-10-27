@@ -8,30 +8,82 @@
 
 React 的语法跨平台，Learn once, write everywhere
 
+💡前端已经不再是一个单一的网页前端的概念，而是分为了**桌面浏览器端**，**移动端**，**小程序端**，**iOS** 和**安卓应用端**等。
+
 ## 为什么要学 React Native
 
-* 移动互联网趋势
+* 移动互联网趋势（移动端优先）
 * 多端代码同构
 * 组件化
 
+现在好多场景，都是优先**移动端**。
+
 ## React Native 的优势
 
-Android和iOS应用中多种视图的一些示例。
+Android 和 iOS应用中多种视图的一些示例。
 
 ![Android 和 iOS 应用中多种视图的一些示例](./img/Android和iOS应用中多种视图的一些示例.png)
 
 ## 开发环境配置
 
 * Node.js LTS 12
-* npm install -g expo-cli
+* npm install -g expo-cli （全局安装 `expo-cli`）
 * expo init xxx
 
-### Android，iOS 环境配置
+### ⭐️Android，iOS 环境配置
 
-* 官方： <https://reactnative.dev/docs/next/environment-setup>
-* 中文： <https://reactnative.cn/docs/environment-setup>
+官方： <https://reactnative.dev/docs/next/environment-setup>
+
+中文： <https://reactnative.cn/docs/environment-setup>
+
+📋注意事项：
+
 * Android 应用可以在 MacOS 和 windows 进行开发
+
 * iOS 必须要有 MacOS
+
+### 🌰举例 MacOS
+
+#### 安装依赖
+
+必须安装的依赖有：**Node**、**Watchman**、**Xcode** 和 **CocoaPods**。
+
+```bash
+# 推荐使用`Homebrew`来安装 Node 和 Watchman
+brew install node
+brew install watchman
+```
+
+⚠️ 安装 Xcode
+
+⚠️ 安装 CocoaPods （安装可能不顺利，请尝试使用代理软件或寻找一些国内可用的镜像源。）
+
+```bash
+# 为你的命令行设置`加速`
+# 科学上网的前提下
+export http_proxy=http://localhost:1080;
+export http_proxy=https://localhost:1080;
+```
+
+#### 创建新项目
+
+```bash
+npx react-native init AwesomeProject
+
+# 可选参数
+npx react-native init AwesomeTSProject --template react-native-template-typescript
+```
+
+#### 编译并运行 React Native 应用
+
+```bash
+cd AwesomeProject
+# 编译
+yarn ios # 或者 yarn react-native run-ios
+# 启动`Metro`服务对`js`代码进行实时打包处理（类似 webpack）
+# `Metro`服务也可以使用`yarn start`命令单独启动
+yarn start
+```
 
 ## React Native 组件应用
 
