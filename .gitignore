@@ -13,6 +13,7 @@ dist
 # misc 杂项
 *.code-workspace
 .vscode
+.idea
 *下载资料
 package-lock.json
 yarn.lock

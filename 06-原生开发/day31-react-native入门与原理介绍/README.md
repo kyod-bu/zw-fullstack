@@ -42,9 +42,9 @@ Android 和 iOS应用中多种视图的一些示例。
 
 * iOS 必须要有 MacOS
 
-### 🌰举例 MacOS
+### 🌰eg: 开发平台 MacOS + 目标平台 iOS
 
-#### 安装依赖
+#### 1、安装依赖
 
 必须安装的依赖有：**Node**、**Watchman**、**Xcode** 和 **CocoaPods**。
 
@@ -52,38 +52,69 @@ Android 和 iOS应用中多种视图的一些示例。
 # 推荐使用`Homebrew`来安装 Node 和 Watchman
 brew install node
 brew install watchman
+
+# watchman，监视文件系统变更的工具。安装此工具可以提高开发时的性能（packager 可以快速捕捉文件的变化从而实现实时刷新）。
 ```
 
 ⚠️ 安装 Xcode
 
+会同时安装 **Xcode IDE**、**Xcode 的命令行工具**和 **iOS 模拟器**。
+
 ⚠️ 安装 CocoaPods （安装可能不顺利，请尝试使用代理软件或寻找一些国内可用的镜像源。）
 
 ```bash
+brew install cocoapods
+# CocoaPods，包管理器（可以理解为针对 iOS 的 npm）。
+```
+
+❓❓❓开了科学上网，但是事实上 终端 terminal 并没有科学上网，这时候要咋办呢？？
+
+------设置代理即可。（科学上网，才设置 1080 端口）
+
+```bash
 # 为你的命令行设置`加速`
-# 科学上网的前提下
 export http_proxy=http://localhost:1080;
 export http_proxy=https://localhost:1080;
 ```
 
-#### 创建新项目
+#### 2、创建新项目
 
 ```bash
-npx react-native init AwesomeProject
+npx react-native init demo
 
 # 可选参数
-npx react-native init AwesomeTSProject --template react-native-template-typescript
+npx react-native init demo --template react-native-template-typescript
 ```
 
-#### 编译并运行 React Native 应用
+#### 3、编译并运行 React Native 应用
 
 ```bash
-cd AwesomeProject
+cd demo
 # 编译
 yarn ios # 或者 yarn react-native run-ios
 # 启动`Metro`服务对`js`代码进行实时打包处理（类似 webpack）
 # `Metro`服务也可以使用`yarn start`命令单独启动
 yarn start
 ```
+
+### ⭐️沙盒环境
+
+官方沙盒环境大量依赖于国外网络环境，也不能直接安装第三方原生组件。不建议国内用户使用
+
+```bash
+# 全局安装 expo-cli
+yarn global add expo-cli
+```
+
+```bash
+# 初始化一个项目
+expo init expo-demo
+
+cd expo-demo
+yarn start # 或 expo start
+```
+
+💡[举个例子🌰](./react-native-demos)
 
 ## React Native 组件应用
 
