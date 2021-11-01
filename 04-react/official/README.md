@@ -14,19 +14,9 @@
 
   React 还可以使用 Node 进行服务器渲染，或使用 [React Native](https://reactnative.dev/) 开发原生移动应用。
 
-## 入门教程：认识 React
-
-用React开发一个井字棋（tic-tac-toe）
-
-* 环境准备
-  * 安装 Node.js
-  * 使用 create-react-app 创建一个新的项目 `npx create-react-app my-app`
-
-* 概览：React 的基础知识（组件、props、state）
-* 游戏完善：在React开发过程中最常用的技术
-* 时间旅行：更加深刻地了解React的独特优势
-
 ## 文档
+
+[入门教程： 用 React 开发一个井字棋（tic-tac-toe）](./tutorial.md)
 
 1. [基础](./1-基础.md)
 2. [核心概念](./2-核心概念.md)
