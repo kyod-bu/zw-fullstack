@@ -1,0 +1,13 @@
+{
+  "name": "package",
+  "version": "1.0.0",
+  "description": "定义一个生命周期 postinstall",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node -e 'console.log(`hello world.`)'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
