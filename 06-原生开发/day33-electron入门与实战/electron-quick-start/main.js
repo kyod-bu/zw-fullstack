@@ -1,6 +1,7 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain, dialog} = require('electron')
 const path = require('path')
+const fs = require('fs')
 
 // require('electron-reload')(__dirname); // 监听当前文件夹
 
@@ -22,14 +23,26 @@ function createWindow () {
   // if (process.platform === 'darwin') {
   //   app.dock.setIcon(iconPath);
   // }
-  setInterval(function() {
-    if (process.platform === 'darwin') {
-      app.dock.setIcon(iconPath);
-    }
-  }, 1000);
+  // setInterval(function() {
+  //   if (process.platform === 'darwin') {
+  //     app.dock.setIcon(iconPath);
+  //   }
+  // }, 1000);
+
+  // 监听渲染进程：
+  // 监听事件 open-folder
+  ipcMain.on('open-folder', (event, arg) => {
+    const files = dialog.showOpenDialogSync({
+      properties: ['openDirectory', 'openFile']
+    });
+    const content = fs.readFileSync(files[0], 'utf-8');
+    event.sender.send('file-content', content);
+  })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  // mainWindow.loadFile('index.html');
+  // 加载远端的文档
+  mainWindow.loadURL('http://localhost:3000/');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

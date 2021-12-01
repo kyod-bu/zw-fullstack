@@ -87,14 +87,37 @@ webPreferences: {
 npm i --save-dev electron-reload
 ```
 
+```shell
+# electron 推荐方式：主进程与渲染进程之间进行通信
+# 主进程：设置图标等信息
+# 渲染进程：仅负责渲染元素
+npx create-react-app electron-react
+cd elecctron-react
+yarn start # 此处启动渲染进程
+```
+
+```js
+// 在 electron-quick-start 的主进程 main.js，加载远端的文档
+mainWindow.loadURL('http://localhost:3000/');
+```
+
+举个🌰：MarkDown文档的读写，类似于 VsCode
+
+```shell
+npm i --save react-markdown
+```
+
+❓window.require 是什么样的 require ？
+
+------答：
+
 ## electron 打包
 
-package
-
-make
+* 大部分情况下，我们可以单独打包渲染引擎部分的代码，实现升级
+* electron- builder 和 electron-package 来进行打包
 
 ## electron 的缺点
 
-创建GitHub工程的流程
+electron 的缺点就在于为了达到跨平台的效果，每个 Electron 应用都包含了整个 **V8引擎** 和 **Chromium内核**。
 
-life-assistant
+打包时会将整个 `node_modules` 打包进去，大家都知道一个应用的  `node_modules` 体积是非常庞大的，这也是 Electron 应用打包后的体积较大的原因。
