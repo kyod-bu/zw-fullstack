@@ -109,7 +109,7 @@ npm i --save react-markdown
 
 ❓window.require 是什么样的 require ？
 
-------答：
+------答：window.require 不会被 webpack 编译；在渲染进程中，require 关键字就表示 node 模块的系统。
 
 ## electron 打包
 
