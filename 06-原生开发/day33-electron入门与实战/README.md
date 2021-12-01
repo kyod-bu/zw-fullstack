@@ -87,8 +87,6 @@ webPreferences: {
 npm i --save-dev electron-reload
 ```
 
-todo：调用一下 系统级别的 API
-
 ## electron 打包
 
 package
