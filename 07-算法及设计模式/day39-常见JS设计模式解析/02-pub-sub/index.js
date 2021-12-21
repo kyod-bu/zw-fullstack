@@ -2,23 +2,26 @@
  * 观察者模式
  * 典型的 `事件触发`和`事件注册` 异步化的模式
  */
-var map = {};
+var map = {}; // 注意：这里的map必须是全局可访问到的
 
+// 监听
 function listen(key, fn) {
     if (!map[key]) {
         map[key] = [];
     }
     map[key].push(fn);
-    // 另一种做法：redux 的做法
+    // 另一种做法：也是 redux 的做法
     return function () {
         map[key] = map[key].filter(item => item !== fn);
     }
 }
 
+// 触发
 function trigger(key, data) {
     map[key].forEach(item => item(data));
 }
 
+// 删除
 function remove(key, fn) {
     var result = [];
     for(var i=0; i<map[key].length; i++) {
