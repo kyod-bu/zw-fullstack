@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            body {
+                height: 100vh;
+                width: 100vw;
+                background-color: #0152D9;
+            }
+        </style>
+        <!-- <script src="./debounce.js"></script> -->
+        <script src="./throttle.js"></script>
+    </head>
+
+    <body>
+        <script>
+            // // 普通用法
+            // document.body.onmousemove = function() {
+            //     console.log(new Date().getTime());
+            // }
+
+            function callback() {
+                console.log(new Date().getTime());
+            }
+
+            // // 使用 debounce
+            // var debouncedCb = window.debounce(callback, 1000);
+            // document.body.onmousemove = debouncedCb;
+
+            // 使用 throttle
+            var throttleCb = window.throttle(callback, 1000);
+            document.body.onmousemove = throttleCb;
+        </script>
+    </body>
+</html>
