@@ -173,6 +173,196 @@ python3 -m http.server 1234
 
 观察者模式又叫做**发布-订阅**模式，是我们最常见的设计模式之一。
 
+### 观察者模式 *vs* 发布订阅模式
+
+![观察者模式&发布订阅模式](./img/观察者模式&发布订阅模式.png)
+
+观察者模式：
+
+* **优点：** 实现起来比较简单，抽象成本要低一些
+
+* **缺点：** 对象跟观察者耦合
+
+发布订阅模式：
+
+* **优点：** 把对象和观察者隔离开来
+
+* **缺点：** 多了一个中介，写起来比较麻烦
+
+### 例（EventEmitter 的实现）
+
+EventEmitter 的实现：
+
+```js
+// events.js
+class EventEmitter {
+    constructor() {
+        this._events = {};
+    }
+
+    // 事件监听
+    on(name, cb) {
+        if (!this._events[name]) {
+            this._events[name] = [];
+        }
+
+        this._events[name].push(cb);
+    }
+
+    // 触发事件
+    emit(name, ...args) {
+        if (!this._events[name]) {
+            return;
+        }
+      
+        for(const fn of this._events[name]) {
+            fn.apply(null, args);
+        }
+    }
+
+    // 取消事件
+    off(name, cb) {
+        if (!this._events[name]) {
+            return;
+        }
+
+        const index = this._events[name].findIndex(evt => evt === cb);
+        if (index >= 0) {
+            this._events[name].splice(index, 1);
+        }
+    }
+}
+
+module.exports = {
+    EventEmitter,
+};
+```
+
+EventEmitter 的使用：
+
+```js
+// index.js
+const { EventEmitter } = require("./events");
+
+const eventEmitter = new EventEmitter();
+
+eventEmitter.on("data", (value) => {
+    console.log("on data::", value);
+});
+
+const cb = () => {
+    console.log("cb");
+};
+eventEmitter.on("data", cb);
+eventEmitter.emit("data", "hello");
+eventEmitter.off("data", cb);
+eventEmitter.emit("data", "hey");
+
+// on data:: hello
+// cb
+// on data:: hey
+
+// ===================继承=======================
+class Runner extends EventEmitter {
+    run() {
+        this.emit("run");
+    }
+}
+
+const runner = new Runner();
+
+runner.on("run", () => {
+    console.log("running!!!");
+});
+
+runner.run();
+
+// EventEmitter 其实现的功能类似于：
+// document.body.addEventListener('click', () => {
+//     // ...
+// })
+```
+
+### 例（Observable 的实现）
+
+Observable 的实现：
+
+```js
+// observable.js
+class Observable {
+    static of(list) {
+        return new Observable((observer) => {
+            setTimeout(() => {
+                for(const item of list) {
+                    observer.next(item);
+                }
+            }, 0);
+        });
+    }
+
+    static clickEvent(dom) {
+        return new Observable((observer) => {
+            dom.addEventListener("click", () => {
+                observer.next();
+            });
+        });
+    }
+
+    constructor(subscriber) {
+        this._subscriber = subscriber;
+    }
+
+    subscribe(observer) {
+        if ("object" !== typeof observer || observer === null) {
+            observer = {
+                next: observer,
+            };
+        }
+
+        return new Subscription(observer, this._subscriber);
+    }
+}
+
+class Subscription {
+    constructor(observer, subscriber) {
+        this._observer = observer;
+
+        const subscriptionObserver = new SubscriptionObserver(this);
+
+        subscriber.call(null, subscriptionObserver);
+    }
+}
+
+class SubscriptionObserver {
+    constructor(subscription) {
+        this._subscription = subscription;
+    }
+
+    next(value) {
+        notify(this._subscription, "next", value);
+    }
+}
+
+function notify(subscription, type, ...args) {
+    if (subscription._observer[type]) {
+        subscription._observer[type].apply(null, args);
+    }
+}
+
+module.exports = {
+    Observable,
+};
+```
+
+Observable 的使用：
+
+```js
+// index.js
+const { Observable } = require("./observable");
+
+Observable.of([1, 2, 3]).subscribe((value) => console.log(value));
+```
+
 ## 代理模式（proxy）
 
 ## 迭代器模式（iterator）
@@ -183,4 +373,4 @@ python3 -m http.server 1234
 
 ## 策略模式（strategy）
 
-demo
+策略模式
