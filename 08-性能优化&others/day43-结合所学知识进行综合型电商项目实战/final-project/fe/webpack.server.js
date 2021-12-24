@@ -81,6 +81,8 @@ module.exports = {
     ],
 
     devServer: {
+        // 代理的配置，可以让所有 /api 相关的请求 转到 3000 端口
+        // 尽管我们的应用和服务器在不同的域，还是可以访问的，不存在跨域的问题
         proxy: {
             '/api': {
                 target: "http://localhost:3000",

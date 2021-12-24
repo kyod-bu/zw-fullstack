@@ -54,6 +54,8 @@ app.listen(3000);
 
 ##### 数据模型 model/index.js
 
+每张数据表，对应 model/ 下的一个 js 文件。
+
 Mysql 使用小技巧：
 
 ```shell
@@ -70,6 +72,7 @@ create database shop;
 数据模型的建立：
 
 ```js
+// model/index.js
 const Sequelize = require('sequelize');
 
 const PASSWORD = process.env.PASSWORD; // 配置信息从环境读取👍
@@ -102,6 +105,130 @@ sequelize
 
 至此，我们服务端的基本框架已经建设好了。
 
+接下来我们开始搭建**业务**框架。
+
+###### 持久化存储数据
+
+我们需要对数据进行持久化存储，这里我们先来创建一个数据表 user（model/user.js）
+
+```js
+// 数据模型 Users
+module.exports = function (sequelize) {
+    return sequelize.define('User', {
+        id: {
+            type: Sequelize.UUID,
+            allowNull: false,
+            defaultValue: Sequelize.UUIDV4,
+            primaryKey: true, // 主键
+            // autoIncrement: true, // 自增
+        },
+        name: {
+            type: Sequelize.STRING,
+            defaultValue: '',
+            allowNull: false,
+        },
+        password: {
+            type: Sequelize.STRING,
+            defaultValue: '',
+            allowNull: false,
+        }
+    }, {
+        paranoid: true // 软删除策略
+    });
+}
+```
+
+数据模型 Users 的使用：
+
+* 查：findAll | findAndCountAll
+* 增：create | bulkCreate
+* 改：update
+* 删：destroy
+
+```js
+// 在 model/index.js 里面
+const createUser = require('./user');
+const UserModel = createUser(sequelize);
+
+// 创建：create | bulkCreate
+UserModel.sync().then(() => {
+    UserModel.create({ name: 'name1', password: 'pwd1' });
+});
+
+// 查询：findAll | findAndCountAll
+const data = UserModel.findAll({ raw: true }).then(data => {
+    console.log('查询所得数据：：', data);
+});
+
+// 修改：update
+UserModel.update({ name: 'zhuawa2' }, { where: { id: 'xxx' } });
+
+// 删除：destroy
+UserModel.destroy({ where: { name: 'zhuawa2' } });
+```
+
+##### Cookie 鉴权相关
+
+###### 普通办法
+
+```js
+// index.js
+// 签名需要一个加密的 key（签名配置：{signed: true}）
+app.keys = ['hello world'];
+
+router.get('/', function (ctx) {
+    // 获取 cookie 信息
+    const sessionId = ctx.cookies.get('sessionId', { signed: true });
+    if (sessionId) {
+        ctx.body = `当前登录的用户是：${sessionId}`;
+    } else {
+        ctx.body = '还没有登录';
+        // 设置登录信息
+        ctx.cookies.set('sessionId', 'abcd', {
+            signed: true,
+            httpOnly: true, // 只能通过 http 方式访问，防止使用 js 访问修改网站信息
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 一周时长
+        });
+    }
+});
+```
+
+###### 异步中间件
+
+鉴权部分，我们使用 **中间件** 的方式去实现
+
+```js
+const { UserModel } = require('./model');
+
+// 有些部分是不需要鉴权的，要越过中间件鉴权
+router.get('/login', function () {
+    console.log('login...');
+});
+
+// 鉴权部分，我们使用`中间件`的方式去实现
+// KOA 异步中间件
+router.use(async function (ctx, next) {
+    // 获取 cookie 信息
+    // const sessionId = ctx.cookies.get('sessionId', { signed: true });
+    const sessionId = ctx.cookies.get('sessionId');
+    if (sessionId) {
+        // 去数据库查询，看看当前用户信息是否已经存在，若是不存在，需要跳转到注册
+        const user = await UserModel.findOne({
+            where: {
+                id: sessionId
+            }
+        });
+        if (user) {
+            ctx.user = user;
+        }
+    } else {
+        // 没有登录
+        ctx.body = '还没有登录';
+    }
+    return next(); // 注意：这里不能省
+});
+```
+
 #### 前端 fe
 
 ```shell
@@ -114,11 +241,41 @@ npm i --save-dev autoprefixer babel-core babel-loader
 npm i --save-dev webpack
 ```
 
+前端 fe 业务设计：
+
+```shell
+npm run dev
+```
+
+
+
+##### 入口 index.js
+
 #### 后台 admin
+
+```shell
+# 安装依赖包
+npm i bundle-loader es6-promise fastclick
+npm i koa-bodyparser koa-session mysql2 prismjs sequelize
+npm i redux react-redux react-router-dom react-swipe whatwg-fetch
+
+npm i --save-dev autoprefixer babel-core babel-loader
+npm i --save-dev webpack
+```
+
+后台 admin 业务设计：
+
+```shell
+npm run dev
+```
+
+
+
+##### 入口 index.js
 
 =============
 
-## 🌹24:17 / 03:58:31
+## 🌹01:54:38 / 03:58:31
 
 =============
 
