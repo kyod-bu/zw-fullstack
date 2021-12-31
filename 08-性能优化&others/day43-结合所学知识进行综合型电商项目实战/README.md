@@ -257,9 +257,29 @@ npm run dev
 1. 优先处理列表展示
 2. 接下来处理增删改查（需要用到后台管理系统 admin）
 
-##### 入口 index.js
+#### 权限管理设计
 
-#### 后台 admin
+很多时候，我们会基于路由前缀进行权限校验。
+
+1. 用户（对于 Users 数据表，每一行数据就对应一个用户）
+2. 组（对于大型项目来说，典型的一对多场景：一个用户对应多个组）
+3. 权限（一个组可能有多个权限，典型的多对多场景）
+4. 角色（一个权限来说，有不同的角色）
+
+#### 后台系统 admin
+
+接下来，我们给予 vue + element 做一个后台系统
+
+这里，我们使用一些新的 API
+
+```shell
+# 创建 admin 项目的模板
+npx @vue/cli create admin
+```
+
+
+
+#### Others
 
 ```shell
 # 安装依赖包
@@ -270,18 +290,6 @@ npm i redux react-redux react-router-dom react-swipe whatwg-fetch
 npm i --save-dev autoprefixer babel-core babel-loader
 npm i --save-dev webpack
 ```
-
-后台 admin 业务设计：
-
-```shell
-npm run dev
-```
-
-
-
-##### 入口 index.js
-
-demo
 
 ## 业务
 

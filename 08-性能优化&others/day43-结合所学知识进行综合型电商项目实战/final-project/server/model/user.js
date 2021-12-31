@@ -23,6 +23,11 @@ module.exports = function (sequelize) {
             type: Sequelize.STRING,
             defaultValue: '',
             allowNull: false,
+        },
+        role: {
+            type: Sequelize.STRING,
+            defaultValue: 'normal',
+            allowNull: false,
         }
     }, {
         paranoid: true // 软删除策略

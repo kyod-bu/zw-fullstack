@@ -57,8 +57,8 @@ module.exports = {
 // UserModel.sync({ torce: true }).then(() => {
 // UserModel.sync().then(() => {
 //     UserModel.create({
-//         name: 'test-insert',
-//         password: 'pwd'
+//         name: 'test-insert-role',
+//         password: 'rolePwd'
 //     });
 // });
 
