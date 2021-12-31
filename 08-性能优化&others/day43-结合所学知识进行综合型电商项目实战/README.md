@@ -310,26 +310,11 @@ npm run serve
 
 ###### 后台实现（列表｜编辑）
 
-#### Others
+调用一下 element 的组件
 
-```shell
-# 安装依赖包
-npm i bundle-loader es6-promise fastclick
-npm i koa-bodyparser koa-session mysql2 prismjs sequelize
-npm i redux react-redux react-router-dom react-swipe whatwg-fetch
+#### 部署
 
-npm i --save-dev autoprefixer babel-core babel-loader
-npm i --save-dev webpack
-```
-
-## 业务
-
-| path          | component | desc                                        |
-| ------------- | --------- | ------------------------------------------- |
-| "/"           | Home      | 加载组件 ProductList，使用路由 /api/product |
-| "/about"      | About     | 加载组件 UserInfo，使用路由 /api/user       |
-| "/list"       | List      |                                             |
-| "/detail/:id" | Detail    |                                             |
+打包编译之后，生成一堆静态文件，直接部署到服务器就可以啦～
 
 ## 疑问
 
@@ -355,6 +340,14 @@ export default function (props) {
 
 ------样式优先级会比较高。（真正的 class，会加上一串 hash 值，不会冲突，也不会有重复内容）详情见：[styled-components](https://github.com/styled-components/styled-components)
 
-### 3、demo
+### 3、前后台一起部署，注意事项？
 
-------demo
+### 4、sso?
+
+### 5、现在前后端比例一般是怎么计算的？1:1吗？
+
+------不是固定的，但是一般说，后端会比前端多一些（但是编辑器之类的项目，前端肯定需要多一些，比如：语雀/WPS/……）
+
+### 6、http2 现在用的多吗？
+
+------目前来看，用的比较少（新业务的话，可能会多一点吧）

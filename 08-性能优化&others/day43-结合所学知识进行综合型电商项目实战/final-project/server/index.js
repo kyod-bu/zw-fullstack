@@ -88,19 +88,11 @@ router.get('/api/admin/product', async function (ctx) {
 // 补充一下 增、删、改、查 的接口
 // 沿用 /api/admin，方便权限管理
 router.get('/api/admin/product', async function (ctx) {
-    if (ctx.user.role !== 'admin') {
-        // 具体的业务场景里面，会针对不同的角色划分权限
-        // 核心部分，我们可以利用一个中间件来处理，进行一个切面拦截
-        throw new Error('权限不足');
-    }
-    const { perPage = 3, pn = 1 } = ctx.query;
-    const offset = (+pn - 1) * (+perPage);
-    const data = await ProductModel.findAndCountAll({
-        limit: +perPage,
-        offset,
-    });
-    ctx.body = data;
+    // ...
 });
+
+// post 请求 后台管理系统 admin 的接口
+// router.post('/api/admin/demo');
 
 app.use(router.routes());
 app.use(router.allowedMethods());
