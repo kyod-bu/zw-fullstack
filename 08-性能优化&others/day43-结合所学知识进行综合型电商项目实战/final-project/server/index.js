@@ -9,8 +9,8 @@ const serve = require('koa-static');
 
 const { UserModel, ProductModel } = require('./model');
 
-// app.use(serve(__dirname + '/images')); // 静态
-app.use(serve(__dirname + '/public')); // 静态
+// app.use(serve(__dirname + '/images')); // 静态目录
+app.use(serve(__dirname + '/public')); // 静态目录，处理之后，可以访问路径：http://localhost:3000/images/2.png
 
 // 有些部分是不需要鉴权的，要越过中间件鉴权
 router.get('/login', function () {

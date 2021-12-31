@@ -242,15 +242,20 @@ npm i redux react-redux react-router-dom react-swipe whatwg-fetch
 
 npm i --save-dev autoprefixer babel-core babel-loader
 npm i --save-dev webpack
+
+# 节流/防抖
+npm i --save lodash
 ```
 
 前端 fe 业务设计：
 
 ```shell
+# 启动开发环境
 npm run dev
 ```
 
-
+1. 优先处理列表展示
+2. 接下来处理增删改查（需要用到后台管理系统 admin）
 
 ##### 入口 index.js
 
@@ -277,3 +282,40 @@ npm run dev
 ##### 入口 index.js
 
 demo
+
+## 业务
+
+| path          | component | desc                                        |
+| ------------- | --------- | ------------------------------------------- |
+| "/"           | Home      | 加载组件 ProductList，使用路由 /api/product |
+| "/about"      | About     | 加载组件 UserInfo，使用路由 /api/user       |
+| "/list"       | List      |                                             |
+| "/detail/:id" | Detail    |                                             |
+
+## 疑问
+
+### 1、前端项目初始化是如何设计的？
+
+### 2、这样引入样式有什么好处？
+
+```jsx
+import React from 'react';
+import Item from './Item';
+import styles from './list.less';
+
+export default function (props) {
+    return (
+        <div className={styles['list-container']}>
+            {props.data.map((item, index) => {
+                return <Item key={index} data={item} />
+            })}
+        </div>
+    );
+}
+```
+
+------样式优先级会比较高。（真正的 class，会加上一串 hash 值，不会冲突，也不会有重复内容）详情见：[styled-components](https://github.com/styled-components/styled-components)
+
+### 3、demo
+
+------demo
