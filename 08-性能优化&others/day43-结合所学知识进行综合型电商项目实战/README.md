@@ -19,6 +19,9 @@
 npm i --save koa koa-router
 npm i --save nodemon # node monitor
 npm i --save sequelize mysql2
+
+# 处理静态路由（图片）
+npm i --save koa-static
 ```
 
 使用数据库时，老师用了一个数据库的可视化工具 Sequel Pro
@@ -273,33 +276,4 @@ npm run dev
 
 ##### 入口 index.js
 
-=============
-
-## 🌹01:54:38 / 03:58:31
-
-=============
-
-使用 react / vue / sequelize 写一个完整的前后台应用
-
-1. 使用 react 打造商城前端：
-    1.1 商品列表页面
-
-  1.2 商品详情页面
-
-  1.3 购物车页面
-  1.4 结算页面等
-  1.5 使用 ssr 加速页面渲染优化
-
-2. 使用 express 打造商城后端 API：
-    2.1 注册登陆借口/校验中间件
-    2.2 功能的表结构设计 sequelize ORM + mysql 数据库
-    2.3列表/详情/下单 等接口
-
-3. 使用 vue 打造商城后台
-    3.1 基本后台 UI，路由切换
-    3.2 后台能够对商品内容增删改查
-    3.3 后台能看到所有用户信息及权限配置
-
-4. 增加小程序打造一个多端应用配置
-   4.1 小程序多端登陆
-   4.2 小程序的多端下单购买
+demo

@@ -1,5 +1,6 @@
 import React from 'react';
+import ProductList from '../ProductList';
 
 export default function () {
-    return <div>hello world</div>
+    return <div><ProductList /></div>
 }

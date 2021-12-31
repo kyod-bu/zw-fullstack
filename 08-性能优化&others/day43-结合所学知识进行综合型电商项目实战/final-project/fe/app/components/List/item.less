@@ -1,6 +1,41 @@
+// item 左右布局
 .list-item {
-    .item-img-container {}
+    display: flex;
+    height: 75px;
+    margin-bottom: 12px;
+    color: #000;
+    align-items: center;
+    border-bottom: 1px solid #e3e3e3;
+    padding: 0 12px;
+
+    .item-img-container {
+        width: 75px; // 给 img 固定宽度
+        height: 75px;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
     .item-content {
-        .item-title {}
+        flex: 1; // img 剩下的宽度
+        display: flex;
+        justify-content: space-between;
+        padding: 0 4px;
+        .item-title {
+            font-size: 14px;
+            color: #333;
+            .item-subTitle {
+                font-size: 12px;
+                color: #666;
+            }
+        }
+        .item-price-container {
+            .item-price {
+                font-size: 12px;
+            }
+            .item-number {
+                color: aquamarine;
+            }
+        }
     }
 }

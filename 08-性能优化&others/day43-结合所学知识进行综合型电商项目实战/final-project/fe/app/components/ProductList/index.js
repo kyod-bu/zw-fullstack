@@ -3,8 +3,9 @@ import request from '../../util/fetch';
 
 import List from '../List';
 
-export class extends React.Component {
-    constructor() {
+export default class extends React.Component {
+    constructor(props) {
+        super(props);
         this.state = {
             data: [],
             loading: false
@@ -13,10 +14,14 @@ export class extends React.Component {
 
     componentDidMount() {
         this.setState({ loading: true });
-        return request('/api/list')
+        return request('/api/product')
             .then(resp => resp.json())
             .then(data => {
-                this.setState({ data, loading: false });
+                console.log('====', data);
+                this.setState({
+                    data: data.rows,
+                    loading: false
+                });
             });
     }
 

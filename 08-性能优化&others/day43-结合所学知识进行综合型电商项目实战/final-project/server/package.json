@@ -13,6 +13,7 @@
   "dependencies": {
     "koa": "^2.13.4",
     "koa-router": "^10.1.1",
+    "koa-static": "^5.0.0",
     "mysql2": "^2.3.0",
     "nodemon": "^2.0.15",
     "sequelize": "^6.6.5"

@@ -2,19 +2,26 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './item.less';
 
-export default function () {
+export default function ({ data }) {
     return (
-        <div className={styles['list-item']}>
-            <Link to={`/detail/${data.id}`}>
+        <Link to={`/detail/${data.id}`}>
+            <div className={styles['list-item']}>
                 <div className={styles['item-img-container']}>
-                    inijjj
+                    <img src={data.img}></img>
                 </div>
                 <div className={styles['item-content']}>
                     <div className={styles['item-title']}>
-                        jjjj
+                        {data.title}
+                        <div className={styles['item-subTitle']}>
+                            {data.subTitle}
+                        </div>
+                    </div>
+                    <div className={styles['item-price-container']}>
+                        <div className={styles['item-price']}>&yen;{data.price}</div>
+                        <div className={styles['item-number']}>月售{data.number}</div>
                     </div>
                 </div>
-            </Link>
-        </div>
+            </div>
+        </Link>
     );
 }

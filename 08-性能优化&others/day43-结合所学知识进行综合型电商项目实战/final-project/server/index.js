@@ -2,11 +2,15 @@ const Koa = require('koa');
 
 const app = new Koa();
 const router = require('koa-router')();
+const serve = require('koa-static');
 
 // 签名需要一个加密的 key（签名配置：{signed: true}）
 // app.keys = ['hello world'];
 
-const { UserModel } = require('./model');
+const { UserModel, ProductModel } = require('./model');
+
+// app.use(serve(__dirname + '/images')); // 静态
+app.use(serve(__dirname + '/public')); // 静态
 
 // 有些部分是不需要鉴权的，要越过中间件鉴权
 router.get('/login', function () {
@@ -36,16 +40,22 @@ router.get('/', function (ctx) {
     ctx.body = `当前登录的用户是：${ctx.user.name}`;
 });
 
-router.get('/user', function (ctx) {
+router.get('/api/user', function (ctx) {
     ctx.body = {
         user: ctx.user
     };
 });
 
-router.get('/list', function (ctx) {
-    ctx.body = {
-        user: ctx.user
-    };
+router.get('/api/product', async function (ctx) {
+    const { perPage = 3, pn = 1 } = ctx.query;
+    // 计算一下 offset
+    const offset = (+pn - 1) * (+perPage);
+    // 这里我们想要使用`分页`功能，因此选用`findAndCountAll`
+    const data = await ProductModel.findAndCountAll({
+        limit: +perPage,
+        offset,
+    });
+    ctx.body = data;
 });
 
 app.use(router.routes());
