@@ -10,6 +10,7 @@ import {
   Param,
   Res,
   HttpStatus,
+  HttpException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Observable, of } from 'rxjs';
@@ -33,10 +34,15 @@ export class CatsController {
   //   return res.status(HttpStatus.CREATED).send();
   // }
 
+  // @Get()
+  // async findAll(): Promise<Cat[]> {
+  //   // return `This action returns all cats (limit: ${query.limit} items)`;
+  //   this.catsService.findAll();
+  // }
+
   @Get()
-  async findAll(): Promise<Cat[]> {
-    // return `This action returns all cats (limit: ${query.limit} items)`;
-    this.catsService.findAll();
+  async findAll() {
+    throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   // @Get()

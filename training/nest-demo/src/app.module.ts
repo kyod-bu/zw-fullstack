@@ -1,14 +1,32 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { CatsModule } from './cats/cats.module';
-import { DatabaseModule } from './database/database.module';
-import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
+
+import { FormAdminController } from './form-admin/form-admin.controller';
+import { FormAdminModule } from './form-admin/form-admin.module';
+import { FormAdminService } from './form-admin/form-admin.service';
+
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 @Module({
-  imports: [CatsModule, DatabaseModule.forRoot([User])],
+  imports: [
+    UsersModule,
+    FormAdminModule,
+    TypeOrmModule.forRoot(
+      {
+        type: 'mysql',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: 'yafbu',
+        database: 'kyod',
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: true,
+      }
+    ),
+  ],
   controllers: [AppController],
   providers: [AppService],
-  exports: [DatabaseModule],
 })
 export class AppModule {}

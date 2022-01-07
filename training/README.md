@@ -48,14 +48,34 @@ nest g cats-controller cats
 
 ### 中间件（Middleware）
 
-### 异常过滤器
+Nest 中间件实际上等价于 express 中间件。
 
-### 管道
+### 异常过滤器（Filter）
 
-### 守卫
+HttpException
 
-### 拦截器
+### 管道（Pipe）
 
-### 自定义装饰器
+具有 `@Injectable` 装饰器的类。管道应实现 `PipeTransform` 接口。
+
+### 守卫（Guard）
+
+具有 `@Injectable` 装饰器的类。守卫应实现 `CanActivate` 接口。
+
+### 拦截器（Interceptor）
+
+使用 `@Injectable` 装饰器注解的类。拦截器应实现 `NestInterceptor` 接口。
+
+### 自定义装饰器（Decorator）
 
 ## Web
+
+```shell
+# 利用教授教 CRA 初始化项目
+npx create-react-app web-demo --template typescript
+
+# 启动
+cd web-demo
+npm run start
+```
+

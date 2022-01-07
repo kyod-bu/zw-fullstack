@@ -1,0 +1,13 @@
+.login-container {
+  min-height: 100%;
+  margin: 20px;
+}
+
+.login-header {
+  height: 20px;
+  display: block;
+  text-align: center;
+  margin: 40px;
+  font-weight: bold;
+  font-size: 20px;
+}
