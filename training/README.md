@@ -1,6 +1,6 @@
 # 训练项目
 
-使用 
+使用
 
 * TS
 
@@ -71,7 +71,7 @@ HttpException
 ## Web
 
 ```shell
-# 利用教授教 CRA 初始化项目
+# 利用脚手架 CRA 初始化项目
 npx create-react-app web-demo --template typescript
 
 # 启动
