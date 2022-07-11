@@ -104,7 +104,7 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 这些标签常用于显示计算机/编程代码：
 
 ```
-<code>	计算机代码
+<code>	计算机代码（不保留多余的空格和折行）
 <kbd>	键盘码
 <samp>	计算机代码样本
 <tt>	打字机代码
@@ -156,10 +156,10 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 </head>
 ```
 
-### 链接到一个外部样式表 `<link href="*.css">`
+### 链接到一个外部样式表 `<link href="*.css" />`
 
 ```html
-<link rel="stylesheet" type="text/css" href="mystyle.css">
+<link rel="stylesheet" type="text/css" href="mystyle.css" />
 ```
 
 ## HTML 中引入 JavaScript 脚本🌹
@@ -529,19 +529,420 @@ Demo
 <p><a href="http://www.w3school.com.cn" target="iframe_demo">链接文本</a></p>
 ```
 
-## html头部元素 ##
+## 头部 `<head>` 🌹⭐️ ##
 
-- head 定义关于文档的信息
-- title 文档标题
-- base 定义页面上所有链接的默认地址或默认目标
-- link 外部资源
-- meta 关于文档的元数据（name,content,http-equiv,scheme）
-- script 脚本
-- style 文档的样式
+`<head>` 元素是所有头部元素的**容器**。
 
+可以添加到 head 部分的标签：`<title>` 、 `<base>` 、 `<link>` 、 `<meta>` 、 `<script>` 、 `<style>`。
 
+- `<head>` 定义关于文档的信息
 
-## Others:::HTML 统一资源定位器 ##
+- `<title>` 文档标题
+
+- `<base>` 定义页面上所有链接的**默认地址**或默认目标（target）⭐️
+
+- `<link>` 外部资源（样式表）
+
+- `<meta>` 关于文档的元数据（name,content,http-equiv,scheme）⭐️⭐️
+
+  meta 元数据不会显示在页面上，但是对于机器是可读的。
+
+  使用场景：规定页面的描述、关键词、文档的作者、最后修改时间以及其他元数据。
+
+  元数据可用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他 web 服务。
+
+- `<script>` 脚本
+
+- `<style>` 定义文档的样式（head中的css）
+
+```html
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+  <meta http-equiv="Content-Language" content="zh-cn" />
+  <!-- 定义页面的描述信息 -->
+  <meta name="description" content="Free Web tutorials on HTML, CSS, XML" />
+  <!-- 定义页面的关键词 -->
+  <meta name="keywords" content="HTML, CSS, XML" />
+  
+  <base href="http://www.w3school.com.cn/images/"/>
+  <base target="_blank"/>
+  
+  <link rel="stylesheet" type="text/css" href="mystyle.css" />
+  <!-- 内部样式 css -->
+  <style>
+    body { background: red }
+    p { color: blue }
+  </style>
+  
+  <title>文档标题</title>
+</head>
+```
+
+## 布局 div *VS* table 🌹⭐️ ##
+
+### 使用 `<div>` 元素的 HTML 布局
+
+⚠️ `<div>` 元素常用作布局工具，因为能够轻松地通过 CSS 对其进行定位。
+
+常用布局结构：
+
+* 上中下布局 `Header-Content-Footer`
+* 顶部-侧边布局-通栏（多用于应用型的网站）`Header-Sider-Content-Footer`
+* 顶部-侧边布局（多用于展示类网站）`Header-Content-Sider-Content-Footer`
+* 侧边布局（侧边导航可收起）`Sider-Header-Content-Footer`
+* 响应式布局（配置 breakpoint 属性，进行 trigger 交互视窗宽度） ⭐️
+
+```css
+/* 常用布局样式 */
+.header {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 5px;
+}
+.nav {
+  line-height: 30px;
+  background-color: #eeeeee;
+  height: 300px;
+  width: 100px;
+  float: left;
+  padding: 5px;
+}
+.section {
+  width: 350px;
+  float: left;
+  padding: 10px;
+}
+.footer {
+  background-color: black;
+  color: white;
+  clear: both;
+  text-align: center;
+  padding: 5px;
+}
+```
+
+### 使用 HTML5 的网站布局
+
+```txt
+header	定义文档或节的页眉
+nav	定义导航链接的容器
+section	定义文档中的节
+article	定义独立的自包含文章
+aside	定义内容之外的内容（比如：侧栏）
+footer	定义文档或节的页脚
+details	定义额外的细节
+summary	定义 details 元素的标题
+```
+
+### 使用表格的 HTML 布局
+
+⚠️ `<table>` 元素不是作为布局工具而设计的。
+
+`table` 元素的作用是显示表格化的数据。
+
+使用 `table` 元素能够取得布局效果，因为能够通过 CSS 设置表格元素的样式。
+
+```html
+<body>
+  <table class="lamp">
+    <tr>
+      <th><img src="/images/lamp.jpg" alt="Note" style="height:32px;width:32px"></th>
+      <td>The table element was not designed to be a layout tool.</td>
+    </tr>
+  </table>
+  
+  <style>
+    table.lamp {
+      width: 100%;
+      border: 1px solid #d4d4d4;
+    }
+    table.lamp th,td {
+      padding: 10px;
+    }
+    table.lamp td {
+      width: 40px;
+    }
+  </style>
+</body>
+```
+
+## HTML 响应式 Web 设计 ⭐️
+
+响应式 Web 设计（RWD，Responsive Web Design）
+
+RWD 能够以可变尺寸传递网页
+
+RWD 对于平板和移动设备是必须的
+
+* 创建自己的响应式设计（`float: left`）
+
+* 使用 Bootstrap（现成的CSS框架）
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width", initial-scale=1.0 />
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    </head>
+    
+    <body>
+      <div class="contenter">
+        <div class="jumbotron">
+          <h1>Demo</h1>
+          <p>Resize this responsive page!</p>
+        </div>
+      </div>
+      
+      <div class="contenter">
+        <div class="row">
+          <div class="col-md-4">
+            <h2>London</h2>
+            <p>London is the capital city of England.</p>
+            <p>t is the most populous city in the United Kingdom,
+      with a metropolitan area of over 13 million inhabitants.</p>
+          </div>
+          <div class="col-md-4">
+            <h2>London</h2>
+            <p>London is the capital city of England.</p>
+            <p>t is the most populous city in the United Kingdom,
+      with a metropolitan area of over 13 million inhabitants.</p>
+          </div>
+          <div class="col-md-4">
+            <h2>London</h2>
+            <p>London is the capital city of England.</p>
+            <p>t is the most populous city in the United Kingdom,
+      with a metropolitan area of over 13 million inhabitants.</p>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>
+  ```
+
+## HTML5 中新的语义元素
+
+许多网站包含了指示导航、页眉以及页脚的 HTML 代码，例如这些：`<div id="nav"> <div class="header"> <div id="footer">`。
+
+HTML5 提供了定义页面不同部分的新语义元素：
+
+```html
+<article></article>
+<aside></aside>
+<details></details>
+<figcaption></figcaption>
+<figure></figure>
+<footer></footer>
+<header></header>
+<main></main>
+<nav></nav>
+<section></section>
+<time></time>
+
+<!-- section: 文档中的节 
+	根据 W3C 的 HTML 文献：“节（section）是有主题的内容组，通常具有标题”。
+	可以将网站首页划分为：简介、内容、联系信息等节。
+-->
+<section>
+  <h1>WWF</h1>
+  <p>The World Wide Fund for Nature (WWF) is....</p>
+</section>
+
+<!-- article: 独立的自包含内容 
+	文档有其自身的意义，并且可以独立于网站其他内容进行阅读。
+	<article> 元素的使用场景：论坛/博客/新闻
+-->
+<article>
+  <h1>What Does WWF Do?</h1>
+  <p>WWF's mission is to stop the degradation of our planet's natural environment,
+  and build a future in which humans live in harmony with nature.</p>
+</article>
+
+<!--
+	在 HTML5 中，<article>元素定义完整的相关元素自包含块。
+	<section>元素定义为相关元素块。
+-->
+
+<!-- header 元素为文档或节规定`页眉`。
+	<header>元素应该被用作介绍性内容的容器。
+	您可以在一个文档中使用多个 <header> 元素。
+-->
+<article>
+  <header>
+    <h1>What Does WWF Do?</h1>
+    <p>WWF's mission:</p>
+  </header>
+  <p>WWF's mission is to stop the degradation of our planet's natural environment,
+  and build a future in which humans live in harmony with nature.</p>
+</article>
+
+<!-- footer 元素为文档或节规定`页脚`。
+	<footer> 元素应该提供有关其包含元素的信息。
+	页脚通常包含文档的作者、版权信息、使用条款链接、联系信息等等。
+	您可以在一个文档中使用多个 <footer> 元素。
+-->
+<footer>
+  <p>Posted by: Hege Refsnes</p>
+  <p>Contact information: <a href="mailto:someone@example.com">
+  someone@example.com</a>.</p>
+</footer>
+
+<!-- nav 元素定义导航链接集合。
+	<nav> 元素旨在定义大型的导航链接块。不过，并非文档中所有链接都应该位于 <nav> 元素中！
+-->
+<nav>
+  <a href="/html/">HTML</a> |
+  <a href="/css/">CSS</a> |
+  <a href="/js/">JavaScript</a> |
+  <a href="/jquery/">jQuery</a>
+</nav>
+
+<!-- aside 元素页面主内容之外的某些内容（比如侧栏）。
+	aside 内容应该与周围内容相关。
+-->
+<p>My family and I visited The Epcot center this summer.</p>
+<aside>
+  <h4>Epcot Center</h4>
+  <p>The Epcot Center is a theme park in Disney World, Florida.</p>
+</aside> 
+
+<!-- figure 和 figcaption 元素
+	在书籍和报纸中，与图片搭配的标题很常见。
+	标题（caption）的作用是为图片添加可见的解释。
+	通过 HTML5，图片和标题能够被组合在 <figure> 元素中：
+-->
+<figure>
+  <!-- img 元素定义图像 -->
+  <img src="pic_mountain.jpg" alt="The Pulpit Rock" width="304" height="228">
+  <!-- figcaption 元素定义标题 -->
+  <figcaption>Fig1. - The Pulpit Pock, Norway.</figcaption>
+</figure> 
+```
+
+### 为何使用 HTML5 元素？
+
+如果使用 HTML4 的话，开发者会使用他们喜爱的属性名来设置页面元素的样式：header, top, bottom, footer, menu, navigation, main, container, content, article, sidebar, topnav, ... 如此，浏览器便无法识别正确的网页内容。
+
+而通过 HTML5 元素，比如：`<header> <footer> <nav> <section> <article>`，此问题迎刃而解。
+
+根据 W3C，语义网：<q>允许跨应用程序、企业和团体对数据进行分享和重用。</q>
+
+### HTML5 中的语义元素
+
+```html
+<article>	<!-- 定义文章 -->
+<aside>	<!-- 定义页面内容以外的内容 -->
+<details>	<!-- 定义用户能够查看或隐藏的额外细节 -->
+<figcaption>	<!-- 定义 figure 元素的标题 -->
+<figure>	<!-- 规定自包含内容，比如图示、图表、照片、代码清单等 -->
+<header>	<!-- 规定文档或节的页眉 -->
+<footer>	<!-- 定义文档或节的页脚 -->
+<main>	<!-- 规定文档的主内容 -->
+<mark>	<!-- 定义重要的或强调的文本 -->
+<nav>	<!-- 定义导航链接 -->
+<section>	<!-- 定义文档中的节 -->
+<summary>	<!-- 定义 details 元素的可见标题 -->
+<time>	<!-- 定义日期/时间 -->
+```
+
+## HTML 实体
+
+参考文档：https://www.w3school.com.cn/html/html_entities.asp
+
+HTML 中的预留字符必须被替换为字符实体。
+
+⚠️ 使用实体名而不是数字的好处是，名称易于记忆。不过坏处是，浏览器也许并不支持所有实体名称（对实体数字的支持却很好）。
+
+```html
+<!-- HTML 中常用的字符实体 -->
+显示结果	描述	实体名称	实体编号
+ 	空格	&nbsp;	&#160;
+<	小于号	&lt;	&#60;
+>	大于号	&gt;	&#62;
+&	和号	&amp;	&#38;
+"	引号	&quot;	&#34;
+¥	元（yen）	&yen;	&#165;
+©	版权（copyright）	&copy;	&#169;
+×	乘号	&times;	&#215;
+÷	除号	&divide;	&#247;
+```
+
+## HTML 符号
+
+键盘上不存在的字符也可以由实体代替。
+
+1. 普通键盘上不存在的众多数学、技术和货币符号。
+2. 希腊字母
+3. 其他实体
+
+## HTML 表情符号（Emoji） ##
+
+**表情符号（Emoji）是来自 UTF-8 字符集的字符：😄 😍 💗**
+
+### 什么是 Emoji？
+
+表情符号（Emoji）类似图像或图标，但它们并不是。
+
+它们来自 UTF-8（Unicode）字符集的字母（字符）。
+
+⚠️ UTF-8 几乎涵盖世界上所有字符和符号。
+
+### HTML charset 属性
+
+为了正确显示 HTML 页面，Web 浏览器必须知道页面中使用的字符集。
+
+```html
+<meta charset="UTF-8" /> <!-- 如果未规定，UTF-8 则是 HTML 中的默认字符集。-->
+```
+
+### UTF-8 字符
+
+很多 UTF-8 字符无法在键盘上键入，但始终可以使用数字（被称为实体编号）来显示它们：
+
+* A -> 65
+* B -> 66
+* C -> 67
+
+Emoji 字符：
+
+* 😄 是 128516
+* 😍 是 128525
+* 💗 是 128151
+
+⚠️ 由于表情符号是字符，因此可以像 HTML 中的其他任何字符一样复制、显示和调整它们的大小。
+
+## HTML 编码（字符集） ##
+
+**为了正确显示 HTML 页面，Web 浏览器必须知道要使用哪个字符集。**
+
+### 从 ASCII 到 UTF-8
+
+ASCII 是第一个字符编码标准。**ASCII 定义了 128 种**可以在互联网上使用的字符：数字（0-9）、英文字母（A-Z）和一些特殊字符，比如：! $ + - ( ) @ < >。
+
+**ISO-8859-1 是 HTML 4 的默认字符集**。此字符集支持 256 个不同的字符代码。HTML 4 同时支持 UTF-8。
+
+ANSI（Windows-1252）是原始的 Windows 字符集。 ANSI 与 ISO-8859-1 相同，不同之处在于 ANSI 具有 32 个额外的字符。
+
+**HTML5 规范鼓励 Web 开发人员使用 UTF-8 字符集，该字符集涵盖了世界上几乎所有的字符和符号！**⭐️
+
+### HTML charset 属性
+
+```html
+<meta charset="UTF-8" />
+```
+
+### 字符集之间的差异
+
+参考：https://www.w3school.com.cn/html/html_charset.asp
+
+* ASCII 字符集
+* ANSI 字符集
+* ISO-8859-1 字符集
+* UTF-8 字符集
+
+## HTML 统一资源定位器（URL） ##
 
 URL（Uniform Resource Locator），译为“统一资源定位符”
 

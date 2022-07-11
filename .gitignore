@@ -22,9 +22,16 @@ yarn.lock
 *.log*
 
 # other
-/other
+# /other
+/interview
+/training
 /npm_project
 unsplash
+powerlevel10k的配置项.txt
+打造一个完美的 shell command line 环境.md
+zshrc.txt
+
+/08-性能优化&others/day43-结合所学知识进行综合型电商项目实战/webpack-study-project
 
 # 源码
 node-v14.17.6
