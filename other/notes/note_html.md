@@ -178,13 +178,13 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 ```html
 <script>
   document.getElementById('demo_button').innerHTML = Date();
-  
+
   // 脚本更改`内容`
   document.getElementById('demo_context').innerHTML = "Hello JavaScript!";
-  
+
   // 脚本更改`样式`
   document.getElementById('demo_style').style.color = "red";
-  
+
   // 脚本更改`属性`
   document.getElementById('demo_image').src = "picture.gif";
 </script>
@@ -261,7 +261,7 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
   ```html
   <!-- 未设置对齐方式的图像： -->
   图像 <img src ="/i/eg_cute.gif"> 在文本中</p>
-  
+
   <!-- 已设置对齐方式的图像：（默认 bottom） -->
   图像 <img src="/i/eg_cute.gif" align="bottom"> 在文本中
   图像 <img src ="/i/eg_cute.gif" align="middle"> 在文本中
@@ -272,14 +272,14 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 
   ```html
   <!-- 图像将浮动到文本的左侧 -->
-  <img src ="/i/eg_cute.gif" align ="left"> 
+  <img src ="/i/eg_cute.gif" align ="left">
   ```
 
 * 调整图像尺寸 `<img src="/eg_mouse.jpg" alt="替换文本" width="104" height="142" />`
 
 * 为图片显示替换文本 （alt 属性）
 
-* 制作图像链接 
+* 制作图像链接
 
   ```html
   <a href="/example/html/lastpage.html">
@@ -298,7 +298,7 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
       <area shape="circle" coords="129,161,10" href ="/example/html/mercur.html" target ="_blank" alt="Mercury" />
       <area shape="rect" coords="0,0,110,260" href ="/example/html/sun.html" target ="_blank" alt="Sun" />
     </map>
-  
+
     <p>⚠️ img 元素中的 "usemap" 属性引用 map 元素中的 "id" 或 "name" 属性（根据浏览器），所以我们同时向 map 元素添加了 "id" 和 "name" 属性。</p>
   </body>
   ```
@@ -336,11 +336,11 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
     <tr>
       <th>表头1</th>
       <th>表头2</th>
-    </tr> 
+    </tr>
     <tr>
       <td>First</td>
       <td>Row</td>
-    </tr>   
+    </tr>
     <tr>
       <td>Second</td>
       <td>Row</td>
@@ -459,7 +459,7 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
   <li>Milk</li>
 </ol>
 
-<!-- 
+<!--
 	type属性，编号类型（A，大写字母；a,小写字母；I，罗马字母；i，小写罗马字母）
 	start属性，序号起始；
 -->
@@ -500,16 +500,61 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 
 Demo
 
-## HTML 框架 `<frame>` 🌹 ##
+## HTML 框架 `<frameset>` 🌹 ##
 
 通过使用框架，你可以在同一个浏览器窗口中显示不止一个页面。
 
 ```html
-<frameset cols="25%, 75%">
-  <frame src="frame_a.htm">
-  <frame src="frame_a.htm">
+<!-- 垂直框架: cols属性 -->
+<frameset cols="25%, 50%, 25%">
+  <frame src="/example/frame_a.html">
+  <frame src="/example/frame_b.html">
+  <frame src="/example/frame_c.html">
+</frameset>
+
+<!-- 水平框架：rows属性 -->
+<frameset rows="25%, 50%, 25%">
+  <frame src="/example/frame_a.html">
+  <frame src="/example/frame_b.html">
+  <frame src="/example/frame_c.html">
 </frameset>
 ```
+
+通过使用框架，你可以在同一个浏览器窗口中显示不止一个页面。每份HTML文档称为一个框架，并且每个框架都独立于其他的框架。
+
+使用框架 `<frameset>` 的坏处：
+
+* 开发人员必须同时跟踪更多的 HTML 文档
+* 很难打印整张页面
+
+### 框架结构标签 `<frameset>`
+
+框架结构标签（`<frameset>`）定义如何将窗口分割为框架。
+
+每个 frameset 定义了一系列行**或**列。
+
+rows/cols 的值规定了每行或每列占据屏幕的面积。
+
+⚠️ frameset 标签也称为**框架集**。
+
+### 框架标签 `<frame>`
+
+`frame` 标签定义了放置在每个框架中的 HTML 文档。
+
+```html
+<frameset rows="25%, 75%">
+  <frame src="/example/frame_a.html">
+  <frame src="/example/frame_b.html">
+</frameset>
+```
+
+### 注意事项
+
+假如一个框架有可见边框，用户可以拖动边框来改变它的大小。为了避免这种情况发生，可以在 `<frame>` 标签中加入 `noresize="noresize"` 。
+
+为不支持框架的浏览器添加 `<noframes>` 标签。
+
+‼️ 不能将 `<body></body>` 标签与 `<frameset></frameset>` 标签同时使用！不过，假如你添加包含一段文本的 `<noframes>` 标签，就必须将这段文字嵌套于 `<body></body>` 标签内。
 
 ### ⭐️ HTML 内联框架 `iframe` ###
 
@@ -519,15 +564,117 @@ Demo
 
 ```html
 <!-- 设置高度和宽度 -->
-<iframe src="demo_iframe.htm" width="200" height="200"></iframe>
+<iframe src="demo_iframe.html" width="200" height="200"></iframe>
 
 <!-- 删除边框，frameborder置0 -->
-<iframe src="demo_iframe.htm" frameborder="0"></iframe>
+<iframe src="demo_iframe.html" frameborder="0"></iframe>
 
 <!-- iframe 可用作链接的目标（target），target 属性必须引用 iframe 的name属性 -->
-<iframe src="demo_iframe.htm" name="iframe_demo"></iframe>
+<iframe src="demo_iframe.html" name="iframe_demo"></iframe>
 <p><a href="http://www.w3school.com.cn" target="iframe_demo">链接文本</a></p>
 ```
+
+### 举例：
+
+```html
+<!-- 1.如何使用 <noframes> 标签 -->
+<html>
+  <frameset cols="25%, 50%, 25%">
+    <frame src="/example/frame_a.html" />
+    <frame src="/example/frame_b.html" />
+    <frame src="/example/frame_c.html" />
+
+    <noframes>
+      <body>
+        您的浏览器无法处理框架！
+      </body>
+    </noframes>
+  </frameset>
+</html>
+
+<!-- 2.混合框架结构 -->
+<html>
+  <frameset rows="50%, 50%">
+    <frame src="/example/frame_a.html" />
+    <frameset cols="25%, 75%">
+      <frame src="/example/frame_b.html" />
+      <frame src="/example/frame_c.html" />
+    </frameset>
+  </frameset>
+</html>
+
+<!-- 3.含有 noresize="noresize" 属性的框架结构 -->
+
+<!-- 4.导航框架
+	导航框架包含一个将第二个框架作为目标的链接列表。名为 "contents.html" 的文件包含三个链接。
+-->
+<html>
+  <frameset cols="120, *">
+    <frame src="/demo/html/content.html" />
+    <frame src="/example/html/frame_a.html" name="showframe" />
+
+    <!-- 6.跳转至框架内的一个指定的节：使用 <a name="C10"> 进行标识。-->
+    <frame src="/example/html/frame_a.html" />
+    <frame src="/example/html/link.html#C10" />
+  </frameset>
+</html>
+
+<!-- 5.内联框架 -->
+<html>
+  <body>
+    <iframe src="/i/eg_landscape.jpg"></iframe>
+    <p>⚠️ 一些老的浏览器不支持 iframe。</p>
+    <p>如果得不到支持，iframe 是不可见的。</p>
+  </body>
+</html>
+
+<!-- 7.使用框架导航跳转至指定的节
+	左侧的导航框架包含了一个链接列表，这些链接将第二个框架作为目标。第二个框架显示被链接的文档。导航框架其中的链接指向目标文件中指定的节。
+-->
+<html>
+  <frameset cols="180, *">
+    <frame src="/demo/html/content.html" />
+    <frame src="/example/html/link.html" name="showframe" />
+  </frameset>
+</html>
+```
+
+## 背景（bgcolor *VS* background）
+
+**好的背景使站点看上去特别棒。**
+
+`<body>` 拥有两个配置背景的属性。背景可以是**颜色**或者**图像**。
+
+```html
+<!-- 背景颜色：bgcolor -->
+<body bgcolor="#000000"></body>
+<body bgcolor="rgb(0,0,0)"></body>
+<body bgcolor="black"></body>
+
+<!-- 背景：background -->
+<body background="clouds.gif"></body>
+<body background="http://www.w3school.com.cn/clouds.gif"></body>
+<!--
+	gif 和 jpg 文件均可用作 HTML 背景。
+	如果图像小于页面，图像会进行重复。
+
+	可用性强的背景图像：
+	/i/eg_bg_06.gif（即，http://www.w3school.com.cn/i/eg_bg_06.gif）
+	/i/eg_bg_04.gif
+-->
+```
+
+⚠️ 如果你打算使用背景图片，需要注意一下几点：
+
+* 背景图片是否增加了页面的**加载时间**。（⚠️ 图像文件不应超过 10k。）
+* 背景图像是否与页面中的**其它图像**搭配良好。
+* 背景图像是否与页面中的**文字颜色**搭配良好。
+* 图像在页面中**平铺后**，看上去还可以吗？
+* 对文字的注意力被背景图像**喧宾夺主**了吗？
+
+‼️`<body>` 标签中的背景颜色（bgcolor）、背景（background）和文本（text）属性在最新的 HTML 标准（HTML4 和 XHTML）中**已被废弃**。W3C 在他们的推荐标准中已删除这些属性。
+
+👍 应该使用层叠样式表（CSS）来定义 HTML 元素的布局和显示属性。
 
 ## 头部 `<head>` 🌹⭐️ ##
 
@@ -563,17 +710,17 @@ Demo
   <meta name="description" content="Free Web tutorials on HTML, CSS, XML" />
   <!-- 定义页面的关键词 -->
   <meta name="keywords" content="HTML, CSS, XML" />
-  
+
   <base href="http://www.w3school.com.cn/images/"/>
   <base target="_blank"/>
-  
+
   <link rel="stylesheet" type="text/css" href="mystyle.css" />
   <!-- 内部样式 css -->
   <style>
     body { background: red }
     p { color: blue }
   </style>
-  
+
   <title>文档标题</title>
 </head>
 ```
@@ -651,7 +798,7 @@ summary	定义 details 元素的标题
       <td>The table element was not designed to be a layout tool.</td>
     </tr>
   </table>
-  
+
   <style>
     table.lamp {
       width: 100%;
@@ -687,7 +834,7 @@ RWD 对于平板和移动设备是必须的
       <meta name="viewport" content="width=device-width", initial-scale=1.0 />
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     </head>
-    
+
     <body>
       <div class="contenter">
         <div class="jumbotron">
@@ -695,7 +842,7 @@ RWD 对于平板和移动设备是必须的
           <p>Resize this responsive page!</p>
         </div>
       </div>
-      
+
       <div class="contenter">
         <div class="row">
           <div class="col-md-4">
@@ -741,7 +888,7 @@ HTML5 提供了定义页面不同部分的新语义元素：
 <section></section>
 <time></time>
 
-<!-- section: 文档中的节 
+<!-- section: 文档中的节
 	根据 W3C 的 HTML 文献：“节（section）是有主题的内容组，通常具有标题”。
 	可以将网站首页划分为：简介、内容、联系信息等节。
 -->
@@ -750,7 +897,7 @@ HTML5 提供了定义页面不同部分的新语义元素：
   <p>The World Wide Fund for Nature (WWF) is....</p>
 </section>
 
-<!-- article: 独立的自包含内容 
+<!-- article: 独立的自包含内容
 	文档有其自身的意义，并且可以独立于网站其他内容进行阅读。
 	<article> 元素的使用场景：论坛/博客/新闻
 -->
@@ -806,7 +953,7 @@ HTML5 提供了定义页面不同部分的新语义元素：
 <aside>
   <h4>Epcot Center</h4>
   <p>The Epcot Center is a theme park in Disney World, Florida.</p>
-</aside> 
+</aside>
 
 <!-- figure 和 figcaption 元素
 	在书籍和报纸中，与图片搭配的标题很常见。
@@ -818,7 +965,7 @@ HTML5 提供了定义页面不同部分的新语义元素：
   <img src="pic_mountain.jpg" alt="The Pulpit Rock" width="304" height="228">
   <!-- figcaption 元素定义标题 -->
   <figcaption>Fig1. - The Pulpit Pock, Norway.</figcaption>
-</figure> 
+</figure>
 ```
 
 ### 为何使用 HTML5 元素？
@@ -919,7 +1066,7 @@ Emoji 字符：
 
 ### 从 ASCII 到 UTF-8
 
-ASCII 是第一个字符编码标准。**ASCII 定义了 128 种**可以在互联网上使用的字符：数字（0-9）、英文字母（A-Z）和一些特殊字符，比如：! $ + - ( ) @ < >。
+ASCII 是第一个字符编码标准。**ASCII 定义了 128 种**可以在互联网上使用的字符：**数字（0-9）**、**英文字母（A-Z）**和一些**特殊字符**，比如：`! $ + - ( ) @ < >`。
 
 **ISO-8859-1 是 HTML 4 的默认字符集**。此字符集支持 256 个不同的字符代码。HTML 4 同时支持 UTF-8。
 
@@ -937,28 +1084,88 @@ ANSI（Windows-1252）是原始的 Windows 字符集。 ANSI 与 ISO-8859-1 相�
 
 参考：https://www.w3school.com.cn/html/html_charset.asp
 
-* ASCII 字符集
-* ANSI 字符集
-* ISO-8859-1 字符集
-* UTF-8 字符集
+* **ASCII 字符集：**（**128种**，数字0～9、英文字母a~zA~Z、特殊字符）
+* **ANSI 字符集：**（原始的Windows字符集，与ISO-8859-1相同，另外有**32个**额外的字符）
+* **ISO-8859-1 字符集：**（**256个**不同的字符）
+* **UTF-8 字符集：**（包含**超过 10000 个**不同字符，涵盖了世界上几乎所有的字符和符号！推荐👍）
+
+### `@charset` CSS 规则
+
+可以使用 CSS `@charset` 规则来指定样式表中使用的字符编码。
+
+```css
+/* 将样式表的编码设置为 Unicode UTF-8 */
+@charset "UTF-8";
+```
 
 ## HTML 统一资源定位器（URL） ##
 
-URL（Uniform Resource Locator），译为“统一资源定位符”
+URL（Uniform Resource Locator），译为“统一资源定位符”，也被称为**网址**。
 
-网址，遵守以下的语法规则：
+当你点击 HTML 页面中的某个链接时，对应的 `<a>` 标签指向万维网上的一个地址。
 
-    eg：http://www.w3school.com.cn/html/index.asp
-    
-    scheme://host.domain:port/path/filename
+统一资源定位器（URL）用于定位万维网上的文档（或其他数据）。
+
+```txt
+例如：
+http://www.w3school.com.cn/html/index.asp
+file:///Users/testuser/workspace/demo.html
+
+💡【规则】网址，遵守以下的语法规则：
+scheme://host.domain:port/path/filename
+
+两种写法，效果一样的（`http://host:port/` -> `http://domain/`）
+域名：http://localhost/ 👍（名称比数字好记）
+因特网协议（IP）地址：http://127.0.0.1:80/
+```
 
 **解释：**
 
-- scheme - 定义因特网服务的类型。（http，https，ftp，files）
-- host - 定义域主机（http 的默认主机是 www）
-- domain - 定义因特网域名，比如 w3school.com.cn
-- port - 定义主机上的端口号（http 的默认端口号是 80）
-- path - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）
-- filename - 定义文档/资源的名称
+- **scheme** - 定义因特网服务的类型。（流行的scheme：http，https，ftp，file）
+  * http：超文本传输协议（以 http:// 开头的普通网页。不加密。）
+  * https：安全超文本传输协议（安全网页。**加密**所有信息交换。）
+  * ftp：文件传输协议（用于将文件**下载**或**上传**至网站）
+  * file：（您计算机上的文件）
+- **host** - 定义域主机（http 的默认主机是 www）
+- **domain** - 定义因特网域名，比如 w3school.com.cn
+- **port** - 定义主机上的端口号（http 的默认端口号是 80）
+- **path** - 定义服务器上的路径（如果省略，则文档必须位于网站的根目录中）
+- **filename** - 定义文档/资源的名称
 
-**URL 只能使用 ASCII 字符集来通过因特网进行发送。**
+### URL 编码
+
+**URL 编码会将字符转换为可通过因特网传输的格式。**
+
+Web 浏览器通过 URL 从 web 服务器请求页面。（URL 是网页的地址，比如 *http://www.w3school.com.cn*。）
+
+‼️⭐️⚠️ **URL 只能使用 [ASCII 字符集](https://www.w3school.com.cn/charsets/ref_html_ascii.asp) 来通过因特网进行发送。**
+
+由于 URL 常常会包含 ASCII 集合之外的字符，URL 必须转换为有效的 ASCII 格式。
+
+URL 编码使用 "%" 其后跟随两位的十六进制数来替换非 ASCII 字符。
+
+URL 不能包含空格。URL 编码通常使用 + 来替换空格。
+
+🌰 URL 编码示例：[完整的 URL 编码参考手册](https://www.w3school.com.cn/tags/html_ref_urlencode.asp)
+
+```txt
+字符	URL 编码
+€	%80
+£	%A3
+©	%A9
+®	%AE
+À	%C0
+Á	%C1
+Â	%C2
+Ã	%C3
+Ä	%C4
+Å	%C5
+```
+
+## Web 服务器（Web Server） 🌹
+
+**如果希望向世界发布您的网站，那么您必须把它存放在 web 服务器上。**
+
+### 托管自己的网站
+
+在自己的服务器上托管网站始终是一个选项。
