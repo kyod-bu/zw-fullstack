@@ -496,9 +496,158 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
   </select>
   <textarea name="Comment" rows="4" cols="20"></textarea>
 </form>
+
+<!--
+	<input> 元素的类型（type）有：text/radio/submit
+	<input> 元素的属性有：type/name/value/checked
+	⚠️ text 的默认宽度是 20 个字符。
+-->
 ```
 
-Demo
+**表单元素**指的是不同类型的 input 元素、复选框、单选按钮、提交按钮等等。
+
+表单（form）的 **action 属性** 定义在提交表单时执行的动作。
+
+表单（form）的 **method 属性** 规定在提交表单时所用的 HTTP 方法（GET 或 POST）。
+
+💡用 `<fieldset>` **组合**表单数据
+
+```html
+<form action="action_page.php" method="get" target="_blank" accept-charset="utf-8">
+  <fieldset>
+    <legend>Personal information:</legend>
+    First name:<br />
+    <input type="text" name="firstname" value="Mickey" />
+    <br />
+    Last name:<br />
+    <input type="text" name="lastname" value="Mouse" />
+    <br /><br />
+    <input type="submit" value="Submit" />
+  </fieldset>
+</form>
+```
+
+### 表单属性
+
+* accept-charset	规定在被提交表单中使用的字符集（默认：页面字符集）
+
+* action	规定向何处提交表单的地址（URL）（提交页面）
+
+* autocomplete	规定浏览器应该自动完成（填写）表单（默认：开启）
+
+* enctype	规定被提交数据的编码（默认：url-encoded）（⚠️ 仅供 `method="post"`）
+
+* method	规定在提交表单时所用的 HTTP 方法（默认：GET）
+
+  * GET 的注意事项：
+    * 永远不要使用 GET 发送敏感数据（提交的表单数据在 URL 中可见）
+    * URL 的长度受限（2048 个字符）
+    * 对于用户希望将结果添加为书签的表单提交很有用
+    * GET 适用于非安全数据，例如 Google 中的查询字符串
+  * POST 的注意事项：
+    * 将表单数据附加在 HTTP 请求的正文中（不在URL中显示提交的表单数据）
+    * POST 没有大小限制，可用于发送大量数据
+    * 带有 POST 的表单提交，无法添加书签
+
+  ❗️❗️❗️如果表单数据包含敏感信息或个人信息，请务必使用 POST！
+
+* name	规定识别表单的名称（对于 DOM 使用：`document.forms.name`）
+
+* novalidate	规定提交时浏览器不应验证表单
+
+* rel	规定链接资源和当前文档之间的关系
+
+* target	规定 action 属性中地址的目标（默认：`_self` ，另外的：`_blank` `_self` `_parent` `_top` `framename`）
+
+### 表单元素
+
+```html
+<!-- 根据 type 属性，可以变化为多种形态 -->
+<input />
+
+<!-- 下拉列表 -->
+<select name="cars">
+  <option value="volvo">Volvo</option> <!-- 待选项 -->
+  <option value="saab">Saab</option>
+  <option value="fiat" selected>Fiat</option> <!--预定义选项-->
+  <option value="audi">Audi</option>
+</select>
+
+<!-- 多行输入字段 -->
+<textarea name="message" rows="10" cols="30">
+  The cat was playing in the garden.
+</textarea>
+
+<!-- 按钮 -->
+<button type="button" onclick="alert('Hello World!')">Click Me!</button>
+
+
+<!-- HTML5 新增表单元素 -->
+<!-- datalist 元素为 input 元素规定预定义选项列表，用户会在它们输入数据时看到预定义选项的下拉列表 -->
+<form action="action_page.php">
+  <input list="browsers" />
+  <datalist id="browsers">	<!-- 💡<input>的list属性必须引用<datalist>的id属性 -->
+    <option value="Internet Explorer" />
+    <option value="Firefox" />
+    <option value="Chrome" />
+    <option value="Opera" />
+    <option value="Safari" />
+  </datalist>
+</form>
+
+<!-- Others -->
+<keygen></keygen>
+<output></output>
+```
+
+### 输入类型 `<input type="*"/>`
+
+```html
+<!-- 根据 type 属性，可以变化为多种形态 -->
+<input type="text" /> <!--文本输入-->
+<input type="password" /> <!--密码字段-->
+<input type="submit" /> <!--定义表单数据至“表单处理程序”的按钮-->
+<input type="radio" /> <!--单选按钮-->
+<input type="checkbox" /> <!--复选框，复选框允许用户在有限数量的选项中选择零个或多个选项-->
+<input type="button" /> <!--按钮-->
+
+<!-- HTML5 新增输入类型 -->
+<!-- color/date/datetime/datetime-local/email/month/number/range/search/tel/time/url/week -->
+<input type="number" /> <!--用于应该包含“数字值”的输入字段，能够对数字作出限制-->
+<input type="date" /> <!--用于应该包含“日期”的输入字段-->
+<input type="color" /> <!--用于应该包含“颜色”的输入字段-->
+<input type="range" /> <!--用于应该包含“一定范围内的值”的输入字段-->
+<input type="month" /> <!--允许用户选择月份和年份-->
+<input type="week" /> <!--允许用户选择周和年-->
+<input type="time" /> <!--允许用户选择时间（无时区）-->
+<input type="datetime" /> <!--允许用户选择日期和时间（有时区）-->
+<input type="datetime-local" /> <!--允许用户选择日期和时间（无时区）-->
+<input type="email" /> <!--用于应该包含“电子邮件”的输入字段，能够在提交时自动对电子邮件地址进行验证-->
+<input type="search" /> <!--用于搜索字段（搜索字段的表现类似常规的文本字段）-->
+<input type="tel" /> <!--用于应该包含“电话号码”的输入字段-->
+<input type="url" /> <!--用于应该包含“URL”的输入字段，在提交时能够自动验证 URL 字段-->
+```
+
+### 输入属性（输入限制）
+
+* disabled	规定输入字段应该被禁用
+* max	规定输入字段的最大值
+* maxlength	规定输入字段的最大字符数
+* min	规定输入字段的最小值
+* pattern	规定通过其检查输入值的正则表达式
+* readonly	规定输入字段为只读（无法修改）
+* required	规定输入字段是必需的（必需填写）
+* size	规定输入字段的宽度（以字符计）
+* step	规定输入字段的合法数字间隔
+* value	规定输入字段的默认值（⭐️初始值）
+
+**HTML5 属性**
+
+HTML5 为 `<input />` 增加了属性：`autocomplete` `autofocus` `form` `formaction` `formenctype` `formmethod` `formnovalidate` `formtarget` `height` `width` `list` `min` `max` `multiple` `pattern(ragexp)` `placeholder` `required` `step`
+
+并为 `<form>` 增加了属性：`autocomplete` `novalidate`
+
+### Input 表单属性
 
 ## HTML 框架 `<frameset>` 🌹 ##
 
@@ -834,7 +983,7 @@ RWD 对于平板和移动设备是必须的
       <meta name="viewport" content="width=device-width", initial-scale=1.0 />
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     </head>
-
+  
     <body>
       <div class="contenter">
         <div class="jumbotron">
@@ -842,7 +991,7 @@ RWD 对于平板和移动设备是必须的
           <p>Resize this responsive page!</p>
         </div>
       </div>
-
+  
       <div class="contenter">
         <div class="row">
           <div class="col-md-4">

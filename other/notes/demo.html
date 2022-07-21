@@ -45,5 +45,23 @@
 
         <button type="button" onclick="document.getElementById('demo_button').innerHTML = Date()">点击我来显示日期和时间</button>
         <p id="demo_button"></p>
+
+        <form action="demo.php" method="get">
+          <input type="text" value="testing" name="testInput" />
+          <input type="submit" value="提交按钮名称" />
+        </form>
+
+        <form action="action_page.php">
+          <fieldset>
+            <legend>Personal information:</legend>
+            First name:<br />
+            <input type="text" name="firstname" value="Mickey" />
+            <br />
+            Last name:<br />
+            <input type="text" name="lastname" value="Mouse" />
+            <!-- <br /><br /> -->
+            <input type="submit" value="Submit" />
+          </fieldset>
+        </form>
     </body>
 </html>
