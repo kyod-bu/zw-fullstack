@@ -2191,7 +2191,102 @@ URL 不能包含空格。URL 编码通常使用 + 来替换空格。
 
 ### HTML 5 简介
 
-### HTML 5 支持
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo</title>
+  </head>
+  <body>
+    <video width="420" controls>
+      <source src="mov_bbb.mp4" type="video/mp4">
+      <source src="mov_bbb.ogg" type="video/ogg">
+      Your browser does not support the video tag.
+    </video>
+  </body>
+</html>
+```
+
+#### 什么是 HTML5？
+
+HTML5 是最新的 HTML 标准。
+
+HTML5 是专门为承载丰富的 web 内容而设计的，并且无需额外插件。
+
+HTML5 拥有新的语义、图形以及多媒体元素。
+
+HTML5 提供的新元素和新的 API 简化了 web 应用程序的搭建。
+
+HTML5 是跨平台的，被设计为在不同类型的硬件（PC、平板、手机、电视机等等）之上运行。
+
+#### HTML5 中的新内容？
+
+HTML5 的新的文档类型（DOCTYPE）声明非常简单：`<!DOCTYPE html>`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title of the document</title>
+  </head>
+  
+  <body>
+    Content of the document......
+  </body>
+</html>
+```
+
+⚠️ HTML5 中默认的字符编码是 UTF-8。
+
+#### HTML5 - 新的属性语法
+
+HTML5 标准允许 4 种不同的属性语法。（在 `<input>` 标签中的使用，请参考表单 form）
+
+#### HTML5 - 新特性
+
+HTML5 的一些最有趣的新特性：
+
+- 新的语义元素，比如 `<header>`, `<footer>`, `<article>`, and `<section>`。
+- 新的表单控件，比如数字、日期、时间、日历和滑块。
+- 强大的图像支持（借由 `<canvas>` 和 `<svg>`）
+- 强大的多媒体支持（借由 `<video>` 和 `<audio>`）
+- 强大的新 API，比如用**本地存储取代 cookie**。
+
+#### HTML5 - 被删元素
+
+以下 HTML 4.01 元素已从 HTML5 中删除：
+
+```html
+<acronym>
+<applet>
+<basefont>
+<big>
+<center>
+<dir>
+<font>
+<frame>
+<frameset>
+<noframes>
+<strike>
+<tt>
+```
+
+### HTML 5 浏览器支持🌹
+
+**您可以帮助老版本浏览器处理 HTML5。**
+
+#### HTML5 浏览器支持
+
+#### 把 HTML5 元素定义为块级元素
+
+#### 向 HTML 添加新元素
+
+#### Internet Explorer 的问题
+
+#### 完整的 Shiv 解决方案
+
+#### HTML5 Skeleton
 
 ### HTML 5 元素
 
