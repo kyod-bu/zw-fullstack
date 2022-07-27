@@ -630,14 +630,14 @@ Web 浏览器的作用是**读取 HTML 文档，并以网页的形式显示出�
 
 ### 输入属性（输入限制）
 
-* disabled	规定输入字段应该被禁用
+* disabled	规定输入字段应该被**禁用**
 * max	规定输入字段的最大值
 * maxlength	规定输入字段的最大字符数
 * min	规定输入字段的最小值
 * pattern	规定通过其检查输入值的正则表达式
-* readonly	规定输入字段为只读（无法修改）
+* readonly	规定输入字段为**只读**（无法修改）
 * required	规定输入字段是必需的（必需填写）
-* size	规定输入字段的宽度（以字符计）
+* size	规定输入字段的宽度（**以字符计**）
 * step	规定输入字段的合法数字间隔
 * value	规定输入字段的默认值（⭐️初始值）
 
@@ -647,7 +647,178 @@ HTML5 为 `<input />` 增加了属性：`autocomplete` `autofocus` `form` `forma
 
 并为 `<form>` 增加了属性：`autocomplete` `novalidate`
 
-### Input 表单属性
+* **autocomplete**	规定表单或输入字段是否应该自动完成。（若开启 `autocomplete="on"`，浏览器会基于用户之前的输入值自动填写值。）
+
+  ⚠️ 您可以把表单的 autocomplete 设置为 on，同时把特定的输入字段设置为 off，反之亦然。
+
+  autocomplete 属性适用于 `<form>` 以及如下 `<input>` 类型：text、search、url、tel、email、password、datepickers、range 以及 color。
+
+  ```html
+  <form action="action_page.php" autocomplete="on">
+    First name: <input type="text" name="fname" /><br />
+    Last name: <input type="text" name="lname" /><br />
+    E-mail: <input type="email" name="email" autocomplete="off" /><br />
+    <input type="submit" />
+  </form>
+  ```
+
+  ⚠️ 在某些浏览器中，您也许需要**手动启用**自动完成功能。
+
+* **novalidate**	属于 `<form>` 属性。如果设置，则 novalidate 规定在提交表单时不对表单数据进行验证。
+
+### Input 表单属性（form* 属性）
+
+#### form 属性
+
+input 的 `form` 属性规定 `<input>` 元素所属的表单。此属性的值必须等于它所属的 `<form>` 元素的 id 属性。
+
+```html
+<!-- 位于 HTML 表单（但仍是表单的一部分）之外的输入字段 -->
+<form action="/action_page.php" id="form1">
+  <label for="fname">姓氏：</label>
+  <input type="text" id="fname" name="fname" /><br /><br />
+  <input type="submit" value="提交" />
+</form>
+
+<label for="lname">名字：</label>
+<input type="text" id="lname" name="lname" form="form1" /><!--关注此处的form属性-->
+```
+
+#### formaction 属性
+
+input 的 `formaction` 属性规定当提交表单时，对输入（数据）进行处理的文件的 URL。
+
+⚠️ 该属性会覆盖 `<form>` 元素的 `action` 属性。
+
+`formaction` 属性适用于以下输入类型：submit 和 image
+
+```html
+<!-- 带有两个提交按钮的 HTML 表单，它们具有不同的操作（action） -->
+<form action="/action_page.php">
+  <label for="fname">姓氏：</label>
+  <input type="text" id="fname" name="fname" /><br /><br />
+  <label for="lname">名字：</label>
+  <input type="text" id="lname" name="lname" /><br /><br />
+  <input type="submit" value="提交" />
+  <input type="submit" formaction="/action_page2.php" value="以管理员提交" />
+</form>
+```
+
+#### formenctype 属性
+
+input 的 `formenctype` 属性指定提交表单时，应如何编码表单数据（仅适用于 `method="post"` 的表单 ）。
+
+⚠️ 此属性会覆盖 `<form>` 元素的 `enctype` 属性。
+
+`formenctype` 属性适用于以下输入类型：submit 和 image
+
+```html
+<!-- 有两个提交按钮的表单，第一个发送使用默认编码的表单数据，第二个发送编码为“multipart/form-data”的表单数据 -->
+<form action="/action_page_binary.asp" method="post">
+  <label for="fname">姓氏：</label>
+  <input type="text" id="fname" name="fname" /><br /><br />
+  <input type="submit" value="提交" />
+  <input type="submit" formenctype="multipart/form-data" value="以 Multipart/form-data 编码提交" />
+</form>
+```
+
+#### formmethod 属性
+
+input 的 `formmethod` 属性定义了将表单数据发送到 action URL 的 HTTP 方法。
+
+⚠️ 此属性将覆盖 `<form>` 元素的 `method` 属性。
+
+`formmethod` 属性适用于以下输入类型：submit 和 image。
+
+表单数据可以作为 URL 变量（`method="get"`）或作为 HTTP post 事务（`method="post"`）发送。
+
+* 关于 GET 的注意事项：
+  * 以名称/值对的形式将表单数据追加到 URL
+  * 永远不要使用 GET 发送敏感数据！（提交的表单数据在 URL 中可见！）❗️
+  * URL 的长度受到限制（2048 个字符）
+  * 对于用户希望将结果添加为书签的表单提交很有用❗️
+  * GET 适用于非安全数据，例如 Google 中的查询字符串
+* 关于 POST 的注意事项：
+  * 将表单数据附加在 HTTP **请求的正文中**（不在 URL 中显示提交的表单数据）❗️
+  * POST 没有大小限制，可用于发送大量数据。
+  * 带有 POST 的表单提交无法添加书签❗️
+
+⚠️ 如果表单数据包含敏感信息或个人信息，请务必使用 POST！
+
+```html
+<!-- 有两个提交按钮的表单，第一个使用 method="get" 发送表单数据，第二个使用 method="post" 发送表单数据 -->
+<form action="/action_page.php" method="get">
+  <label for="fname">姓氏：</label>
+  <input type="text" id="fname" name="fname" /><br /><br />
+  <label for="lname">名字：</label>
+  <input type="text" id="lname" name="lname" /><br /><br />
+  <input type="submit" value="使用 GET 提交" />
+  <input type="submit" formmethod="post" value="使用 POST 提交" />
+</form>
+```
+
+#### formtarget 属性
+
+input 的 `formtarget` 属性指定了一个名称或关键字，该名称或关键字规定在提交表单后在何处显示收到的响应。
+
+⚠️ 此属性将覆盖 `<form>` 元素的 `target` 属性。
+
+`formtarget` 属性适用于以下输入类型：submit 和 image。
+
+```html
+<!-- 有两个提交按钮且有不同目标窗口的表单 -->
+<form action="/action_page.php">
+  <label for="fname">姓氏：</label>
+  <input type="text" id="fname" name="fname" /><br /><br />
+  <label for="lname">名字：</label>
+  <input type="text" id="lname" name="lname" /><br /><br />
+  <input type="submit" value="提交" />
+  <input type="submit" formtarget="_blank" value="提交到新窗口/标签页" />
+</form>
+```
+
+#### formnovalidate 属性
+
+input 的 `formnovalidate` 属性规定提交时不验证 `<input />` 元素。
+
+⚠️ 此属性将覆盖 `<form>` 元素的 `novalidate` 属性。
+
+`formnovalidate` 属性适用于以下输入类型：submit
+
+```html
+<!-- 有两个提交按钮的表单（进行和不进行验证） -->
+<form action="/action_page.php">
+  <label for="email">Enter your email：</label>
+  <input type="email" id="email" name="email" /><br /><br />
+  <input type="submit" value="提交" />
+  <input type="submit" formmovalidate="formnovalidate" value="不进行验证的提交" />
+</form>
+```
+
+#### novalidate 属性
+
+`novalidate` 属性是 `<form>` 属性。
+
+如果已设置，novalidate 属性规定在提交时不应验证所有表单数据。
+
+```html
+<!-- 规定在提交时不验证任何表单数据 -->
+<form action="/action_page.php" novalidate>
+  <label for="email">Enter your email：</label>
+  <input type="email" id="email" name="email" /><br /><br />
+  <input type="submit" value="提交" />
+</form>
+```
+
+## HTML 图形 ##
+
+### 画布 Canvas ###
+
+`canvas` 元素用于在网页上绘制图形。
+
+### SVG ###
+
+### 画布 *vs* SVG ###
 
 ## HTML 框架 `<frameset>` 🌹 ##
 
