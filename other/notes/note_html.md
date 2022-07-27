@@ -1056,9 +1056,392 @@ Web 浏览器长期以来一直支持 `<embed>` 元素。但是，它不属于 H
 
 在 HTML 中播放声音的方法有很多种。
 
+#### 问题，以及解决方法
+
+在 HTML 中播放音频并不容易！
+
+您需要谙熟大量技巧，以确保您的音频文件在所有浏览器中（Internet Explorer, Chrome, Firefox, Safari, Opera）和所有硬件上（PC, Mac , iPad, iPhone）都能够播放。
+
+#### 使用插件
+
+浏览器插件是一种扩展浏览器标准功能的小型计算机程序。
+
+插件有很多用途：播放音乐、显示地图、验证银行账号，控制输入等等。
+
+可使用 `<object>` 或 `<embed>` 标签来将插件添加到 HTML 页面。
+
+这些标签定义资源（通常非 HTML 资源）的容器，根据类型，它们即会由浏览器显示，也会由外部插件显示。
+
+#### 使用 `<embed>` 元素
+
+`<embed>` 标签定义外部（非 HTML）内容的容器。（这是一个 HTML5 标签，在 HTML4 中是非法的，但是所有浏览器中都有效）。
+
+下面的代码片段能够显示嵌入网页中的 MP3 文件：
+
+```html
+<embed height="100" width="100" src="song.mp3" />
+```
+
+**问题：**
+
+* `<embed>` 标签在 HTML4 中是无效的。页面无法通过 HTML4 验证。
+* 不同的浏览器对音频格式的支持也不同。
+* 如果浏览器不支持该文件格式，没有插件的话就无法播放该音频。
+* 如果用户的计算机未安装插件，无法播放音频。
+* 如果把该文件转换为其他格式，仍然无法在所有浏览器中播放。
+
+⚠️ 使用 `<!DOCTYPE html> (HTML5)` 解决验证问题。
+
+#### 使用 `<object>` 元素
+
+`<object>` 标签也可以定义外部（非 HTML）内容的容器。
+
+下面的代码片段能够显示嵌入网页中的 MP3 文件：
+
+```html
+<object height="100" width="100" data="song.mp3"></object>
+```
+
+**问题：**
+
+* 不同的浏览器对音频格式的支持也不同。
+* 如果浏览器不支持该文件格式，没有插件的话就无法播放该音频。
+* 如果用户的计算机未安装插件，无法播放音频。
+* 如果把该文件转换为其他格式，仍然无法在所有浏览器中播放。
+
+#### 使用 HTML5 `<audio>` 元素
+
+`<audio>` 元素是一个 HTML5 元素，在 HTML4 中是非法的，但是所有浏览器中都有效。
+
+```html
+<audio controls="controls">
+  <source src="song.mp3" type="audio/mp3" />
+  <source src="song.ogg" type="audio/ogg" />
+  Your browser does not support this audio format.
+</audio>
+```
+
+上面的例子使用了一个 mp3 文件，这样它在 Internet Explorer、Chrome 以及 Safari 中是有效的。
+
+为了使这段音频在 Firefox 和 Opera 中同样有效，添加了一个 ogg 类型的文件。如果失败，会显示错误消息。
+
+**问题：**
+
+- `<audio>` 标签在 HTML 4 中是无效的。您的页面无法通过 HTML 4 验证。
+- 您必须把音频文件转换为不同的格式。
+- `<audio>` 元素在老式浏览器中不起作用。
+
+⚠️ 使用 `<!DOCTYPE html> (HTML5)`  解决验证问题。
+
+#### 最好的 HTML 解决方法
+
+```html
+<audio controls="controls" height="100" width="100">
+  <source src="song.mp3" type="audio/mp3" />
+  <source src="song.ogg" type="audio/ogg" />
+  <embed height="100" width="100" src="song.mp3" />
+</audio>
+```
+
+上面的例子使用了两个不同的音频格式。HTML5 `<audio>` 元素会尝试以 mp3 或 ogg 来播放音频。如果失败，代码将回退尝试 `<embed>` 元素。
+
+**问题：**
+
+- 您必须把音频转换为不同的格式。
+- `<audio>` 元素无法通过 HTML 4 和 XHTML 验证。
+- `<embed>` 元素无法通过 HTML 4 和 XHTML 验证。
+- `<embed>` 元素无法回退来显示错误消息。
+
+⚠️ 使用 `<!DOCTYPE html> (HTML5)` 解决验证问题。
+
+#### 向网站添加音频的最简单方法
+
+向网页添加音频的最简单的方法是什么？
+
+雅虎的媒体播放器绝对算其中之一。
+
+使用雅虎媒体播放器是一个不同的途径。您只需简单地让雅虎来完成歌曲播放的工作就好了。
+
+它能播放 mp3 以及一系列其他格式。通过一行简单的代码，您就可以把它添加到网页中，轻松地将 HTML 页面转变为专业的播放列表。
+
+##### 雅虎媒体播放器
+
+```html
+<a href="song.mp3">Play Sound</a>
+
+<!-- 需要把这段 JavaScript 插入网页底部 -->
+<script type="text/javascript" src="http://mediaplayer.yahoo.com/js"></script>
+```
+
+⚠️ 使用雅虎播放器是免费的。只需简单地把 MP3 文件链接到您的 HTML 中，JavaScript 会自动地为每首歌创建播放按钮。
+
+雅虎媒体播放器为您的用户提供的是一个**小型的**播放按钮，而不是完整的播放器。不过，当您点击该按钮，会弹出完整的播放器。
+
+⚠️ 这个播放器始终停靠在窗框底部。只需点击它，就可将其滑出。
+
+##### 使用超链接
+
+如果网页包含指向媒体文件的超链接，大多数浏览器会使用***“辅助应用程序”***来播放文件。
+
+以下代码片段显示指向 mp3 文件的链接。如果用户点击该链接，浏览器会启动“辅助应用程序”来播放该文件：
+
+```html
+<a href="song.mp3">Play the sound</a>
+```
+
+##### 内联的声音
+
+当您在网页中包含声音，或者作为网页的组成部分时，它被称为内联声音。
+
+⚠️ 如果您打算在 web 应用程序中使用内联声音，您需要意识到很多人都觉得内联声音令人恼火。同时请注意，用户可能已经关闭了浏览器中的内联声音选项。
+
+我们最好的建议是**只在用户希望听到**内联声音的地方包含它们。一个正面的例子是，在用户需要听到录音并点击某个链接时，会打开页面然后播放录音。
+
+#### HTML 4.01 多媒体标签
+
+| 标签                                                         | 描述                                         |
+| :----------------------------------------------------------- | :------------------------------------------- |
+| [`<applet>`](https://www.w3school.com.cn/tags/tag_applet.asp) | 不赞成。定义内嵌 applet。                    |
+| `<embed>`                                                    | HTML4 中不赞成，HTML5 中允许。定义内嵌对象。 |
+| [`<object>`](https://www.w3school.com.cn/tags/tag_object.asp) | 定义内嵌对象。                               |
+| [`<param>`](https://www.w3school.com.cn/tags/tag_param.asp)  | 定义对象的参数。                             |
+
+#### HTML 5 多媒体标签 ⭐️
+
+| 标签                                                        | 描述                                 |
+| :---------------------------------------------------------- | :----------------------------------- |
+| [`<audio>`](https://www.w3school.com.cn/tags/tag_audio.asp) | 标签定义声音，比如音乐或其他音频流。 |
+| [`<embed>`](https://www.w3school.com.cn/tags/tag_embed.asp) | 标签定义嵌入的内容，比如插件。       |
+
 ### 视频 ###
 
+在 HTML 中播放视频的方法有很多种。
+
+```html
+<video width="320" height="240" controls="controls">
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  <source src="movie.webm" type="video/webm" />
+  <object data="movie.mp4" width="320" height="240">
+    <embed src="movie.swf" width="320" height="240" />
+  </object>
+</video>
+```
+
+#### 问题，以及解决方法
+
+在 HTML 中播放视频并不容易！
+
+您需要谙熟大量技巧，以确保您的视频文件在所有浏览器中（Internet Explorer, Chrome, Firefox, Safari, Opera）和所有硬件上（PC, Mac , iPad, iPhone）都能够播放。
+
+#### 使用 `<embed>` 元素
+
+`<embed>` 标签的作用是在 HTML 页面中嵌入多媒体元素。
+
+下面的 HTML 代码片段显示嵌入网页中的 Flash 视频：
+
+```html
+<embed src="movie.swf" height="200" width="200" />
+```
+
+**问题：**
+
+* HTML4 无法识别 `<embed>` 标签。您的页面无法通过验证。
+* 如果浏览器不支持 Flash，那么视频将无法播放。
+* iPad 和 iPhone 不能显示 Flash 视频。
+* 如果您将视频转换为其他格式，那么它仍然不能在所有浏览器中播放。
+
+#### 使用 `<object>` 元素
+
+`<object>` 标签的作用是在 HTML 页面中嵌入多媒体元素。
+
+下面的 HTML 代码片段显示嵌入网页中的 Flash 视频：
+
+```html
+<object data="movie.swf" height="200" width="200"></object>
+```
+
+**问题：**
+
+* 如果浏览器不支持 Flash，将无法播放视频。
+* iPad 和 iPhone 不能显示 Flash 视频。
+* 如果您将视频转换为其他格式，那么它仍然不能在所有浏览器中播放。
+
+#### 使用 `<video>` 元素
+
+`<video>` 是一个 HTML5 中的新标签。
+
+`video` 标签的作用是在 HTML 页面中嵌入视频元素。
+
+以下 HTML 片段会显示一段潜入网页的 ogg、mp4 或 webm 格式的视频：
+
+```html
+<video width="320" height="240" controls="controls">
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  <source src="movie.webm" type="video/webm" />
+  Your browser does not support the video tag.
+</video>
+```
+
+**问题：**
+
+- 您必须把视频转换为不同的格式。
+- `<video>` 元素在老式浏览器中无效。
+- `<video>` 元素无法通过 HTML4 和 XHTML 验证。
+
+#### 最好的 HTML 解决方法
+
+**HTML 5 + `<object>` + `<embed>`**
+
+```html
+<video width="320" height="240" controls="controls">
+  <source src="movie.mp4" type="video/mp4" />
+  <source src="movie.ogg" type="video/ogg" />
+  <source src="movie.webm" type="video/webm" />
+  <object data="movie.mp4" width="320" height="240">
+    <embed src="movie.swf" width="320" height="240" />
+  </object>
+</video>
+```
+
+上面的例子使用了四种不同的视频格式。HTML5 `<video>` 元素会尝试播放以 mp4 、ogg 或 webm 格式中的一种来播放视频。如果均失败，则回退到 `<embed>` 元素。
+
+**问题：**
+
+- 您必须把视频转换为很多不同的格式。
+- `<video>` 元素无法通过 HTML 4 和 XHTML 验证。
+- `<embed>` 元素无法通过 HTML 4 和 XHTML 验证。
+
+⚠️ 使用 `<!DOCTYPE html> (HTML5)` 解决验证问题。
+
+##### 优酷解决方案
+
+在 HTML 中显示视频的最简单的方法是使用优酷等视频网站。
+
+如果您希望在网页中播放视频，那么您可以把视频上传到优酷等视频网站，然后在您的网页中插入 HTML 代码即可播放视频：
+
+```html
+<embed src="http://player.youku.com/player.php/sid/XMzI2NTc4NTMy/v.swf" width="480" height="400" type="application/x-shockwave-flash">
+</embed>
+```
+
+##### 使用超链接
+
+如果网页包含指向媒体文件的超链接，大多数浏览器会使用***“辅助应用程序”***来播放文件。
+
+以下代码片段显示指向 AVI 文件的链接。如果用户点击该链接，浏览器会启动“辅助应用程序”，比如 Windows Media Player 来播放这个 AVI 文件：
+
+```html
+<a href="movie.avi">Play a video file</a>
+```
+
+##### 关于内联视频的一段注释
+
+当视频被包含在网页中时，它被称为**内联视频**。
+
+如果您打算在 web 应用程序中使用内联视频，您需要意识到很多人都觉得内联视频令人恼火。
+
+同时请注意，用户可能已经关闭了浏览器中的内联视频选项。
+
+我们最好的建议是**只在用户希望看到**内联视频的地方包含它们。一个正面的例子是，在用户需要看到视频并点击某个链接时，会打开页面然后播放视频。
+
+#### HTML 4.01 多媒体标签
+
+| 标签                                                         | 描述                      |
+| :----------------------------------------------------------- | :------------------------ |
+| [`<applet>`](https://www.w3school.com.cn/tags/tag_applet.asp) | 不赞成。定义内嵌 applet。 |
+| `<embed>`                                                    | 不赞成。（HTML5 中允许）  |
+| [`<object>`](https://www.w3school.com.cn/tags/tag_object.asp) | 定义内嵌对象。            |
+| [`<param>`](https://www.w3school.com.cn/tags/tag_param.asp)  | 定义对象的参数。          |
+
+#### HTML 5 多媒体标签 ⭐️
+
+| 标签                                                        | 描述                                 |
+| :---------------------------------------------------------- | :----------------------------------- |
+| [`<video>`](https://www.w3school.com.cn/tags/tag_video.asp) | 标签定义声音，比如音乐或其他音频流。 |
+| [`<embed>`](https://www.w3school.com.cn/tags/tag_embed.asp) | 标签定义嵌入的内容，比如插件。       |
+
 ### YouTube ###
+
+在 HTML 中包含视频的最简单的方法是 使用 YouTube。
+
+#### 纠结视频格式？
+
+将视频转换为不同的格式可能既困难又耗时。
+
+一个更简单的解决方案是让 YouTube 在您的网页中播放视频。
+
+#### YouTube Video Id
+
+保存（或播放）视频时，YouTube 会显示一个 id（例如 ih1l6wb7LhU）。
+
+您可以使用这个 id，并在 HTML 代码中引用您的视频。
+
+#### 在 HTML 中保留 YouTube 视频
+
+如需在网页上播放视频，请执行以下操作：
+
+- 将视频上传到 YouTube
+- 记下视频 id
+- 在您的网页中定义 `<iframe>` 元素
+- 让 `src` 属性指向视频的 URL
+- 使用 `width` 和 `height` 属性来规定播放器的尺寸
+- 向 URL 添加其他参数
+
+```html
+<iframe width="420" height="315" src="https://www.youtube.com/embed/ih1l6wb7LhU">
+</iframe>
+```
+
+#### YouTube Autoplay + Mute
+
+您可以通过在 YouTube URL 上添加 autoplay=1 来让视频在用户访问页面时自动开始播放。但是，自动开始播放视频会让您的访问者感到烦恼！
+
+⚠️ 在大多数情况下，Chromium 浏览器都不允许自动播放。但始终允许静音自动播放。
+
+在 `autoplay=1` 之后添加 `mute=1`，可让您的视频自动开始播放（但已静音）。
+
+**YouTube - Autoplay + Mute**
+
+```html
+<iframe width="420" height="315" src="https://www.youtube.com/embed/ih1l6wb7LhU?autoplay=1&mute=1">
+</iframe>
+```
+
+#### YouTube Playlist
+
+以逗号分隔的要播放的视频列表（原始 URL 除外）。
+
+#### YouTube Loop
+
+添加 `loop=1` 会让您的视频永远循环。
+
+值 0（默认）：视频将播放一次。
+
+值 1：视频将循环（永远）。
+
+**YouTube - Loop**
+
+```html
+<iframe width="420" height="315" src="https://www.youtube.com/embed/ih1l6wb7LhU?playlist=ih1l6wb7LhU&loop=1">
+</iframe>
+```
+
+#### YouTube Controls
+
+添加 `controls=0` 会使视频播放器不显示控件。
+
+值 0：播放器控件不显示。
+
+值 1（默认）：播放器控件显示。
+
+**YouTube - Controls**
+
+```html
+<iframe width="420" height="315" src="https://www.youtube.com/embed/ih1l6wb7LhU?controls=0">
+</iframe>
+```
 
 ## HTML 框架 `<frameset>` 🌹 ##
 
@@ -1803,3 +2186,27 @@ URL 不能包含空格。URL 编码通常使用 + 来替换空格。
   </body>
 </html>
 ```
+
+## HTML 5
+
+### HTML 5 简介
+
+### HTML 5 支持
+
+### HTML 5 元素
+
+### HTML 5 迁移
+
+## HTML API
+
+### HTML 5 地理定位
+
+### HTML 5 拖放
+
+### HTML 5 Web 存储
+
+### HTML 5 应用缓存
+
+### HTML 5 Web Workers
+
+### HTML 5 SSE
