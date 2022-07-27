@@ -810,15 +810,255 @@ input 的 `formnovalidate` 属性规定提交时不验证 `<input />` 元素。
 </form>
 ```
 
-## HTML 图形 ##
+## HTML 图形🌹 ##
 
 ### 画布 Canvas ###
 
 `canvas` 元素用于在网页上绘制图形。
 
+HTML5 的 canvas 元素使用 JavaScript 在网页上绘制图形。
+
+画布是一个矩形区域，您可以控制其每一像素。
+
+canvas 拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。
+
+```html
+<!-- 1、创建 canvas 元素 -->
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;">
+  Your browser does not support the canvas element.
+</canvas>
+
+<!-- 2、通过 JavaScript 来绘制（canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成） -->
+<script type="text/javascript">
+  var c = document.getElementById("myCanvas");
+  var cxt = c.getContext("2d"); // 内建的 HTML5 对象，拥有多种绘制路径、矩形、圆形、字符以及添加图像的方法。
+  // 下面两行，绘制一个红色的矩形
+  cxt.fillStyle = "#FF0000";
+  cxt.fillRect(0, 0, 150, 75);
+  
+  // 绘制一条线
+  cxt.moveTo(10, 10);
+  cxt.lineTo(150, 150);
+  cxt.lineTo(10, 50);
+  cxt.stroke();
+  
+  // 绘制一个圆
+  cxt.fillStyle = "#FF0000";
+  cxt.beginPath();
+  cxt.arc(70, 18, 15, 0, Math.PI*2, true);
+  cxt.closePath();
+  cxt.fill();
+  
+  // 渐变（使用您指定的颜色来绘制渐变背景）
+  var grd = cxt.createLinearGradient(0, 0, 175, 50);
+  grd.addColorStop(0, "#FF0000");
+  grd.addColorStop(1, "#00FF00");
+  cxt.fillStyle = grd;
+  cxt.fillRect(0, 0, 175, 50);
+</script>
+
+<!-- 把一幅图像放置到画布上 -->
+<script>
+  window.onload = function() {
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("scream"); // 获取页面中的图像元素
+    ctx.drawImage(img, 10, 10);
+  };
+</script>
+```
+
 ### SVG ###
 
+HTML5 支持内联 SVG。
+
+**什么是 SVG？**
+
+* SVG 指可伸缩矢量图形 (Scalable Vector Graphics)
+* SVG 用于定义用于网络的基于矢量的图形
+* SVG 使用 XML 格式定义图形
+* SVG 图像在放大或改变尺寸的情况下其图形质量不会有损失
+* SVG 是万维网联盟的标准
+
+**SVG 的优势（与其他图像格式相比，如 jpeg/gif）**
+
+* SVG 图像可通过文本编辑器来创建和修改
+* SVG 图像可被搜索、索引、脚本化或压缩
+* SVG 是可伸缩的
+* SVG 图像可在任何的分辨率下被高质量地打印
+* SVG 可在图像质量不下降的情况下被放大
+
+**浏览器支持：Internet Explorer 9、Firefox、Opera、Chrome 以及 Safari 支持内联 SVG。**
+
+**把 SVG 直接嵌入 HTML 页面**
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SVG demo</title>
+  </head>
+  
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
+      <!--绘制五角星-->
+      <polygon points="100,10 40,180 190,60 10,60 160,180" style="fill:lime;stroke:purple;stroke-width:5;fill-rule:evenodd;" />
+    </svg>
+  </body>
+</html>
+```
+
 ### 画布 *vs* SVG ###
+
+**Canvas 和 SVG 都允许您在浏览器中创建图形，但是它们在根本上是不同的。**
+
+* **SVG**
+
+  SVG 是一种使用 XML 描述 2D 图形的语言。
+
+  SVG 基于 XML，这意味着 SVG DOM 中的每个元素都是可用的。您可以为某个元素附加 JavaScript 事件处理器。
+
+  在 SVG 中，每个被绘制的图形均被视为对象。如果 SVG 对象的属性发生变化，那么浏览器能够自动重现图形。
+
+* **Canvas**
+
+  Canvas 通过 JavaScript 来绘制 2D 图形。
+
+  Canvas 是逐像素进行渲染的。
+
+  在 canvas 中，一旦图形被绘制完成，它就不会继续得到浏览器的关注。如果其位置发生变化，那么整个场景也需要重新绘制，包括任何或许已被图形覆盖的对象。
+
+* **Canvas 与 SVG 的比较**
+
+  * **Canvas**
+    * 依赖分辨率
+    * **不支持事件处理器**
+    * 弱的文本渲染能力
+    * 能够以 .png 或 .jpg 格式保存结果图像
+    * 最适合图像密集型的游戏，其中的许多对象会被频繁重绘
+  * **SVG**
+    * 不依赖分辨率
+    * **支持事件处理器**
+    * 最适合带有大型渲染区域的应用程序（比如谷歌地图）
+    * 复杂度高会减慢渲染速度（任何过度使用 DOM 的应用都不快）
+    * 不适合游戏应用
+
+## HTML 多媒体🌹 ##
+
+### 多媒体 ###
+
+**Web 上的多媒体指的是音效、音乐、视频和动画。**
+
+现代网络浏览器已支持很多多媒体格式。
+
+#### 什么是多媒体？
+
+多媒体来自多种不同的格式。它可以是您**听到或看到的任何内容**，文字、图片、音乐、音效、录音、电影、动画等等。
+
+在因特网上，您会经常发现**嵌入网页中的多媒体元素**，***现代浏览器已支持多种多媒体格式***。
+
+#### 浏览器支持
+
+不同的浏览器以不同的方式处理对音效、动画和视频的支持。某些元素能够以内联的方式处理，而某些则需要额外的插件。
+
+#### 多媒体格式
+
+多媒体元素（比如视频和音频）存储于媒体文件中。
+
+确定媒体类型的最常用的方法是查看文件扩展名。当浏览器得到文件扩展名 .htm 或 .html 时，它会假定该文件是 HTML 页面。.xml 扩展名指示 XML 文件，而 .css 扩展名指示样式表。图片格式则通过 .gif 或 .jpg 来识别。
+
+多媒体元素元素也拥有带有不同扩展名的文件格式，比如 .swf、.wmv、.mp3 以及 .mp4。
+
+#### 视频格式
+
+MP4 格式是一种新的即将普及的因特网视频格式。HTML5 、Flash 播放器以及优酷等视频网站均支持它。
+
+| 格式      | 文件      | 描述                                                         |
+| :-------- | :-------- | :----------------------------------------------------------- |
+| AVI       | .avi      | AVI (Audio Video Interleave) 格式是由微软开发的。所有运行 Windows 的计算机都支持 AVI 格式。它是因特网上很常见的格式，但非 Windows 计算机并不总是能够播放。 |
+| WMV       | .wmv      | Windows Media 格式是由微软开发的。Windows Media 在因特网上很常见，但是如果未安装额外的（免费）组件，就无法播放 Windows Media 电影。一些后期的 Windows Media 电影在所有非 Windows 计算机上都无法播放，因为没有合适的播放器。 |
+| MPEG      | .mpg.mpeg | MPEG (Moving Pictures Expert Group) 格式是因特网上**最流行**的格式。它是跨平台的，得到了所有最流行的浏览器的支持。 |
+| QuickTime | .mov      | QuickTime 格式是由苹果公司开发的。QuickTime 是因特网上常见的格式，但是 QuickTime 电影不能在没有安装额外的（免费）组件的 Windows 计算机上播放。 |
+| RealVideo | .rm.ram   | RealVideo 格式是由 Real Media 针对因特网开发的。该格式允许低带宽条件下（在线视频、网络电视）的视频流。由于是低带宽优先的，质量常会降低。 |
+| Flash     | .swf.flv  | Flash (Shockwave) 格式是由 Macromedia 开发的。Shockwave 格式需要额外的组件来播放。但是该组件会预装到 Firefox 或 IE 之类的浏览器上。 |
+| Mpeg-4    | .mp4      | Mpeg-4 (with H.264 video compression) 是一种针对因特网的新格式。事实上，YouTube 推荐使用 MP4。YouTube 接收多种格式，然后全部转换为 .flv 或 .mp4 以供分发。越来越多的视频发布者转到 MP4，将其作为 Flash 播放器和 HTML5 的因特网共享格式。 |
+
+#### 声音格式
+
+| 格式      | 文件      | 描述                                                         |
+| :-------- | :-------- | :----------------------------------------------------------- |
+| MIDI      | .mid.midi | MIDI (Musical Instrument Digital Interface) 是一种针对电子音乐设备（比如合成器和声卡）的格式。MIDI 文件不含有声音，但包含可被电子产品（比如声卡）播放的数字音乐指令。[点击这里播放 The Beatles](https://www.w3school.com.cn/i/beatles.mid)。因为 MIDI 格式仅包含指令，所以 MIDI 文件极其小巧。上面的例子只有 23k 的大小，但却能播放将近 5 分钟。MIDI 得到了广泛的平台上的大量软件的支持。大多数流行的网络浏览器都支持 MIDI。 |
+| RealAudio | .rm.ram   | RealAudio 格式是由 Real Media 针对因特网开发的。该格式也支持视频。该格式允许低带宽条件下的音频流（在线音乐、网络音乐）。由于是低带宽优先的，质量常会降低。 |
+| Wave      | .wav      | Wave (waveform) 格式是由 IBM 和微软开发的。所有运行 Windows 的计算机和所有网络浏览器（除了 Google Chrome）都支持它。 |
+| WMA       | .wma      | WMA 格式 (Windows Media Audio)，质量优于 MP3，兼容大多数播放器，除了 iPod。WMA 文件可作为连续的数据流来传输，这使它对于网络电台或在线音乐很实用。 |
+| MP3       | .mp3.mpga | MP3 文件实际上是 MPEG 文件的声音部分。MPEG 格式最初是由运动图像专家组开发的。MP3 是其中最受欢迎的针对音乐的声音格式。期待未来的软件系统都支持它。 |
+
+#### 使用哪种格式？
+
+**WAVE** 是因特网上最受欢迎的***无压缩*** 声音格式，所有流行的浏览器都支持它。如果您需要未经压缩的声音（音乐或演讲），那么您应该使用 WAVE 格式。
+
+**MP3** 是最新的***压缩*** 录制音乐格式。MP3 这个术语已经成为数字音乐的代名词。如果您的网址从事录制音乐，那么 MP3 是一个选项。
+
+### 对象 `<object>`（插件） ###
+
+插件（Plug-in）是扩展浏览器标准功能的计算机程序。
+
+插件被设计用于许多不同的目的：
+
+- 运行 Java 小程序
+- 运行 ActiveX 控件
+- 显示 Flash 电影
+- 显示地图
+- 扫描病毒
+- 验证银行账号
+
+⚠️ 大多数浏览器不再支持 Java Applet 和插件。
+
+⚠️ 所有浏览器均不再支持 ActiveX 控件。
+
+⚠️ 在现代浏览器中，对 Shockwave Flash 的支持也已关闭。
+
+#### `<object>` 元素
+
+所有浏览器均支持 `<object>` 元素。
+
+`<object>` 元素定义 HTML 文档中的嵌入式对象。
+
+它旨在将插件（例如 Java applet、PDF 阅读器和Flash播放器）嵌入网页中，但也可以用于将 HTML 包含在 HTML 中：
+
+```html
+<object width="100%" height="500px" data="snippet.html"></object>
+
+<object data="audi.jpeg"></object>
+```
+
+#### `<embed>` 元素
+
+所有主要浏览器均支持 `<embed>` 元素。
+
+`<embed>` 元素也可定义了 HTML 文档中的嵌入式对象。
+
+Web 浏览器长期以来一直支持 `<embed>` 元素。但是，它不属于 HTML5 之前的 HTML 规范的一部分。
+
+```html
+<embed src="audi.jpeg">
+```
+
+⚠️ `<embed>` 元素没有结束标记。它无法包含替代文本。
+
+`<embed>` 元素也可用于在 HTML 中包含 HTML：
+
+```html
+<embed width="100%" height="500px" data="snippet.html">
+```
+
+### 音频 ###
+
+在 HTML 中播放声音的方法有很多种。
+
+### 视频 ###
+
+### YouTube ###
 
 ## HTML 框架 `<frameset>` 🌹 ##
 
