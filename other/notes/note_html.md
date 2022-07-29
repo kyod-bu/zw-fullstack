@@ -835,20 +835,20 @@ canvas 拥有多种绘制路径、矩形、圆形、字符以及添加图像的�
   // 下面两行，绘制一个红色的矩形
   cxt.fillStyle = "#FF0000";
   cxt.fillRect(0, 0, 150, 75);
-  
+
   // 绘制一条线
   cxt.moveTo(10, 10);
   cxt.lineTo(150, 150);
   cxt.lineTo(10, 50);
   cxt.stroke();
-  
+
   // 绘制一个圆
   cxt.fillStyle = "#FF0000";
   cxt.beginPath();
   cxt.arc(70, 18, 15, 0, Math.PI*2, true);
   cxt.closePath();
   cxt.fill();
-  
+
   // 渐变（使用您指定的颜色来绘制渐变背景）
   var grd = cxt.createLinearGradient(0, 0, 175, 50);
   grd.addColorStop(0, "#FF0000");
@@ -898,7 +898,7 @@ HTML5 支持内联 SVG。
   <head>
     <title>SVG demo</title>
   </head>
-  
+
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="190">
       <!--绘制五角星-->
@@ -2187,7 +2187,7 @@ URL 不能包含空格。URL 编码通常使用 + 来替换空格。
 </html>
 ```
 
-## HTML 5
+## HTML 5🌹🌹🌹🌹🌹
 
 ### HTML 5 简介
 
@@ -2230,7 +2230,7 @@ HTML5 的新的文档类型（DOCTYPE）声明非常简单：`<!DOCTYPE html>`
     <meta charset="UTF-8" />
     <title>Title of the document</title>
   </head>
-  
+
   <body>
     Content of the document......
   </body>
@@ -2278,23 +2278,397 @@ HTML5 的一些最有趣的新特性：
 
 #### HTML5 浏览器支持
 
+所有现代浏览器都支持 HTML5。
+
+此外，所有浏览器，不论新旧，都会自动把**未识别元素当做行内元素来处理**。
+
+正因如此，您可以帮助老式浏览器处理”未知的“ HTML 元素。
+
 #### 把 HTML5 元素定义为块级元素
+
+HTML5 定义了 ***8*** 个新的***语义*** HTML 元素。所有都是*块级*元素。
+
+您可以把 CSS `display` 属性设置为 ***block***，以确保老式浏览器中正确的行为：
+
+```css
+header, section, footer, aside, nav, main, article, figure {
+  display: block;
+}
+```
 
 #### 向 HTML 添加新元素
 
+您可以通过浏览器 trick 向 HTML 添加任何新元素：
+
+本例向 HTML 添加了一个名为 `<myHero>` 的新元素，并为其定义 display 样式：
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Creating an HTML Element</title>
+    <!-- 这里的 JavaScript 语句 `document.createElement("myHero")` 仅适用于IE -->
+    <script>document.createElement("myHero")</script>
+    <style>
+      myHero {
+        display: block;
+        background-color: #ddd;
+        padding: 50px;
+        font-size: 30px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>My First Heading</h1>
+    <p>My first paragraph.</p>
+    <myHero>My First Hero</myHero> <!--自定义新的元素 myHero-->
+  </body>
+</html>
+```
+
 #### Internet Explorer 的问题
 
-#### 完整的 Shiv 解决方案
+上述方案可用于所有新的 HTML5 元素，但是：
+
+⚠️ Internet Explorer 8 以及更早的版本，不允许对未知元素添加样式。
+
+幸运的是，Sjoerd Visscher 创造了 "HTML5 Enabling JavaScript", ***"the shiv"***：
+
+```html
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+```
+
+以上代码是一段注释，但是 IE9 的早期版本会读取它（并理解它）。
+
+#### 完整的 Shiv 解决方案👍⭐️
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Styling HTML5</title>
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <h1>My First Article</h1>
+    <article>
+      London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.
+    </article>
+  </body>
+</html>
+```
+
+引用 shiv 代码的链接必须位于 `<head>` 元素中，因为 Internet Explorer 需要在读取之前认识所有新元素。
 
 #### HTML5 Skeleton
 
-### HTML 5 元素
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>HTML5 Skeleton</title>
+    <meta charset="utf-8" />
+    <!--[if lt IE 9]>
+      <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+      body { font-family: Verdana, sans-serif; font-size: 0.8em; }
+      header, nav, section, article, footer { border: 1px solid grey; margin: 5px; padding: 8px; }
+      nav ul { margin: 0; padding: 0; }
+      nav ul li { display: inline;  margin: 5px; }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>HTML5 Skeleton</h1>
+    </header>
+
+    <nav>
+      <li><a href="html5_semantic_elements.asp">HTML5 Semantic</a></li>
+      <li><a href="html5_geolocation.asp">HTML5 Geolocation</a></li>
+      <li><a href="html5_canvas.asp">HTML5 Graphics</a></li>
+    </nav>
+
+    <section>
+      <h1>Famous Cities</h1>
+
+      <article>
+        <h2>London</h2>
+        <p>London is the capital city of England. It is the most populous city in the United Kingdom, with a metropolitan area of over 13 million inhabitants.</p>
+      </article>
+
+      <article>
+        <h2>Paris</h2>
+        <p>Paris is the capital and most populous city of France.</p>
+      </article>
+
+      <article>
+        <h2>Tokyo</h2>
+        <p>Tokyo is the capital of Japan, the center of the Greater Tokyo Area,
+and the most populous metropolitan area in the world.</p>
+      </article>
+    </section>
+
+    <footer>
+      <p>© 2014 W3Schools. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+```
+
+### HTML 5 新元素🌹🌹
+
+#### 新的语义/结构元素
+
+HTML5 提供的新元素可以构建更好的文档结构：
+
+```html
+<article>定义文档内的文章</article>
+<aside>定义页面内容之外的内容</aside>
+
+<bdi>定义与其他文本不同的文本方向</bdi>
+<details>定义用户可查看或隐藏的额外细节</details>
+<dialog>定义对话框或窗口</dialog>
+
+<figcaption></figcaption> <!--定义 <figure> 元素的标题-->
+<figure>定义自包含内容，比如图示、图表、照片、代码清单等等</figure>
+
+<footer>定义文档或节的页脚</footer>
+<header>定义文档或节的页眉</header>
+<main>定义文档的主内容</main>
+
+<mark>定义重要或强调的内容</mark>
+<menuitem>定义用户能够从弹出菜单调用的命令/菜单项目</menuitem>
+<meter>定义已知范围（尺度）内的标量测量</meter>
+<nav>定义文档内的导航链接</nav>
+<progress>定义任务进度</progress>
+
+<rp>定义在不支持 ruby 注释的浏览器中显示什么</rp>
+<rt>定义关于字符的解释/发音（用于东亚字体）</rt>
+<ruby>定义 ruby 注释（用于东亚字体）</ruby>
+
+<section>定义文档中的节</section>
+<summary></summary> <!--定义 <details> 元素的可见标题-->
+
+<time>定义日期/时间</time>
+<wbr>定义可能的折行（line-break）</wbr>
+```
+
+#### 新的表单元素
+
+```html
+<datalist>定义输入控件的预定义选项</datalist>
+<keygen>定义键对生成器字段（用于表单）</keygen>
+<output>定义计算结果</output>
+```
+
+#### 新的输入类型
+
+| 新的输入类型                                                 | 新的输入属性                                                 |
+| :----------------------------------------------------------- | :----------------------------------------------------------- |
+| `color` `date` `datetime` `datetime-locale` `mail` `month` `number` `range` `search` `tel` `time` `url` `week` | `autocomplete` `autofocus` `form` `formaction` `formenctype` `formmethod` `formnovalidate` `formtarget` `height 和 width` `list` `min 和 max` `multiple` `pattern (regexp)` `placeholder` `required` `step` |
+
+#### HTML5-新的属性语法
+
+HTML5 允许四种不同的属性语法。
+
+该例演示 `<input>` 标签中使用的不同语法：
+
+| 属性语法 | 描述                                              |
+| :------- | :------------------------------------------------ |
+| 空       | `<input type="text" value="Bill Gates" disabled>` |
+| 未引用   | `<input type="text" value=Bill>`                  |
+| 双引号   | `<input type="text" value="Bill Gates">`          |
+| 单引号   | `<input type="text" value='Bill Gates'>`          |
+
+在 HTML5 中，根据属性所需，可能会使用所有这四种语法。
+
+#### HTML5 图像
+
+| 标签       | 描述                             |
+| :--------- | :------------------------------- |
+| `<canvas>` | 定义使用 JavaScript 的图像绘制。 |
+| `<svg>`    | 定义使用 SVG 的图像绘制。        |
+
+#### 新的媒介元素
+
+| 标签        | 描述                                 |
+| :---------- | :----------------------------------- |
+| `<audio>` ⭐️ | 定义声音或音乐内容。                 |
+| `<embed>`   | 定义外部应用程序的容器（比如插件）。 |
+| `<source>`  | 定义 `<video>` 和 `<audio>` 的来源。 |
+| `<track>`   | 定义 `<video>` 和 `<audio>` 的轨道。 |
+| `<video>` ⭐️ | 定义视频或影片内容。                 |
 
 ### HTML 5 迁移
+
+[HTML 5 迁移](https://www.w3school.com.cn/html/html5_migration.asp) 
+
+把一张已有的 HTML4 页面转换为 HTML5 页面，在不破坏如何原始内容和结构的情况下。
+
+⚠️ 您可以使用相同的技巧从 HTML4 以及 XHTML 迁移至 HTML5。
+
+|     典型的 HTML4     | 典型的 HTML5 |
+| :------------------: | :----------: |
+| `<div id="header">`  |  `<header>`  |
+|  `<div id="menu">`   |   `<nav>`    |
+| `<div id="content">` | `<section>`  |
+|  `<div id="post">`   | `<article>`  |
+| `<div id="footer">`  |  `<footer>`  |
+
+* HTML4：
+
+  ```html
+  <!-- Doctype -->
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  "http://www.w3.org/TR/html4/loose.dtd">
+  
+  <!-- 编码 -->
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  ```
+
+* HTML5：
+
+  ```html
+  <!-- Doctype -->
+  <!DOCTYPE html>
+  
+  <!-- 编码 -->
+  <meta charset="utf-8">
+  
+  <!-- 添加 shiv -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  ```
+
+**`<article>` `<section>` 与  `<div>` 之间的差异：**
+
+在 HTML5 标准中，`<article>` `<section>` 与 `<div>` 之间的差异很小，令人困惑。
+
+在 HTML5 标准中：
+
+* `<section>` 元素被定位为相关元素的块。
+* `<article>` 元素被定义为相关元素的完整的**自包含块**。
+
+* `<div>` 元素被定义为子元素的块。
+
+**简单理解：**我们可以使用 `<section>` 作为相关 `<articles>` 的容器。也能够把 `<article>` 用作文章的容器。
 
 ## HTML API
 
 ### HTML 5 地理定位
+
+**HTML5 Geolocation（地理定位）用于定位用户的位置。**
+
+#### 定位用户的位置
+
+HTML5 Geolocation API 用于获得**用户的地理位置**。
+
+⚠️ 鉴于该特性可能侵犯用户的隐私，除非用户同意，否则用户位置信息是不可用的。
+
+#### 浏览器支持
+
+Internet Explorer 9、Firefox、Chrome、Safari 以及 Opera 支持地理定位。
+
+⚠️ 对于拥有 GPS 的设备，比如 iPhone，地理定位更加精确。
+
+#### HTML5-使用地理位置
+
+请使用 getCurrentPosition() 方法来获得用户的位置。
+
+```html
+<!-- 一个简单的地理定位实例：可返回用户位置的`经度`和`纬度` -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>demo</title>
+  </head>
+  
+  <body>
+    <p id="demo">点击这个按钮，获得您的坐标：</p>
+    <button onclick="getLocation()">试一下</button>
+    
+    <script>
+      var x = document.getElementById("demo");
+      
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(shouPosition);
+        } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+      function shouPosition(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+          "<br />Longitude: " + position.coords.longitude;
+      }
+    </script>
+  </body>
+</html>
+```
+
+**解释：**
+
+* 检测是否支持地理定位
+* 如果支持，则运行 getCurrentPosition() 方法。如果不支持，则向用户显示一段消息。
+* 如果 `getCurrentPosition()` 运行成功，则向参数 showPosition 中规定的函数返回一个 **coordinates 对象**
+* `showPosition()` 函数获得并显示**经度**和**纬度**
+
+⚠️ 该例子是一个非常基础的地理定位脚本，不含错误处理。
+
+#### 处理错误和拒绝
+
+`getCurrentPosition()` 方法的第二个参数用于处理错误。它规定当获取用户位置失败时运行的函数：
+
+```js
+function showError(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED: // 用户不允许地理位置
+      x.innerHTML = "User denied the request for Geolocation.";
+      break;
+    case error.POSITION_UNAVAILABLE: // 无法获取当前位置
+      x.innerHTML = "Location information is unavailable.";
+      break;
+    case error.TIMEOUT: // 操作超时
+      x.innerHTML = "The request to get user location timed out.";
+      break;
+    case error.UNKNOWN_ERROR:
+      x.innerHTML = "An unknown error occurred.";
+      break;
+  }
+}
+```
+
+#### 在地图中显示结果
+
+如需在地图中显示结果，您需要访问可使用经纬度的**地图服务**，比如谷歌地图或百度地图：
+
+```js
+function showPosition(position) {
+  var latlon = position.coords.latitude + "," + position.coords.longitude;
+  
+  // 使用脚本来显示带有标记、缩放和拖曳选项的交互式地图
+  var img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=400x300&sensor=false";
+  
+  // 使用返回的经纬度数据在谷歌地图中显示位置（使用静态图像）。
+  document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "' />";
+}
+```
+
+#### 给定位置的信息
+
+#### getCurrentPosition() 方法 - 返回数据
+
+#### Geolocation 对象 - 其他有趣的方法
 
 ### HTML 5 拖放
 
