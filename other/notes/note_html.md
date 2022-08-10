@@ -1777,7 +1777,7 @@ RWD 对于平板和移动设备是必须的
       <meta name="viewport" content="width=device-width", initial-scale=1.0 />
       <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
     </head>
-  
+
     <body>
       <div class="contenter">
         <div class="jumbotron">
@@ -1785,7 +1785,7 @@ RWD 对于平板和移动设备是必须的
           <p>Resize this responsive page!</p>
         </div>
       </div>
-  
+
       <div class="contenter">
         <div class="row">
           <div class="col-md-4">
@@ -2509,7 +2509,7 @@ HTML5 允许四种不同的属性语法。
 
 ### HTML 5 迁移
 
-[HTML 5 迁移](https://www.w3school.com.cn/html/html5_migration.asp) 
+[HTML 5 迁移](https://www.w3school.com.cn/html/html5_migration.asp)
 
 把一张已有的 HTML4 页面转换为 HTML5 页面，在不破坏如何原始内容和结构的情况下。
 
@@ -2527,9 +2527,9 @@ HTML5 允许四种不同的属性语法。
 
   ```html
   <!-- Doctype -->
-  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
-  
+
   <!-- 编码 -->
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
   ```
@@ -2539,10 +2539,10 @@ HTML5 允许四种不同的属性语法。
   ```html
   <!-- Doctype -->
   <!DOCTYPE html>
-  
+
   <!-- 编码 -->
   <meta charset="utf-8">
-  
+
   <!-- 添加 shiv -->
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -2591,14 +2591,14 @@ Internet Explorer 9、Firefox、Chrome、Safari 以及 Opera 支持地理定位�
   <head>
     <title>demo</title>
   </head>
-  
+
   <body>
     <p id="demo">点击这个按钮，获得您的坐标：</p>
     <button onclick="getLocation()">试一下</button>
-    
+
     <script>
       var x = document.getElementById("demo");
-      
+
       function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(shouPosition);
@@ -2606,7 +2606,7 @@ Internet Explorer 9、Firefox、Chrome、Safari 以及 Opera 支持地理定位�
           x.innerHTML = "Geolocation is not supported by this browser.";
         }
       }
-      
+
       function shouPosition(position) {
         x.innerHTML = "Latitude: " + position.coords.latitude +
           "<br />Longitude: " + position.coords.longitude;
@@ -2655,10 +2655,10 @@ function showError(error) {
 ```js
 function showPosition(position) {
   var latlon = position.coords.latitude + "," + position.coords.longitude;
-  
+
   // 使用脚本来显示带有标记、缩放和拖曳选项的交互式地图
   var img_url = "http://maps.googleapis.com/maps/api/staticmap?center=" + latlon + "&zoom=14&size=400x300&sensor=false";
-  
+
   // 使用返回的经纬度数据在谷歌地图中显示位置（使用静态图像）。
   document.getElementById("mapholder").innerHTML = "<img src='" + img_url + "' />";
 }
@@ -2708,7 +2708,7 @@ function showPosition(position) {
       x.innerHTML = "Geolocation is not supported by this browser.";
     }
   }
-  
+
   function showPosition(position) {
     x.innerHTML = "Latitude: " + position.coords.latitude +
           "<br />Longitude: " + position.coords.longitude;
@@ -2743,11 +2743,11 @@ function showPosition(position) {
       function allowDrap(ev) {
         ev.preventDefault();
       }
-      
+
       function drag(ev) {
         ev.dataTransfer.setData("text", ev.target.id);
       }
-      
+
       function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("text");
@@ -2755,7 +2755,7 @@ function showPosition(position) {
       }
     </script>
   </head>
-  
+
   <body>
     <div id="div1" ondrap="drop(event)" ondragover="allowDrap(event)"></div>
     <img id="drag1" src="img_logo.gif" draggable="true" ondragstart="drag(event)" width="336" height="69" />
@@ -2828,11 +2828,11 @@ function drop(ev) {
       function allowDrap(ev) {
         ev.preventDefault();
       }
-      
+
       function drag(ev) {
         ev.dataTransfer.setData("Text", ev.target.id);
       }
-      
+
       function drop(ev) {
         ev.preventDefault();
         var data = ev.dataTransfer.getData("Text");
@@ -2840,7 +2840,7 @@ function drop(ev) {
       }
     </script>
   </head>
-  
+
   <body>
     <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
       <img src="/i/eg_dragdrop_w3school.gif" draggable="true" ondragstart="drag(event)" id="drag1" />
@@ -3111,13 +3111,13 @@ Web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影�
   <head>
     <title>demo</title>
   </head>
-  
+
   <body>
     <p>计数: <output id="result"></output></p>
     <button onclick="startWorker()">开始 Worker</button>
     <button onclick="stopWorker()">停止 Worker</button>
     <br /><br />
-    
+
     <script>
       var w;
       function startWorker() {
@@ -3132,7 +3132,7 @@ Web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影�
           document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Workers...";
         }
       }
-      
+
       function stopWorker() {
         w.terminate();
       }
@@ -3221,16 +3221,16 @@ w.onmessage = function (event) {
   <head>
     <title>demo</title>
   </head>
-  
+
   <body>
     <p>计数: <output id="result"></output></p>
     <button onclick="startWorker()">开始 Worker</button>
     <button onclick="stopWorker()">停止 Worker</button>
     <br /><br />
-    
+
     <script>
       var w;
-      
+
       function startWorker() {
         if(typeof(Worker) !== "undefined") {
           if(typeof(w) == "undefined") {
@@ -3243,7 +3243,7 @@ w.onmessage = function (event) {
           document.getElementById("result").innerHTML = "Sorry, No Web Worker wupport.";
         }
       }
-      
+
       function stopWorker() {
         w.terminate();
         w = undefined;
