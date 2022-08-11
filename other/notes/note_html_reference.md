@@ -470,26 +470,76 @@
 
 全局属性是可与所有 HTML 元素一起使用的属性。
 
-```txt
-id		规定元素的唯一 id。【可用作链接锚anchor】
-class	规定元素的一个或多个类名（引用样式表中的类）。【⚠️ 类名不能以数字开头】
-style	规定元素的行内 CSS 样式。【会覆盖掉全局的样式设定】
-title	规定有关元素的额外信息。
-lang	规定元素内容的语言。
-dir	规定元素中内容的文本方向。（rtl | ltr）
+```html
+⭐️	id		规定元素的唯一 id。【可用作链接锚anchor】
+⭐️	class	规定元素的一个或多个类名（引用样式表中的类）。【⚠️ 类名不能以数字开头】
+⭐️	style	规定元素的行内 CSS 样式。【会覆盖掉全局的样式设定】
+⭐️	title	规定有关元素的额外信息。
+lang	规定元素内容的语言。（常用值：en|zh|zh-CN|zh-cn-Hans）
+dir	规定元素中内容的文本方向。（值：rtl|ltr）
 
-accesskey	规定激活元素的快捷键。
-tabindex	规定元素的 tab 键次序。
+accesskey	规定激活元素的快捷键【支持accesskey属性的元素：<a>、<area>、<button>、<input>、<label>、<legend>、<textarea>】
+tabindex	规定元素的 tab 键次序。【当 tab 键用于导航时】
+	支持 tabindex 属性的元素：<a>、<area>、<button>、<input>、<object>、<select>、<textarea>。
 
-====== HTML5 新增 ======
-contenteditable	规定元素内容是否可编辑。
+============ 🌹HTML5 新增🌹 ============
+⭐️	contenteditable	规定元素内容是否可编辑。【语法：<element contenteditable="true|false">】
 contextmenu	规定元素的上下文菜单。上下文菜单在用户点击元素时显示。
-data-*	用于存储页面或应用程序的私有定制数据。
-draggable	规定元素是否可拖动。
-dropzone	规定在拖动被拖动数据时是否进行复制、移动或链接。
-hidden	规定元素仍未或不再相关。
-spellcheck	规定是否对元素进行拼写和语法检查。
-translate	规定是否应该翻译元素内容。
+  
+⭐️	data-*	用于存储页面或应用程序的私有定制数据。【语法：<element data-*="somevalue">】
+ 			 存储的（自定义）数据能够被页面的 JavaScript 中利用，以创建更好的用户体验（不进行 Ajax 调用或服务器端数据库查询）。
+  			data-* 属性包括两部分：
+  				1. 属性名不应该包含任何大写字母，并且在“data-”前缀之后必须有至少一个字符
+  				2. 属性值可以是任意字符串
+  			⚠️ 用户代理会完全忽略前缀为“data-” 的自定义属性。
+  
+⭐️🌹	draggable	规定元素是否可拖动。【语法：<element draggable="true|false|auto(浏览器的默认行为)">】
+  			⚠️ 链接和图像默认是可拖动的。
+dropzone	规定在拖动被拖动数据时是否进行复制、移动或链接。【目前所有主流浏览器都不支持 dropaone 属性】
+  
+⭐️	hidden	规定元素仍未或不再相关。【语法：<element hidden>】
+  		⚠️ 浏览器不显示已规定 hidden 属性的元素
+  		⚠️ hidden 属性也可以防止用户查看元素，直到匹配某些条件（比如选择了某个复选框）。
+  		‼️ JavaScript 可以删除 hidden 属性，以使此元素可见。
+  
+⭐️	spellcheck	规定是否对元素进行拼写和语法检查。【语法：<element spellcheck="true|false">】
+  		⚠️ 可以对以下内容进行拼写检查：<input> 元素中的文本值（非密码）；<textarea> 元素中的文本；可编辑元素中的文本。
+  
+translate	规定是否应该翻译元素内容。【目前所有主流浏览器都不支持 translate 属性】【语法：<element translate="yes|no">】
+  ⚠️ 推荐：使用 class="translate" 替代
+```
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>示例：draggable 属性</title>
+    <style type="text/css">
+      #div1 { width: 350px; height: 70px; padding: 10px; border: 1px solid #aaaaaa; }
+    </style>
+    
+    <script type="text/javascript">
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+      
+      function drag(ev) {
+        ev.dataTransfer.setData("Text", ev.target.id);
+      }
+      
+      function drop(ev) {
+        var data = ev.dataTransfer.getData("Text");
+        ev.target.appendChild(document.getElementById(data));
+        ev.preventDefault();
+      }
+    </script>
+  </head>
+  
+  <body>
+    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <p id="drag1" draggable="true" ondragstart="drag(event)">这是一段可移动的段落。请把该段落拖入上面的矩形。</p>
+  </body>
+</html>
 ```
 
 ## HTML 事件
