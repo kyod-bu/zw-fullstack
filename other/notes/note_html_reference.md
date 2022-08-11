@@ -230,7 +230,7 @@
 </video>  
 ```
 
-### 链接
+### 链接🌹
 
 ```html
 <a href="http://www.w3school.com.cn">	定义锚。【可以使用 CSS伪类 向文本超链接添加复杂而多样的样式】
@@ -245,7 +245,7 @@
 </nav>
 ```
 
-### 列表
+### 列表🌹（ul-li、ol-li、dl-dt-dd）
 
 ```html
 <!-- 无序列表（ul-li）-->
@@ -270,73 +270,227 @@
   <dd>以视觉方式显示信息的装置……</dd>
 </dl>
 
-<menu>	定义命令的菜单/列表。
+<menu>	定义命令的菜单/列表。【目前所有主流浏览器都不支持<menu>标签】⚠️ 请使用 CSS 来设置列表的样式！
 <menuitem>	定义用户可以从弹出菜单调用的命令/菜单项目。
 <command>	定义命令按钮。
 ```
 
-### 表格
+### 表格🌹（th-tr-td、thead-tbody-tfoot、colgroup-col）
 
 ```html
 <table>	定义表格
-<caption>	定义表格标题。
+<caption>	定义表格标题。【紧跟table之后。每个表格只能有一个标题】【属性 align：left/right/top/bottom，推荐使用样式取代】
+  
 <th>	定义表格中的表头单元格。
 <tr>	定义表格中的行。
-<td>	定义表格中的单元。
+<td colspan="2">	定义表格中的单元。【跨行/列：rowspan/colspan】
+
 <thead>	定义表格中的表头内容。
 <tbody>	定义表格中的主体内容。
 <tfoot>	定义表格中的表注内容（脚注）。
-<col>	定义表格中一个或多个列的属性值。
+  
+<col>	定义表格中一个或多个列的属性值。【属性：align(水平对齐方式)、char、charoff、span、valign(垂直对齐方式)、width】
 <colgroup>	定义表格中供格式化的列组。
 ```
 
-### 样式和语义
+```html
+<!-- 表格举例：th-tr-td -->
+<table border="1">
+  <caption>表格标题</caption>
+  <tr>
+    <th>Month</th>
+    <th>Savings</th>
+  </tr>
+  
+  <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+</table>
+```
 
 ```html
-<style>	定义文档的样式信息。
-<div>	定义文档中的节。
-<span>	定义文档中的节。
-<header>	定义 section 或 page 的页眉。
-<footer>	定义 section 或 page 的页脚。
+<!-- 表格举例2：thead-tbody-tfoot -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Month</th>
+      <th>Savings</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <tr>
+      <td>January</td>
+      <td>$100</td>
+    </tr>
+    <tr>
+      <td>February</td>
+      <td>$80</td>
+    </tr>
+  </tbody>
+  
+  <tfoot>
+    <tr>
+      <td>Sum</td>
+      <td>$180</td>
+    </tr>
+  </tfoot>
+</table>
+```
+
+```html
+<!-- 表格举例3：col-colgroup -->
+<table width="100%" border="1">
+  <col align="left" />
+  <col align="left" />
+  <col align="right" />
+  <tr>
+    <th>ISBN</th>
+    <th>Title</th>
+    <th>Price</th>
+  </tr>
+  <tr>
+    <td>3476896</td>
+    <td>My first HTML</td>
+    <td>$53</td>
+  </tr>
+  <tr>
+    <td>2489604</td>
+    <td>My first CSS</td>
+    <td>$47</td>
+  </tr>
+</table>
+```
+
+### 样式和语义⭐️
+
+```html
+<style type="text/css">	定义文档的样式信息。【若引入外部样式，请使用 <link rel="stylesheet" type="text/css" href="theme.css" />】
+  
+<div>	定义文档中的节。【块级元素】
+<span>	定义文档中的节。【行内元素】
+  
+<header>	定义 section 或 page 的页眉。【介绍信息】
+<footer>	定义 section 或 page 的页脚。【通常包含：文档的作者、版权信息、使用条款链接、联系信息等等】
 <main>	定义文档的主要内容。
 <section>	定义 section。
-<article>	定义文章。
-<aside>	定义页面内容之外的内容。
-<details>	定义元素的细节。
-<dialog>	定义对话框或窗口。
+<article>	定义文章。【一篇文章应有其自身的意义，应该有可能独立于站点的其余部分对其进行分发（论坛帖子/包子文章/博客条目/用户评论）】
+<aside>	定义页面内容之外的内容。【aside 的内容应该与附近的内容相关。如：aside 的内容可用作文章的“侧栏”】
+  
+<details>	定义元素的细节。【details 标签用于描述文档或文档某个部分的细节】【可与 summary 标签配合使用，展示标题的细节】
 <summary>	为 <details> 元素定义可见的标题。
-<data>	添加给定内容的机器可读翻译。
+  
+<dialog>	定义对话框或窗口。【属性 open，规定 dialog 元素是活动的，用户可与之交互。】
+  
+<data>	添加给定内容的机器可读翻译。【该元素既为数据处理器提供了机器可读的值，又为浏览器中的渲染提供了人类可读的值。】
 ```
 
-
-
-### 元信息
-
 ```html
-<head>	定义关于文档的信息。
-<meta>	定义关于 HTML 文档的元信息。
-<base>	定义页面中所有链接的默认地址或默认目标。
-<basefont>	定义页面中文本的默认字体、颜色或尺寸。HTML5 中不支持。请使用 CSS 代替。
+<!-- details-summary 使用示例（当用户点击标题时，会显示出详细信息） -->
+<details>
+  <summary>HTML 5</summary>
+  This document teaches you everything you have to learn about HTML 5.
+</details>
 ```
 
-
-
-### 编程
+### 元信息⭐️
 
 ```html
-<script>	定义客户端脚本。</script>
+<head>	定义关于文档的信息。【用于定义文档的头部，它是所有头部元素的容器（可以引用脚本、指示浏览器在哪里找到样式表、提供元信息等）】
+  ⚠️ 可用在 head 部分的元素：<base> <link> <meta> <script> <style> <title>
+    
+<meta>	定义关于 HTML 文档的元信息。(比如针对搜索引擎和更新频度的描述和关键词)【元数据总是以名称/值的形式被成对传递的。】
+  💡属性：	charset 	规定 HTML 文档的字符编码
+  				content		定义与 http-equiv 或 name 属性相关的元信息
+         http-equiv	把content属性关联到HTTP头部（值：content-security-policy/content-type/default-style/refresh）
+  				name		把content属性关联到一个名称（值：application-name/author/description/generator/keywords/viewport）
+          scheme		定义用于翻译 content 属性值的格式
+  
+<base>	定义页面中所有链接的默认地址或默认目标。【这其中包括 <a>、<img>、<link>、<form> 标签中的 URL】【属性：href、target】
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="HTML,ASP,PHP,SQL">
+  <title>Document</title>
+</head>
+<body>
+  <div id="root"></div>
+</body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base href="http://www.w3school.com.cn/i/" />
+  <base target="_blank" />
+</head>
+<body>
+  <!-- ⚠️ 由于我们在 head 部分规定了一个基准URL，浏览器将在如下地址寻找图片 http://www.w3school.com.cn/i/eg_smile.gif -->
+  <img src="eg_smile.gif" />
+  
+  <!-- ⚠️ 即使链接中没有 target="_blank" 属性，但是链接会在新窗口中打开 -->
+  <a href="http://www.w3school.com.cn">W3School</a>
+</body>
+</html>
+```
+
+### 编程⭐️
+
+```html
+<script>	定义客户端脚本。</script>【可以通过 src 属性指向外部脚本文件】
+	⚠️ 如果script元素内部的代码，没有位于某个函数中，那么这些代码会在页面加载时被立即执行，frameset标签之后的脚本会被忽略。
+<!-- 举例 -->
+<script type="text/javascript">
+  document.write("Hello World!");
+</script>
+
 <noscript>	定义针对不支持客户端脚本的用户的替代内容。
-<applet>	定义嵌入的 applet。HTML5 中不支持。请使用 <embed> 和 <object> 代替。
-<embed>	为外部应用程序（非 HTML）定义容器。
-<object>	定义嵌入的对象。
+  <noscript>Your browser does not support JavaScript!</noscript>
+  
+<embed>	为外部应用程序（非 HTML）定义容器。【属性：height、width、src、type】
+  <!-- 举例 -->
+  <embed src="helloworld.swf" />
+  
+<object>	定义嵌入的对象。【使用此元素向HTML页面添加多媒体。此元素允许你规定插入对象的数据和参数，以及可用来显示和操作数据的代码】
+  ⚠️ <object> 标签用于包含对象，比如图像、音频、视频、Java applets、ActiveX、PDF、Flash。
+  
 <param>	定义对象的参数。
 ```
 
-
-
-## HTML 浏览器支持
-
 ## HTML 全局属性
+
+全局属性是可与所有 HTML 元素一起使用的属性。
+
+```txt
+id		规定元素的唯一 id。【可用作链接锚anchor】
+class	规定元素的一个或多个类名（引用样式表中的类）。【⚠️ 类名不能以数字开头】
+style	规定元素的行内 CSS 样式。【会覆盖掉全局的样式设定】
+title	规定有关元素的额外信息。
+lang	规定元素内容的语言。
+dir	规定元素中内容的文本方向。（rtl | ltr）
+
+accesskey	规定激活元素的快捷键。
+tabindex	规定元素的 tab 键次序。
+
+====== HTML5 新增 ======
+contenteditable	规定元素内容是否可编辑。
+contextmenu	规定元素的上下文菜单。上下文菜单在用户点击元素时显示。
+data-*	用于存储页面或应用程序的私有定制数据。
+draggable	规定元素是否可拖动。
+dropzone	规定在拖动被拖动数据时是否进行复制、移动或链接。
+hidden	规定元素仍未或不再相关。
+spellcheck	规定是否对元素进行拼写和语法检查。
+translate	规定是否应该翻译元素内容。
+```
 
 ## HTML 事件
 
